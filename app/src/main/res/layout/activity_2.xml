@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:id="@+id/activity2_relout"
+    android:background="@drawable/rounded_corner_activity">
+
+    <TextView
+        android:id="@+id/basic_test_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:text="@string/basic_test"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_basic_lab"
+        android:layout_below="@+id/basic_test_text"
+        android:padding="5dp">
+
+        <Spinner
+            android:id="@+id/spinner_basic_lab"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_basic_lab"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick"
+            android:text="@string/ok_button_basic_lab"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_basic_lab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_basic_lab"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CBC_text"
+        android:text="CBC"
+        android:layout_below="@id/listview_basic_lab"
+        android:padding="5dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed"
+        />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_CBC"
+        android:layout_below="@+id/CBC_text"
+        android:padding="5dp">
+
+        <Spinner
+            android:id="@+id/spinner_CBC"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_CBC"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick"
+            android:text="@string/ok_button_basic_lab"
+            android:textSize="14sp" />
+    </GridLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_back_lab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="back_to_main" />
+
+</RelativeLayout>

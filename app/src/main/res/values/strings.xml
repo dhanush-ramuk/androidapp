@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Application1</string>
+    <string name="ok_button_basic_lab">Ok</string>
+    <string name="basic_test">Basic Test</string>
+</resources>
