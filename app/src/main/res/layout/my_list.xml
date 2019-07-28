@@ -26,9 +26,10 @@
         android:id="@+id/delete_button_listview"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/rounded_corner"
-        android:text="X"
-        android:layout_marginLeft="20dp"
         android:layout_row="0"
-        android:layout_column="3" />
+        android:layout_column="3"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/rounded_corner"
+        android:onClick="delete"
+        android:text="X" />
 </GridLayout>

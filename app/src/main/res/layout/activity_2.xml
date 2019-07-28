@@ -75,6 +75,7 @@
         android:padding="5dp"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
         app:fontFamily="sans-serif-condensed"
         />
     <GridLayout
@@ -109,11 +110,20 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
-            android:onClick="onclick"
+            android:onClick="onclick_CBC"
             android:text="@string/ok_button_basic_lab"
             android:textSize="14sp" />
     </GridLayout>
 
+    <ListView
+        android:id="@+id/listview_CBC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_CBC"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_back_lab"
@@ -123,5 +133,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:onClick="back_to_main" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_back_lab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="go_to_camera" />
+
+
 
 </RelativeLayout>
