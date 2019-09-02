@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="5dp"
     android:id="@+id/activity2_relout"
     >
 
@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="5dp"
+        android:layout_marginTop="5dp"
         android:text="@string/basic_test"
         android:textColor="@color/textColorPrimary"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:fontFamily="sans-serif-condensed" />
 
@@ -41,13 +42,15 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:inputType=""
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginStart="5dp"
+            android:importantForAutofill="no" />
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -62,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_basic_lab"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:layout_marginRight="20dp"/>
@@ -70,10 +74,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/CBC_text"
-        android:text="CBC"
+        android:text="@string/complete_blood_count_panel"
         android:layout_below="@id/listview_basic_lab"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="@color/textColorPrimary"
         app:fontFamily="sans-serif-condensed"
@@ -100,13 +105,13 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -121,30 +126,46 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_CBC"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:layout_marginRight="20dp"/>
+
     <TextView
-        android:id="@+id/kidneytest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_CBC"
+        android:id="@+id/CMP_text"
+        android:text="@string/comprehensive_metabolic_panel"
+        android:layout_below="@id/listview_CBC"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:text="Kidney function test"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
+        app:fontFamily="sans-serif-condensed"
+        />
+    <TextView
+        android:id="@+id/generaltest_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CMP_text"
+        android:padding="10dp"
+        android:text="General test"
         android:textColor="@color/textColorPrimary"
         android:textSize="24sp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
         app:fontFamily="sans-serif-condensed" />
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/grid_kidneytest"
-        android:layout_below="@+id/kidneytest_text"
-        android:padding="5dp">
+        android:id="@+id/grid_generaltest"
+        android:layout_below="@+id/generaltest_text"
+        android:padding="10dp">
 
         <Spinner
-            android:id="@+id/spinner_kidneytest"
+            android:id="@+id/spinner_generaltest"
             style="@android:style/Widget.Material.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -152,36 +173,37 @@
             android:layout_column="0" />
 
         <EditText
-            android:id="@+id/enter_kidneytest"
+            android:id="@+id/enter_generaltest"
             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
-            android:onClick="onclick_kidney_test"
-            android:text="Ok"
+            android:onClick="onclick_general_test"
+            android:text="@string/ok"
             android:textSize="14sp" />
     </GridLayout>
 
     <ListView
-        android:id="@+id/listview_kidneytest"
+        android:id="@+id/listview_generaltest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/grid_kidneytest"
+        android:layout_below="@+id/grid_generaltest"
         android:layout_marginLeft="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
 
 
 

@@ -21,13 +21,6 @@ Camera cam;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         requestPermission();
         if(checkCameraHardware(this)) {
             if (checkPermission()) {
@@ -43,6 +36,12 @@ Camera cam;
         fam.addView(cameraPreview);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
     Camera.PictureCallback mpicturecallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
@@ -51,14 +50,14 @@ Camera cam;
         }
     };
     public void take_photo(View v){
-        if(cam!=null){
+
 
             Log.d("camera_click", "working");
 
             cam.takePicture(null, null, mpicturecallback);
             Log.d("camera_click", "working1");
 
-        }
+
     }
 
     private boolean checkCameraHardware(Context context) {
