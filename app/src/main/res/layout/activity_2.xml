@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:id="@+id/activity2_relout"
-    >
+    android:padding="5dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buttons"
+        >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <TextView
         android:id="@+id/basic_test_text"
         android:layout_width="match_parent"
@@ -30,7 +38,7 @@
         <Spinner
             android:id="@+id/spinner_basic_lab"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -45,7 +53,6 @@
             android:layout_marginLeft="5dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_marginStart="5dp"
             android:importantForAutofill="no" />
 
         <Button
@@ -204,26 +211,335 @@
         android:dividerHeight="10.0sp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_back_lab"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/kidneytest_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:onClick="back_to_main" />
+        android:layout_below="@+id/listview_generaltest"
+        android:padding="10dp"
+        android:text="Kidney panel"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_back_lab"
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:onClick="go_to_camera" />
+        android:id="@+id/grid_kidneytest"
+        android:layout_below="@+id/kidneytest_text"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_kidneytest"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_kidneytest"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="5dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_kidney_test"
+            android:text="@string/ok"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_kidneytest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_kidneytest"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/livertest_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listview_kidneytest"
+        android:padding="10dp"
+        android:text="Liver panel"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_livertest"
+        android:layout_below="@+id/livertest_text"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_livertest"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_livertest"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="5dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_liver_test"
+            android:text="@string/ok"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_livertest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_livertest"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/electrolytestest_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listview_livertest"
+        android:padding="10dp"
+        android:text="Electrolytes"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_electrolytestest"
+        android:layout_below="@+id/electrolytestest_text"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_electrolytestest"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_electrolytestest"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="5dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_electrolytes_test"
+            android:text="@string/ok"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_electrolytestest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_electrolytestest"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/proteintest_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listview_electrolytestest"
+        android:padding="10dp"
+        android:text="Proteins"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_proteintest"
+        android:layout_below="@+id/proteintest_text"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_proteintest"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_proteintest"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="5dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_protein_test"
+            android:text="@string/ok"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_proteintest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_proteintest"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/lipidstest_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listview_proteintest"
+        android:padding="10dp"
+        android:text="Lipid panel"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_lipidstestest"
+        android:layout_below="@+id/lipidstest_text"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_lipidstest"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:id="@+id/enter_lipidstest"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="5dp"
+            android:inputType=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_lipids_test"
+            android:text="@string/ok"
+            android:textSize="14sp" />
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listview_lipidstest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_electrolytestest"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
 
 
 
+
+</RelativeLayout>
+</ScrollView>
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:onClick="go_to_camera" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_back_lab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="back_to_main" />
+
+
+    </RelativeLayout>
 </RelativeLayout>

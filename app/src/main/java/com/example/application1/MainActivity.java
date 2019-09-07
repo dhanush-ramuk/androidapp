@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RelativeLayout relout;
-        relout = findViewById(R.id.main_relout);
         FloatingActionButton fab = findViewById(R.id.fab_lab);
 
         fab.setOnClickListener(new View.OnClickListener() {
