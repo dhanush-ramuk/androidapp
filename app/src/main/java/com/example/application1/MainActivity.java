@@ -56,23 +56,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i("check", "love4");
+
         if(requestCode==999 && resultCode==RESULT_OK){
             a = new ArrayList<String>();
             a = data.getStringArrayListExtra("country_name");
             b = new ArrayList<String>();
             b = data.getStringArrayListExtra("values");
-
         }
-
-
-
         Log.i("count", "before map");
-
         map = new HashMap<String, String>();
-        map.put("india", null);
+        map.put("weight", null);
         map.put("pakistan", null);
         map.put(a.get(0), b.get(0));
-        map.put(a.get(1), b.get(1));
         Log.i("count", "after map");
 
         obj = new All_Results(map);
@@ -89,14 +85,15 @@ public class MainActivity extends AppCompatActivity {
     public void the_brain(Map mini_map){
         ArrayList<String> countries = new ArrayList<String>(mini_map.keySet());
         Log.i("count",a.get(0));
+        Log.i("count", "hkk");
 
         ArrayList<String> values = new ArrayList<String>(mini_map.values());
 
-        if(a.contains("india")){
-                a_imp.add("india");
+        if(a.contains("weight")){
+                a_imp.add("weight");
             Log.i("count", "True");
 
-            b_imp.add(mini_map.get("india").toString());
+            b_imp.add(mini_map.get("weight").toString());
             }
 
     }

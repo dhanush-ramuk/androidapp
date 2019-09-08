@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -585,9 +586,14 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
 
     public void back_to_main(View v){
         Intent i = new Intent();
-        i.putStringArrayListExtra("country_name", basic_test_rhs);
-        i.putStringArrayListExtra("values", basic_test_lhs);
+        i.putStringArrayListExtra("country_name", basic_test_lhs);
+        i.putStringArrayListExtra("values", basic_test_rhs);
+        Log.i("check", "love1");
         setResult(RESULT_OK, i);
+        Log.i("check", "love2");
+
         finish();
+        Log.i("check", "love3");
+
     }
 }

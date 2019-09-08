@@ -38,7 +38,7 @@
         <Spinner
             android:id="@+id/spinner_basic_lab"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="170dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:importantForAutofill="no" />
@@ -100,7 +100,7 @@
         <Spinner
             android:id="@+id/spinner_CBC"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -169,12 +169,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/grid_generaltest"
         android:layout_below="@+id/generaltest_text"
-        android:padding="10dp">
+        android:padding="0dp">
 
         <Spinner
             android:id="@+id/spinner_generaltest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -186,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -234,7 +234,7 @@
         <Spinner
             android:id="@+id/spinner_kidneytest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -246,7 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -295,7 +295,7 @@
         <Spinner
             android:id="@+id/spinner_livertest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -307,7 +307,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -355,7 +355,7 @@
         <Spinner
             android:id="@+id/spinner_electrolytestest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -367,7 +367,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -415,7 +415,7 @@
         <Spinner
             android:id="@+id/spinner_proteintest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -427,7 +427,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -475,7 +475,7 @@
         <Spinner
             android:id="@+id/spinner_lipidstest"
             style="@android:style/Widget.Material.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0" />
@@ -487,7 +487,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="2dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
