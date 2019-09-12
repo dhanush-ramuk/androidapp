@@ -17,7 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String [] basic_test = {"weight", "BP"};
@@ -46,6 +49,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
+        set_date();
         take_one();
         take_two();
         take_three();
@@ -54,6 +58,14 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         take_six();
         take_seven();
         take_eight();
+    }
+
+    public void set_date(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy / MM / dd ");
+        String strDate = mdformat.format(calendar.getTime());
+        TextView dateview = (TextView) findViewById(R.id.dateview);
+        dateview.setText(strDate);
     }
 
     public void take_one(){
@@ -586,8 +598,22 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
 
     public void back_to_main(View v){
         Intent i = new Intent();
-        i.putStringArrayListExtra("country_name", basic_test_lhs);
-        i.putStringArrayListExtra("values", basic_test_rhs);
+        i.putStringArrayListExtra("basic_test_names", basic_test_lhs);
+        i.putStringArrayListExtra("basic_test_values", basic_test_rhs);
+        i.putStringArrayListExtra("CBC_test_names", CBC_lhs);
+        i.putStringArrayListExtra("CBC_test_values", CBC_rhs);
+        i.putStringArrayListExtra("kidney_test_names", kidney_test_lhs);
+        i.putStringArrayListExtra("kidney_test_values", kidney_test_rhs);
+        i.putStringArrayListExtra("liver_test_names", liver_test_lhs);
+        i.putStringArrayListExtra("liver_test_values", liver_test_rhs);
+        i.putStringArrayListExtra("electrolytes_test_names", electrolytes_lhs);
+        i.putStringArrayListExtra("electrolytes_test_values", electrolytes_rhs);
+        i.putStringArrayListExtra("proteins_test_names", proteins_lhs);
+        i.putStringArrayListExtra("proteins_test_values", proteins_rhs);
+        i.putStringArrayListExtra("general_test_names", general_test_lhs);
+        i.putStringArrayListExtra("general_test_values", general_test_rhs);
+        i.putStringArrayListExtra("lipid_test_names", lipid_panel_lhs);
+        i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
         Log.i("check", "love1");
         setResult(RESULT_OK, i);
         Log.i("check", "love2");
