@@ -2,12 +2,16 @@ package com.example.application1;
 
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class All_Results {
-    private String India;
+    private Map<String, String> map = new HashMap<String, String>();
     public All_Results(Map a){
-       //India =  a.get("india").toString();
+        this.map = a;
+    }
 
+    public Map<String, String> get_map(){
+        return this.map;
     }
 }
