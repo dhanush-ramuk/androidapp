@@ -53,7 +53,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        create_list();
+
+
+        Log.i("check", "create started");
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("mylist", "");
+        ArrayList<All_Results> start_obj = gson.fromJson(json,
+                new TypeToken<List<All_Results>>(){}.getType());
+        if(start_obj!=null) {
+            for (int i = 0; i < start_obj.size(); i++) {
+                obj.add(start_obj.get(i));
+            }
+        }
+        create_list(obj);
         FloatingActionButton fab = findViewById(R.id.fab_lab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,20 +78,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    protected void onResume(){
-        super.onResume();
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        String json = sharedPrefs.getString("mylist", "");
-        ArrayList<All_Results> lstArrayList = gson.fromJson(json,
-                new TypeToken<List<All_Results>>(){}.getType());
-        if(!lstArrayList.isEmpty()) {
-            obj = (ArrayList<All_Results>) lstArrayList.clone();
-        }
+
+    protected void onStart(){
+        super.onStart();
+        Log.i("check", "onStart started");
+
+
+
     }
 
-    protected void onPause(){
-        super.onPause();
+    protected void onStop(){
+        super.onStop();
+        Log.i("check", "Pause started");
+
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
         Gson gson = new Gson();
@@ -89,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.i("check", "love4");
-        clear_list();
-        create_list();
+
+        Log.i("check", "Return started");
         if(requestCode==999 && resultCode==RESULT_OK){
+            Log.i("check", "Return started entered");
 
             basic_test_lhs = new ArrayList<String>();
             basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
@@ -192,18 +206,16 @@ public class MainActivity extends AppCompatActivity {
         obj.add(new All_Results(map));
 
 
-
-        the_brain(map);
-        v = (ListView)findViewById(R.id.listview_main);
-        Log.i("count", "before map46");
-
-        v.setAdapter(adapter);
-        Log.i("count", "before map56");
+clear_list();
+        create_list(obj);
 
     }
 
-    public void create_list(){
-        if(!obj.isEmpty()){
+    public void create_list(ArrayList<All_Results> obj){
+        Log.i("check", "in_create_list");
+        if(obj!=null && !obj.isEmpty()){
+            Log.i("check", "in_create_list_list");
+
             for(int i=0;i<obj.size(); i++){
                  the_brain(obj.get(i).get_map());
             }
@@ -211,12 +223,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clear_list(){
-        int i = 0;
-        while(!a_imp.isEmpty()){
-            a_imp.remove(i);
-            b_imp.remove(i);
-            i++;
-        }
+
+            a_imp.clear();
+            b_imp.clear();
+
         adapter.notifyDataSetChanged();
     }
 
@@ -229,7 +239,11 @@ public class MainActivity extends AppCompatActivity {
 
             b_imp.add(mini_map.get("weight").toString());
             }
+        v = (ListView)findViewById(R.id.listview_main);
+        Log.i("count", "before map46");
 
+        v.setAdapter(adapter);
+        Log.i("count", "before map56");
     }
     public class Customadapter1 extends BaseAdapter {
 
