@@ -30,7 +30,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     String [] electrolyte_panel ={"C02", "sodium", "potassium", "chloride"};
     String [] proteins = {"albumin", "total protein"};
     String [] general_test = {"glucose[fasting]", "glucose[random]", "calcium"};
-    String [] lipid_panel = {"cholestrol", "triglyceride", "HDL", "LDL"};
+    String [] lipid_panel = {"cholesterol", "triglyceride", "HDL", "LDL"};
     Customadapter aaa;
     Customadapter1 aaa1;
     Customadapter2 aaa2;

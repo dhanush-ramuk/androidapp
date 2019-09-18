@@ -3,22 +3,15 @@ package com.example.application1;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,29 +19,31 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.*;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> basic_test_lhs, CBC_lhs, kidney_test_lhs, liver_test_lhs, electrolytes_lhs, proteins_lhs, general_test_lhs, lipid_panel_lhs;
     ArrayList<String> basic_test_rhs, CBC_rhs, kidney_test_rhs, liver_test_rhs, electrolytes_rhs, proteins_rhs, general_test_rhs, lipid_panel_rhs;
-    String [] all_tests = {"weight", "cholestrol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
+    String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine aminotransferase", "aspartate aminotransferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
-    ArrayList<String> a_imp = new ArrayList<String>();
-    ArrayList<String> b_imp = new ArrayList<String>();
+    ArrayList<String> main_value_text, second_value_text, third_value_text, day_text = new ArrayList<String>();
+    ArrayList<String> main_value, second_value, third_value, date_text = new ArrayList<String>();
+    ArrayList<String> prioritized_left = new ArrayList<String>();
+    ArrayList<String> prioritized_left1 = new ArrayList<String>();
+    ArrayList<String> prioritized_left2 = new ArrayList<String>();
     String string;
     Map<String, String> map;
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
     ListView v;
     Customadapter1 adapter = new Customadapter1();
+    Random rand = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         Log.i("count", "after map");
-
+        go_figure_the_fuck_out(map);
 
         obj.add(new All_Results(map));
 
 
-clear_list();
+        clear_list();
         create_list(obj);
 
     }
@@ -224,37 +219,140 @@ clear_list();
 
     public void clear_list(){
 
-            a_imp.clear();
-            b_imp.clear();
+            main_value.clear();
+            main_value_text.clear();
 
         adapter.notifyDataSetChanged();
     }
 
-    public void the_brain(Map mini_map){
+    public void go_figure_the_fuck_out(Map map){
 
 
-        if((mini_map.get("weight")!=null)){
-                a_imp.add("weight");
-            Log.i("count", "True" + mini_map.get("weight"));
+        ArrayList<String> sorting, sorting1, sorting2;
+        sorting = new ArrayList<String>();
+        sorting1 = new ArrayList<String>();
+        sorting2 = new ArrayList<String>();
 
-            b_imp.add(mini_map.get("weight").toString());
+        if(map.get("hemoglobin")!=null){
+            sorting1.add("hemoglobin");
+        }
+        if(map.get("calcium")!=null){
+            sorting1.add("calcium");
+        }
+
+        if(map.get("RBC")!=null){
+            sorting1.add("RBC");
+        }
+
+        if(map.get("WBC")!=null){
+            sorting1.add("WBC");
+        }
+        if(map.get("blood urea nitrogen")!=null){
+            sorting1.add("blood urea nitrogen");
+        }
+        if(map.get("potassium")!=null){
+            sorting1.add("potassium");
+        }
+
+
+        if(map.get("weight")!=null){
+            sorting.add("weight");
+        }
+        if(map.get("creatinine")!=null){
+            sorting.add("creatinine");
+        }
+        if(map.get("glucose[fasting]")!= null){
+            sorting.add("glucose[random]");
+        }
+        if(map.get("cholesterol")!=null){
+            sorting.add("cholesterol");
+        }
+
+        for(int i=0; i<all_tests.length; i++){
+            if(sorting.contains(all_tests[i]) || sorting1.contains(all_tests[i])){
+            }else{
+                sorting2.add(all_tests[i]);
             }
-        v = (ListView)findViewById(R.id.listview_main);
-        Log.i("count", "before map46");
+        }
 
+        int rand_int1 = rand.nextInt(sorting.size());
+        int rand_int2 = rand.nextInt(sorting1.size());
+        int rand_int3 = rand.nextInt(sorting2.size());
+
+        if(!sorting.isEmpty()){
+            prioritized_left.add(sorting.get(rand_int1));
+        } else if(!sorting1.isEmpty()){
+            prioritized_left.add(sorting1.get(rand_int2));
+        } else{
+            prioritized_left.add(sorting2.get(rand_int3));
+        }
+
+        int rand_int4, rand_int5, rand_int6;
+
+        if(!sorting1.isEmpty()){
+            do{
+                rand_int4 = rand.nextInt(sorting1.size());
+            }while(prioritized_left.contains(sorting1.get(rand_int4)));
+            prioritized_left1.add(sorting1.get(rand_int4));
+        } else if(!sorting.isEmpty()){
+            do{
+                rand_int5 = rand.nextInt(sorting.size());
+            }while(prioritized_left.contains(sorting.get(rand_int5)));
+            prioritized_left1.add(sorting.get(rand_int5));
+        } else if(!sorting2.isEmpty()){
+            do{
+                rand_int6 = rand.nextInt(sorting.size());
+            }while(prioritized_left.contains(sorting2.get(rand_int6)));
+            prioritized_left1.add(sorting.get(rand_int6));
+        } else{
+            prioritized_left1.add("no value");
+        }
+
+        if(!sorting1.isEmpty()){
+            do{
+                rand_int4 = rand.nextInt(sorting1.size());
+            }while(prioritized_left.contains(sorting1.get(rand_int4)) || prioritized_left1.contains(sorting1.get(rand_int4)));
+            prioritized_left1.add(sorting1.get(rand_int4));
+        } else if(!sorting.isEmpty()){
+            do{
+                rand_int5 = rand.nextInt(sorting.size());
+            }while(prioritized_left.contains(sorting.get(rand_int5)) || prioritized_left1.contains(sorting.get(rand_int5)));
+            prioritized_left1.add(sorting.get(rand_int5));
+        } else if(!sorting2.isEmpty()){
+            do{
+                rand_int6 = rand.nextInt(sorting.size());
+            }while(prioritized_left.contains(sorting2.get(rand_int6)) || prioritized_left1.contains(sorting2.get(rand_int6)));
+            prioritized_left1.add(sorting.get(rand_int6));
+        } else{
+            prioritized_left1.add("no value");
+        }
+    }
+
+
+    public void the_brain(Map mini_map){
+//TODO add more lab tests in the main list and polish UI.
+
+
+
+
+
+
+
+
+
+        v = (ListView)findViewById(R.id.listview_main);
         v.setAdapter(adapter);
-        Log.i("count", "before map56");
     }
     public class Customadapter1 extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return a_imp.size();
+            return main_value_text.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return a_imp.get(i);
+            return main_value_text.get(i);
         }
 
         @Override
@@ -265,10 +363,10 @@ clear_list();
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.main_list, null);
-            TextView text1 = (TextView)view.findViewById(R.id.textView2);
-            TextView text2 = (TextView)view.findViewById(R.id.textView3);
-            text1.setText(b_imp.get(i));
-            text2.setText(a_imp.get(i));
+            TextView text1 = (TextView)view.findViewById(R.id.main_value);
+            TextView text2 = (TextView)view.findViewById(R.id.main_value_name);
+            text1.setText(main_value.get(i));
+            text2.setText(main_value_text.get(i));
             RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.main_list_relout);
 
             rel.setOnClickListener(new View.OnClickListener() {

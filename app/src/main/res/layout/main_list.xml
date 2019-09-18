@@ -4,18 +4,123 @@ android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_list_relout">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="109dp"
-        android:layout_height="49dp"
-        android:text="TextView"
-        android:textSize="36sp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/main_value"
+        android:layout_width="110dp"
+        android:layout_height="79dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/main_value_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textView2"
-        android:text="TextView"
-        android:textSize="14sp" />
+        android:layout_below="@+id/main_value"
+        android:layout_marginTop="3dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/main_value_updown"
+        android:layout_width="23dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="82dp"
+        android:layout_toEndOf="@+id/main_value_name"
+        android:layout_toRightOf="@+id/main_value_name"
+        android:text="T" />
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="122dp"
+        android:layout_height="59dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp" />
+
+    <TextView
+        android:id="@+id/day_text"
+        android:layout_width="116dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/date_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/second_value"
+        android:layout_width="76dp"
+        android:layout_height="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/main_value"
+        android:layout_toRightOf="@+id/main_value"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/second_value_text"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/second_value"
+        android:layout_toRightOf="@+id/second_value"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/second_value_updown"
+        android:layout_width="21dp"
+        android:layout_height="38dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/second_value_text"
+        android:layout_toRightOf="@+id/second_value_text"
+        android:text="T" />
+
+    <TextView
+        android:id="@+id/third_value"
+        android:layout_width="75dp"
+        android:layout_height="42dp"
+        android:layout_below="@+id/second_value"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="17dp"
+        android:layout_toEndOf="@+id/main_value"
+        android:layout_toRightOf="@+id/main_value"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/third_value_text"
+        android:layout_width="37dp"
+        android:layout_height="44dp"
+        android:layout_below="@+id/second_value_text"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="17dp"
+        android:layout_toEndOf="@+id/third_value"
+        android:layout_toRightOf="@+id/third_value"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/third_value_updown"
+        android:layout_width="18dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/second_value_updown"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="19dp"
+        android:layout_toEndOf="@+id/third_value_text"
+        android:layout_toRightOf="@+id/third_value_text"
+        android:text="T" />
 </RelativeLayout>
