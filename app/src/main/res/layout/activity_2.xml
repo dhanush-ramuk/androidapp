@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/dateview"
-        android:layout_margin="5dp"/>
+    android:padding="5dp"
+    android:id="@+id/rel">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,17 +16,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:id="@+id/dateview"
+            android:layout_margin="5dp"
+            />
+
+
+
+
     <TextView
         android:id="@+id/basic_test_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:padding="5dp"
         android:layout_marginTop="5dp"
         android:text="@string/basic_test"
         android:textColor="@color/textColorPrimary"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:layout_below="@+id/dateview"
         app:fontFamily="sans-serif-condensed" />
 
     <GridLayout

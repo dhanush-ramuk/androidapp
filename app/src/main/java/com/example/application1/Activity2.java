@@ -17,10 +17,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.Date;
 
 public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String [] basic_test = {"weight", "BP"};
@@ -31,6 +36,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     String [] proteins = {"albumin", "total protein"};
     String [] general_test = {"glucose[fasting]", "glucose[random]", "calcium"};
     String [] lipid_panel = {"cholesterol", "triglyceride", "HDL", "LDL"};
+    String strDate, strDay;
     Customadapter aaa;
     Customadapter1 aaa1;
     Customadapter2 aaa2;
@@ -61,11 +67,13 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void set_date(){
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy / MM / dd ");
-        String strDate = mdformat.format(calendar.getTime());
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        strDate = new SimpleDateFormat("yyyy / MM / dd ").format(calendar.getTime());
+        strDay = new SimpleDateFormat("EEEE").format(now);
         TextView dateview = (TextView) findViewById(R.id.dateview);
-        dateview.setText(strDate);
+        dateview.setText(strDate + "    " + strDay);
+
     }
 
     public void take_one(){
@@ -614,12 +622,10 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("general_test_values", general_test_rhs);
         i.putStringArrayListExtra("lipid_test_names", lipid_panel_lhs);
         i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
-        Log.i("check", "love1");
+        i.putExtra("date", strDate);
+        i.putExtra("day", strDay);
         setResult(RESULT_OK, i);
-        Log.i("check", "love2");
-
         finish();
-        Log.i("check", "love3");
 
     }
 }

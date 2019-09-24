@@ -33,75 +33,65 @@ public class MainActivity extends AppCompatActivity {
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine aminotransferase", "aspartate aminotransferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
-    ArrayList<String> main_value_text, second_value_text, third_value_text, day_text = new ArrayList<String>();
-    ArrayList<String> main_value, second_value, third_value, date_text = new ArrayList<String>();
+    int rand_int1, rand_int2, rand_int3, rand_int4, rand_int5, rand_int6;
+    ArrayList<String> main_value_text = new ArrayList<String>();
+    ArrayList<String> main_value  = new ArrayList<String>();
+    ArrayList<String> second_value_text = new ArrayList<String>();
+    ArrayList<String> second_value  = new ArrayList<String>();
+    ArrayList<String> third_value_text = new ArrayList<String>();
+    ArrayList<String> third_value  = new ArrayList<String>();
+    ArrayList<String> date_text = new ArrayList<String>();
+    ArrayList<String> day_text  = new ArrayList<String>();
     ArrayList<String> prioritized_left = new ArrayList<String>();
     ArrayList<String> prioritized_left1 = new ArrayList<String>();
     ArrayList<String> prioritized_left2 = new ArrayList<String>();
-    String string;
     Map<String, String> map;
+    Map<String, String> map1;
+
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
+    String day, date;
     ListView v;
     Customadapter1 adapter = new Customadapter1();
     Random rand = new Random();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         Log.i("check", "create started");
 
+        // Using shared preference to get the object that contains all the previous results.
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
         ArrayList<All_Results> start_obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
         if(start_obj!=null) {
-            for (int i = 0; i < start_obj.size(); i++) {
-                obj.add(start_obj.get(i));
-            }
+                obj.addAll(start_obj);
         }
         create_list(obj);
-        FloatingActionButton fab = findViewById(R.id.fab_lab);
 
+        //button click -> activity to get all the results from user.
+        FloatingActionButton fab = findViewById(R.id.fab_lab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(getApplicationContext(), Activity2.class), 999);
             }
         });
-
     }
 
-    protected void onStart(){
-        super.onStart();
-        Log.i("check", "onStart started");
 
 
+    protected void onResume(){
+        super.onResume();
 
-    }
-
-    protected void onStop(){
-        super.onStop();
-        Log.i("check", "Pause started");
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);
-        editor.putString("mylist", json);
-        editor.commit();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.i("check", "love4");
 
-        Log.i("check", "Return started");
         if(requestCode==999 && resultCode==RESULT_OK){
-            Log.i("check", "Return started entered");
-
             basic_test_lhs = new ArrayList<String>();
             basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
             basic_test_rhs = new ArrayList<String>();
@@ -134,105 +124,111 @@ public class MainActivity extends AppCompatActivity {
             lipid_panel_lhs = data.getStringArrayListExtra("lipid_test_names");
             lipid_panel_rhs = new ArrayList<String>();
             lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
-        }
-        Log.i("count", "before map");
+            date = data.getStringExtra("date");
+            day = data.getStringExtra("day");
 
+        }
         map = new HashMap<String, String>();
         for(String a: all_tests){
             map.put(a, null);
         }
-        Log.i("count", "hello" + map.get("weight"));
 
 
         if(!basic_test_rhs.isEmpty()) {
-            int n = basic_test_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(basic_test_lhs.get(0), basic_test_rhs.get(0));
-            }
+            for(int i = 0; i < basic_test_lhs.size(); i++)
+                map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
         }
 
         if(!kidney_test_rhs.isEmpty()) {
-            int n = kidney_test_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(kidney_test_lhs.get(0), kidney_test_rhs.get(0));
-            }
+            for(int i = 0; i < kidney_test_lhs.size(); i++)
+                map.put(kidney_test_lhs.get(i), kidney_test_rhs.get(i));
         }
         if(!CBC_rhs.isEmpty()) {
-            int n = CBC_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(CBC_lhs.get(0), CBC_rhs.get(0));
-            }
+            for(int i = 0; i < CBC_lhs.size(); i++)
+                map.put(CBC_lhs.get(i), CBC_rhs.get(i));
         }
         if(!liver_test_rhs.isEmpty()) {
-            int n = liver_test_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(liver_test_lhs.get(0), liver_test_rhs.get(0));
-            }
+            for(int i = 0; i < liver_test_lhs.size(); i++)
+                map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
         }
         if(!electrolytes_lhs.isEmpty()) {
-            int n = electrolytes_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(electrolytes_lhs.get(0), electrolytes_rhs.get(0));
-            }
+            for(int i = 0; i < electrolytes_lhs.size(); i++)
+                map.put(electrolytes_lhs.get(i), electrolytes_rhs.get(i));
         }
         if(!lipid_panel_rhs.isEmpty()) {
-            int n = lipid_panel_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(lipid_panel_lhs.get(0), lipid_panel_rhs.get(0));
-            }
+            for(int i = 0; i < lipid_panel_lhs.size(); i++)
+                map.put(lipid_panel_lhs.get(i), lipid_panel_rhs.get(i));
         }
         if(!proteins_rhs.isEmpty()) {
-            int n = proteins_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(proteins_lhs.get(0), proteins_rhs.get(0));
-            }
+            for(int i = 0; i < proteins_lhs.size(); i++)
+                map.put(proteins_lhs.get(i), proteins_rhs.get(i));
         }
         if(!general_test_rhs.isEmpty()) {
-            int n = general_test_rhs.size();
-            for (int i = 0; i < n; i++) {
-                map.put(general_test_lhs.get(0), general_test_rhs.get(0));
-            }
+            for(int i = 0; i < general_test_lhs.size(); i++)
+                map.put(general_test_lhs.get(i), general_test_rhs.get(i));
         }
 
-
-        Log.i("count", "after map");
         go_figure_the_fuck_out(map);
+        Log.i("check", "value of left1 before adding to object "+ prioritized_left1);
+        map1 = new HashMap<String, String>();
+        map1.put("p", prioritized_left.get(0));
+        map1.put("p1", prioritized_left1.get(0));
+        map1.put("p2", prioritized_left2.get(0));
 
-        obj.add(new All_Results(map));
 
+        obj.add(new All_Results(map, map1));
+
+        //Saving the object that contains the current values entered by the user in shared preference
+        //Saving it in the onStop method
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //SharedPreferences.Editor editor = sharedPrefs.edit();
+        //Gson gson = new Gson();
+        //String json = gson.toJson(obj);
+        //editor.putString("mylist", json);
+        //editor.apply();
 
         clear_list();
         create_list(obj);
+        clear_ArrayList();
 
     }
 
-    public void create_list(ArrayList<All_Results> obj){
-        Log.i("check", "in_create_list");
-        if(obj!=null && !obj.isEmpty()){
-            Log.i("check", "in_create_list_list");
+    public void clear_ArrayList(){
+        if(!prioritized_left1.isEmpty())
+            prioritized_left1.clear();
+        if(!prioritized_left.isEmpty())
+            prioritized_left.clear();
+        if(!prioritized_left2.isEmpty())
+            prioritized_left2.clear();
+    }
 
-            for(int i=0;i<obj.size(); i++){
-                 the_brain(obj.get(i).get_map());
+    public void create_list(ArrayList<All_Results> obj){
+        if(obj!=null && !obj.isEmpty()){
+            for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1());
             }
+
         }
     }
 
     public void clear_list(){
-
-            main_value.clear();
-            main_value_text.clear();
-
+        main_value.clear();
+        main_value_text.clear();
+        second_value.clear();
+        second_value_text.clear();
+        third_value.clear();
+        third_value_text.clear();
+        date_text.clear();
+        day_text.clear();
         adapter.notifyDataSetChanged();
     }
 
     public void go_figure_the_fuck_out(Map map){
-
-
         ArrayList<String> sorting, sorting1, sorting2;
         sorting = new ArrayList<String>();
         sorting1 = new ArrayList<String>();
         sorting2 = new ArrayList<String>();
 
+        // Assigning the user entered test values to different ArrayList based on the test priority.
         if(map.get("hemoglobin")!=null){
             sorting1.add("hemoglobin");
         }
@@ -246,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(map.get("WBC")!=null){
             sorting1.add("WBC");
+            Log.i("check", "WBC added in sorting 1");
         }
         if(map.get("blood urea nitrogen")!=null){
             sorting1.add("blood urea nitrogen");
@@ -253,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
         if(map.get("potassium")!=null){
             sorting1.add("potassium");
         }
-
 
         if(map.get("weight")!=null){
             sorting.add("weight");
@@ -270,76 +266,137 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0; i<all_tests.length; i++){
             if(sorting.contains(all_tests[i]) || sorting1.contains(all_tests[i])){
-            }else{
+                //do nothing
+            }else if(map.get(all_tests[i])!=null){
                 sorting2.add(all_tests[i]);
             }
         }
 
-        int rand_int1 = rand.nextInt(sorting.size());
-        int rand_int2 = rand.nextInt(sorting1.size());
-        int rand_int3 = rand.nextInt(sorting2.size());
-
+        //TODO change this algorithm to be more personalized.
         if(!sorting.isEmpty()){
+            rand_int1 = rand.nextInt(sorting.size());
             prioritized_left.add(sorting.get(rand_int1));
         } else if(!sorting1.isEmpty()){
+            rand_int2 = rand.nextInt(sorting1.size());
             prioritized_left.add(sorting1.get(rand_int2));
-        } else{
+        } else if(!sorting2.isEmpty()){
+            rand_int3 = rand.nextInt(sorting2.size());
             prioritized_left.add(sorting2.get(rand_int3));
         }
 
-        int rand_int4, rand_int5, rand_int6;
-
         if(!sorting1.isEmpty()){
-            do{
+            for(int i = 0; i<sorting1.size();i++){
                 rand_int4 = rand.nextInt(sorting1.size());
-            }while(prioritized_left.contains(sorting1.get(rand_int4)));
-            prioritized_left1.add(sorting1.get(rand_int4));
+                if(!prioritized_left.contains(sorting1.get(rand_int4))){
+                    prioritized_left1.add(sorting1.get(rand_int4));
+                    Log.i("check", "added WBC to left1"+ sorting1.get(rand_int4));
+                    break;
+                }
+            }
+
         } else if(!sorting.isEmpty()){
-            do{
+            for(int i = 0; i<sorting.size();i++){
                 rand_int5 = rand.nextInt(sorting.size());
-            }while(prioritized_left.contains(sorting.get(rand_int5)));
-            prioritized_left1.add(sorting.get(rand_int5));
+                if(!prioritized_left.contains(sorting.get(rand_int5))){
+                    prioritized_left1.add(sorting.get(rand_int5));
+                    break;
+                }
+            }
+
         } else if(!sorting2.isEmpty()){
-            do{
-                rand_int6 = rand.nextInt(sorting.size());
-            }while(prioritized_left.contains(sorting2.get(rand_int6)));
-            prioritized_left1.add(sorting.get(rand_int6));
-        } else{
-            prioritized_left1.add("no value");
+            for(int i = 0; i<sorting2.size();i++){
+                rand_int6 = rand.nextInt(sorting2.size());
+                if(!prioritized_left.contains(sorting2.get(rand_int6))){
+                    prioritized_left1.add(sorting2.get(rand_int6));
+                    break;
+                }
+            }
+        }
+        if(prioritized_left1.isEmpty()){
+            Log.i("check", "left1 is empty");
+            prioritized_left1.add("-");
         }
 
-        if(!sorting1.isEmpty()){
-            do{
-                rand_int4 = rand.nextInt(sorting1.size());
-            }while(prioritized_left.contains(sorting1.get(rand_int4)) || prioritized_left1.contains(sorting1.get(rand_int4)));
-            prioritized_left1.add(sorting1.get(rand_int4));
+        if(!sorting2.isEmpty()){
+            for(int i = 0; i<sorting2.size();i++){
+                rand_int4 = rand.nextInt(sorting2.size());
+                if(!prioritized_left.contains(sorting2.get(rand_int4)))
+                    if(!prioritized_left1.contains(sorting2.get(rand_int4))) {
+                        prioritized_left2.add(sorting2.get(rand_int4));
+                        break;
+                    }
+            }
+
+
         } else if(!sorting.isEmpty()){
-            do{
+            for(int i = 0; i<sorting.size();i++){
                 rand_int5 = rand.nextInt(sorting.size());
-            }while(prioritized_left.contains(sorting.get(rand_int5)) || prioritized_left1.contains(sorting.get(rand_int5)));
-            prioritized_left1.add(sorting.get(rand_int5));
-        } else if(!sorting2.isEmpty()){
-            do{
-                rand_int6 = rand.nextInt(sorting.size());
-            }while(prioritized_left.contains(sorting2.get(rand_int6)) || prioritized_left1.contains(sorting2.get(rand_int6)));
-            prioritized_left1.add(sorting.get(rand_int6));
-        } else{
-            prioritized_left1.add("no value");
+                if(!prioritized_left.contains(sorting.get(rand_int5)))
+                    if(!prioritized_left1.contains(sorting.get(rand_int5))) {
+                        prioritized_left2.add(sorting.get(rand_int5));
+                        break;
+                    }
+            }
+
+        } else if(!sorting1.isEmpty()){
+            for(int i = 0; i<sorting1.size();i++){
+                rand_int6 = rand.nextInt(sorting1.size());
+                if(!prioritized_left.contains(sorting1.get(rand_int6)))
+                    if(!prioritized_left1.contains(sorting1.get(rand_int6))) {
+                        prioritized_left2.add(sorting1.get(rand_int6));
+                        break;
+                    }
+            }
+
+        }
+        if(prioritized_left2.isEmpty()){
+
+            prioritized_left2.add(" ");
         }
     }
 
 
-    public void the_brain(Map mini_map){
+    public void the_brain(Map<String, String> mini_map, Map<String, String> mini_map2 ){
 //TODO add more lab tests in the main list and polish UI.
+        String left = mini_map2.get("p").toString();
+        String left1 = mini_map2.get("p1").toString();
+        String left2 = mini_map2.get("p2").toString();
+        main_value_text.add(left);
+        main_value.add(mini_map.get(left));
+        Log.i("check", "left_value "+ mini_map.get(left));
+        if(!left1.isEmpty()) {
 
+            Log.i("check", "value of left1"+left1);
+           // Log.i("check", "left1_value "+ mini_map.get(left1.get(0)));
+            if (left1.equals("-")) {
+                second_value_text.add(" ");
+                second_value.add("-");
+            } else {
+                Log.i("check", "second value"+ mini_map.get(left1));
+                Log.i("check", "check mini_map "+ mini_map.get("WBC"));
+                second_value_text.add(mini_map.get(left1));
+                second_value.add(left1);
+            }
 
+        } else{
 
+            second_value_text.add(" ");
+            second_value.add("-");
+        }
 
-
-
-
-
-
+        if(!left2.isEmpty()) {
+            if (left2.equals(" ")) {
+                third_value_text.add(" ");
+                third_value.add(" ");
+            } else {
+             //   Log.i("check", "all_values "+ mini_map.get(left2.get(0)));
+                third_value_text.add(mini_map.get(left2));
+                third_value.add(left2);
+            }
+        } else{
+            third_value_text.add(" ");
+            third_value.add("-");
+        }
         v = (ListView)findViewById(R.id.listview_main);
         v.setAdapter(adapter);
     }
@@ -365,8 +422,27 @@ public class MainActivity extends AppCompatActivity {
             view = getLayoutInflater().inflate(R.layout.main_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.main_value);
             TextView text2 = (TextView)view.findViewById(R.id.main_value_name);
+            TextView text3 = (TextView)view.findViewById(R.id.second_value);
+            TextView text4 = (TextView)view.findViewById(R.id.second_value_text);
+            TextView text5 = (TextView)view.findViewById(R.id.third_value);
+            TextView text6 = (TextView)view.findViewById(R.id.third_value_text);
+            TextView text7 = (TextView)view.findViewById(R.id.date_text);
+            TextView text8 = (TextView)view.findViewById(R.id.day_text);
+
             text1.setText(main_value.get(i));
             text2.setText(main_value_text.get(i));
+            if(!second_value.isEmpty()) {
+                text3.setText(second_value.get(i));
+                text4.setText(second_value_text.get(i));
+            }
+            if(!third_value.isEmpty()) {
+                text5.setText((third_value.get(i)));
+                text6.setText(third_value_text.get(i));
+            }
+            if(!date_text.isEmpty()) {
+                text7.setText(date_text.get(i));
+                text8.setText(day_text.get(i));
+            }
             RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.main_list_relout);
 
             rel.setOnClickListener(new View.OnClickListener() {
@@ -381,3 +457,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+//TODO BuGs to fix 1.Lipid panel list view is not displaying(must add scrollview). 2. WBC(This bug fixing in progress) (prioritized left must be cleared before storing new value)
