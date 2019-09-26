@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,11 +268,14 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<all_tests.length; i++){
             if(sorting.contains(all_tests[i]) || sorting1.contains(all_tests[i])){
                 //do nothing
-            }else if(map.get(all_tests[i])!=null){
+            }else if(map.get(all_tests[i])!=null) {
                 sorting2.add(all_tests[i]);
+                Log.i("check", "checking value of sorting" + all_tests[i]);
+
             }
         }
 
+            Log.i("check", "size of sorting2"+ sorting2.size());
         //TODO change this algorithm to be more personalized.
         if(!sorting.isEmpty()){
             rand_int1 = rand.nextInt(sorting.size());
@@ -294,7 +298,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        } else if(!sorting.isEmpty()){
+        }
+        if(!sorting.isEmpty() && prioritized_left1.isEmpty()){
             for(int i = 0; i<sorting.size();i++){
                 rand_int5 = rand.nextInt(sorting.size());
                 if(!prioritized_left.contains(sorting.get(rand_int5))){
@@ -303,10 +308,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        } else if(!sorting2.isEmpty()){
+        }
+        if(!sorting2.isEmpty() && prioritized_left1.isEmpty()){
             for(int i = 0; i<sorting2.size();i++){
                 rand_int6 = rand.nextInt(sorting2.size());
+                Log.i("check", "value"+ sorting2.get(rand_int6));
                 if(!prioritized_left.contains(sorting2.get(rand_int6))){
+                    Log.i("check", "tri");
                     prioritized_left1.add(sorting2.get(rand_int6));
                     break;
                 }
@@ -328,7 +336,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-        } else if(!sorting.isEmpty()){
+        }
+        if(!sorting.isEmpty() && prioritized_left2.isEmpty()){
             for(int i = 0; i<sorting.size();i++){
                 rand_int5 = rand.nextInt(sorting.size());
                 if(!prioritized_left.contains(sorting.get(rand_int5)))
@@ -338,7 +347,8 @@ public class MainActivity extends AppCompatActivity {
                     }
             }
 
-        } else if(!sorting1.isEmpty()){
+        }
+        if(!sorting1.isEmpty() && prioritized_left2.isEmpty()){
             for(int i = 0; i<sorting1.size();i++){
                 rand_int6 = rand.nextInt(sorting1.size());
                 if(!prioritized_left.contains(sorting1.get(rand_int6)))
@@ -432,12 +442,12 @@ public class MainActivity extends AppCompatActivity {
             text1.setText(main_value.get(i));
             text2.setText(main_value_text.get(i));
             if(!second_value.isEmpty()) {
-                text3.setText(second_value.get(i));
-                text4.setText(second_value_text.get(i));
+                text4.setText(second_value.get(i));
+                text3.setText(second_value_text.get(i));
             }
             if(!third_value.isEmpty()) {
-                text5.setText((third_value.get(i)));
-                text6.setText(third_value_text.get(i));
+                text6.setText((third_value.get(i)));
+                text5.setText(third_value_text.get(i));
             }
             if(!date_text.isEmpty()) {
                 text7.setText(date_text.get(i));
@@ -450,6 +460,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View arg0) {
                     Toast.makeText(getApplicationContext(), "Ta da", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), FullResult.class);
+                    intent.putExtra("object index", i);
+                   intent.putExtra("list", obj);
+                    startActivity(intent);
 
                 }
             });
