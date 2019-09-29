@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+         />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_width="100dp"
+            android:editable="true"
+            android:id="@+id/edittext_tab_name"/>
+
+        <Spinner
+            android:id="@+id/spinner_tab_times"
+            style="@android:style/Widget.Material.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:entries="@array/types"
+            android:layout_marginLeft="40dp"
+
+            />
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:onClick="onclick_listview_for_time_enter"
+            android:text="@string/ok"
+            android:textSize="14sp"
+            />
+
+    </GridLayout>
+    <ListView
+        android:id="@+id/listview_tab_time_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
+
+</LinearLayout>

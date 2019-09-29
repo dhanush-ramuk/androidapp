@@ -80,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(getApplicationContext(), Activity2.class), 999);
             }
         });
+
+        FloatingActionButton fab_tab = findViewById(R.id.fab_tab);
+        fab_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(getApplicationContext(), Activity3.class), 998);
+            }
+        });
     }
 
 
@@ -89,10 +97,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 998 && resultCode == RESULT_OK) {
+            //DO NOTHING
+        }
 
-        if(requestCode==999 && resultCode==RESULT_OK){
+        if (requestCode == 999 && resultCode == RESULT_OK) {
             basic_test_lhs = new ArrayList<String>();
             basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
             basic_test_rhs = new ArrayList<String>();
@@ -128,70 +141,71 @@ public class MainActivity extends AppCompatActivity {
             date = data.getStringExtra("date");
             day = data.getStringExtra("day");
 
-        }
-        map = new HashMap<String, String>();
-        for(String a: all_tests){
-            map.put(a, null);
-        }
+
+            map = new HashMap<String, String>();
+            for (String a : all_tests) {
+                map.put(a, null);
+            }
 
 
-        if(!basic_test_rhs.isEmpty()) {
-            for(int i = 0; i < basic_test_lhs.size(); i++)
-                map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
-        }
+            if (!basic_test_rhs.isEmpty()) {
+                for (int i = 0; i < basic_test_lhs.size(); i++)
+                    map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
+            }
 
-        if(!kidney_test_rhs.isEmpty()) {
-            for(int i = 0; i < kidney_test_lhs.size(); i++)
-                map.put(kidney_test_lhs.get(i), kidney_test_rhs.get(i));
-        }
-        if(!CBC_rhs.isEmpty()) {
-            for(int i = 0; i < CBC_lhs.size(); i++)
-                map.put(CBC_lhs.get(i), CBC_rhs.get(i));
-        }
-        if(!liver_test_rhs.isEmpty()) {
-            for(int i = 0; i < liver_test_lhs.size(); i++)
-                map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
-        }
-        if(!electrolytes_lhs.isEmpty()) {
-            for(int i = 0; i < electrolytes_lhs.size(); i++)
-                map.put(electrolytes_lhs.get(i), electrolytes_rhs.get(i));
-        }
-        if(!lipid_panel_rhs.isEmpty()) {
-            for(int i = 0; i < lipid_panel_lhs.size(); i++)
-                map.put(lipid_panel_lhs.get(i), lipid_panel_rhs.get(i));
-        }
-        if(!proteins_rhs.isEmpty()) {
-            for(int i = 0; i < proteins_lhs.size(); i++)
-                map.put(proteins_lhs.get(i), proteins_rhs.get(i));
-        }
-        if(!general_test_rhs.isEmpty()) {
-            for(int i = 0; i < general_test_lhs.size(); i++)
-                map.put(general_test_lhs.get(i), general_test_rhs.get(i));
-        }
+            if (!kidney_test_rhs.isEmpty()) {
+                for (int i = 0; i < kidney_test_lhs.size(); i++)
+                    map.put(kidney_test_lhs.get(i), kidney_test_rhs.get(i));
+            }
+            if (!CBC_rhs.isEmpty()) {
+                for (int i = 0; i < CBC_lhs.size(); i++)
+                    map.put(CBC_lhs.get(i), CBC_rhs.get(i));
+            }
+            if (!liver_test_rhs.isEmpty()) {
+                for (int i = 0; i < liver_test_lhs.size(); i++)
+                    map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
+            }
+            if (!electrolytes_lhs.isEmpty()) {
+                for (int i = 0; i < electrolytes_lhs.size(); i++)
+                    map.put(electrolytes_lhs.get(i), electrolytes_rhs.get(i));
+            }
+            if (!lipid_panel_rhs.isEmpty()) {
+                for (int i = 0; i < lipid_panel_lhs.size(); i++)
+                    map.put(lipid_panel_lhs.get(i), lipid_panel_rhs.get(i));
+            }
+            if (!proteins_rhs.isEmpty()) {
+                for (int i = 0; i < proteins_lhs.size(); i++)
+                    map.put(proteins_lhs.get(i), proteins_rhs.get(i));
+            }
+            if (!general_test_rhs.isEmpty()) {
+                for (int i = 0; i < general_test_lhs.size(); i++)
+                    map.put(general_test_lhs.get(i), general_test_rhs.get(i));
+            }
 
-        go_figure_the_fuck_out(map);
-        Log.i("check", "value of left1 before adding to object "+ prioritized_left1);
-        map1 = new HashMap<String, String>();
-        map1.put("p", prioritized_left.get(0));
-        map1.put("p1", prioritized_left1.get(0));
-        map1.put("p2", prioritized_left2.get(0));
+            go_figure_the_fuck_out(map);
+            Log.i("check", "value of left1 before adding to object " + prioritized_left1);
+            map1 = new HashMap<String, String>();
+            map1.put("p", prioritized_left.get(0));
+            map1.put("p1", prioritized_left1.get(0));
+            map1.put("p2", prioritized_left2.get(0));
 
 
-        obj.add(new All_Results(map, map1));
+            obj.add(new All_Results(map, map1));
 
-        //Saving the object that contains the current values entered by the user in shared preference
-        //Saving it in the onStop method
-        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //SharedPreferences.Editor editor = sharedPrefs.edit();
-        //Gson gson = new Gson();
-        //String json = gson.toJson(obj);
-        //editor.putString("mylist", json);
-        //editor.apply();
+            //Saving the object that contains the current values entered by the user in shared preference
+            //Saving it in the onStop method
+            //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            //SharedPreferences.Editor editor = sharedPrefs.edit();
+            //Gson gson = new Gson();
+            //String json = gson.toJson(obj);
+            //editor.putString("mylist", json);
+            //editor.apply();
 
-        clear_list();
-        create_list(obj);
-        clear_ArrayList();
+            clear_list();
+            create_list(obj);
+            clear_ArrayList();
 
+        }
     }
 
     public void clear_ArrayList(){

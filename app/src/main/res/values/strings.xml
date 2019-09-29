@@ -5,4 +5,9 @@
     <string name="complete_blood_count_panel">Complete Blood Count Panel</string>
     <string name="comprehensive_metabolic_panel">Comprehensive Metabolic Panel</string>
     <string name="ok">Ok</string>
+    <string-array name="types">
+        <item>once</item>
+        <item>twice</item>
+        <item>thrice</item>
+    </string-array>
 </resources>
