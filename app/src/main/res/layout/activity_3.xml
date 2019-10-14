@@ -24,11 +24,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/main_linear_layout">
+            android:id="@+id/main_linear_layout"
+            android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tablet name"/>
+                    <EditText
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tablet_name"
+                        android:layout_marginLeft="40dp"
+                        android:hint="name"
+                        />
+                </LinearLayout>
 
 
-
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Times a day"/>
+                <Spinner
+                    android:id="@+id/spinner_tab_times"
+                    style="@android:style/Widget.Material.Spinner"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/types"
+                    android:layout_marginLeft="40dp"/>
+            </LinearLayout>
+            <Button
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:onClick="onclick_listview_for_time_enter"
+                android:text="@string/ok"
+                android:textSize="14sp"
+                android:layout_gravity="end"
+                android:id="@+id/go_to_timepicker"
+                />
 
         </LinearLayout>
     </ScrollView>
@@ -38,13 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:onClick="onclick_open_medications" />
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_back_lab"

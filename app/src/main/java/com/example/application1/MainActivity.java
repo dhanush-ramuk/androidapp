@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> prioritized_left = new ArrayList<String>();
     ArrayList<String> prioritized_left1 = new ArrayList<String>();
     ArrayList<String> prioritized_left2 = new ArrayList<String>();
+    ArrayList<String> hour, minute, ampm;
     Map<String, String> map;
     Map<String, String> map1;
 
@@ -94,15 +95,27 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onResume(){
         super.onResume();
-
     }
 
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.e("check", "check");
+        Log.e("check", "code "+requestCode);
+        Log.e("check", "code "+resultCode);
         if (requestCode == 998 && resultCode == RESULT_OK) {
-            //DO NOTHING
+            //TODO add code for notification of tablet remainder and creating main list for tablet
+            Log.e("check", "check");
+            hour = new ArrayList<String>();
+            hour = data.getStringArrayListExtra("hour");
+            minute = new ArrayList<String>();
+            minute = data.getStringArrayListExtra("minute");
+            ampm = new ArrayList<String>();
+            ampm = data.getStringArrayListExtra("ampm");
+            Log.e("check", "hour "+hour.get(0));
+            Log.e("check", "minute "+minute.get(1));
+            Log.e("check", "ampm "+ampm.get(2));
         }
 
         if (requestCode == 999 && resultCode == RESULT_OK) {
