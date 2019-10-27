@@ -7,13 +7,23 @@
     android:id="@+id/main_relout"
     >
 
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview_medications"
+        android:layout_alignParentTop="true">
+
+    </ListView>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_main"
-        android:layout_alignParentTop="true">
+        android:layout_below="@+id/listview_medications">
 
     </ListView>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

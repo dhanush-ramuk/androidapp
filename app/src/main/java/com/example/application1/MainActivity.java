@@ -3,6 +3,9 @@ package com.example.application1;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine aminotransferase", "aspartate aminotransferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
+    String[] med_info = {"name", "hour1", "hour2", "hour3", "minute1", "minute2", "minute3", "ampm1", "ampm2", "ampm3"};
     int rand_int1, rand_int2, rand_int3, rand_int4, rand_int5, rand_int6;
     ArrayList<String> main_value_text = new ArrayList<String>();
     ArrayList<String> main_value  = new ArrayList<String>();
@@ -46,14 +51,24 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> prioritized_left = new ArrayList<String>();
     ArrayList<String> prioritized_left1 = new ArrayList<String>();
     ArrayList<String> prioritized_left2 = new ArrayList<String>();
+    ArrayList<String> tablet_name_list = new ArrayList<>();
+    ArrayList<String> time1 = new ArrayList<>();
+    ArrayList<String> time2 = new ArrayList<>();
+    ArrayList<String> time3 = new ArrayList<>();
     ArrayList<String> hour, minute, ampm;
+    ArrayList<Integer> hourin12, minutein;
+    ArrayList<Long> alarmStartTime;
+    String tablet_name;
     Map<String, String> map;
     Map<String, String> map1;
+    Map<String, String> map_med;
 
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
+    ArrayList<All_Medications> obj_med = new ArrayList<>();
     String day, date;
     ListView v;
     Customadapter1 adapter = new Customadapter1();
+    Customadapter2 adapter1 = new Customadapter2();
     Random rand = new Random();
 
     @Override
@@ -66,13 +81,20 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
+        String json1 = sharedPrefs.getString("mylist1", "");
         ArrayList<All_Results> start_obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
+        ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
+                new TypeToken<List<All_Medications>>(){}.getType());
         if(start_obj!=null) {
                 obj.addAll(start_obj);
+            create_list(obj);
         }
-        create_list(obj);
+        if(start_obj1!=null){
+            obj_med.addAll(start_obj1);
+            create_medications_list(obj_med);
 
+        }
         //button click -> activity to get all the results from user.
         FloatingActionButton fab = findViewById(R.id.fab_lab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,21 +123,81 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.e("check", "check");
-        Log.e("check", "code "+requestCode);
-        Log.e("check", "code "+resultCode);
+
         if (requestCode == 998 && resultCode == RESULT_OK) {
             //TODO add code for notification of tablet remainder and creating main list for tablet
-            Log.e("check", "check");
+            tablet_name = data.getStringExtra("tablet_name");
             hour = new ArrayList<String>();
             hour = data.getStringArrayListExtra("hour");
             minute = new ArrayList<String>();
             minute = data.getStringArrayListExtra("minute");
             ampm = new ArrayList<String>();
             ampm = data.getStringArrayListExtra("ampm");
-            Log.e("check", "hour "+hour.get(0));
-            Log.e("check", "minute "+minute.get(1));
-            Log.e("check", "ampm "+ampm.get(2));
+            hourin12 = new ArrayList<Integer>();
+            hourin12 = data.getIntegerArrayListExtra("hourin24");
+
+            alarmStartTime = new ArrayList<>();
+            Calendar startTime = Calendar.getInstance();
+            Calendar t = Calendar.getInstance();
+            startTime.set(Calendar.SECOND, 0);
+            for(int i=0; i<hour.size(); i++) {
+                startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
+                startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
+                startTime.set(Calendar.SECOND, 00);
+                startTime.set(Calendar.MILLISECOND, 00);
+                Log.i("check", "time "+hourin12.get(i));
+                Log.i("check", "time1 "+minute.get(i));
+
+                create_alarm_notification(startTime.getTimeInMillis());
+            }
+
+            //TODO create a method to issue notification for medications remainder
+
+
+            map_med = new HashMap<>();
+            for(String a: med_info)
+                map_med.put(a, null);
+            int size;
+            size = hour.size();
+            if(size==2) {
+                map_med.put("hour1", hour.get(0));
+                map_med.put("hour2", hour.get(1));
+                map_med.put("minute1", minute.get(0));
+                map_med.put("minute2", minute.get(1));
+                map_med.put("ampm1", ampm.get(0));
+                map_med.put("ampm2", ampm.get(1));
+            }
+            else if(size==1) {
+
+                map_med.put("hour1", hour.get(0));
+                map_med.put("minute1", minute.get(0));
+                map_med.put("ampm1", ampm.get(0));
+            }
+            else {
+                map_med.put("hour1", hour.get(0));
+                map_med.put("hour2", hour.get(1));
+                map_med.put("hour3", hour.get(2));
+                map_med.put("minute1", minute.get(0));
+                map_med.put("minute2", minute.get(1));
+                map_med.put("minute3", hour.get(2));
+                map_med.put("ampm1", ampm.get(0));
+                map_med.put("ampm2", ampm.get(1));
+                map_med.put("ampm3", hour.get(2));
+
+            }
+            map_med.put("name", tablet_name);
+            obj_med.add(new All_Medications(map_med));
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(obj_med);
+            editor.putString("mylist1", json);
+            editor.apply();
+
+            clear_medication_list();
+            create_medications_list(obj_med);
+
+
         }
 
         if (requestCode == 999 && resultCode == RESULT_OK) {
@@ -196,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             go_figure_the_fuck_out(map);
-            Log.i("check", "value of left1 before adding to object " + prioritized_left1);
             map1 = new HashMap<String, String>();
             map1.put("p", prioritized_left.get(0));
             map1.put("p1", prioritized_left1.get(0));
@@ -207,12 +288,12 @@ public class MainActivity extends AppCompatActivity {
 
             //Saving the object that contains the current values entered by the user in shared preference
             //Saving it in the onStop method
-            //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            //SharedPreferences.Editor editor = sharedPrefs.edit();
-            //Gson gson = new Gson();
-            //String json = gson.toJson(obj);
-            //editor.putString("mylist", json);
-            //editor.apply();
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(obj);
+            editor.putString("mylist", json);
+            editor.apply();
 
             clear_list();
             create_list(obj);
@@ -220,6 +301,37 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+    public void create_medications_list(ArrayList<All_Medications> obj){
+        for(int i=0; i<obj.size(); i++){
+            the_medication_brain(obj.get(i).return_map());
+        }
+    }
+
+    public void the_medication_brain(Map<String, String> map){
+
+        tablet_name_list.add(map.get("name"));
+        if(map.get("hour1")!=null){
+            time1.add(map.get("hour1") + map.get("minute1") + map.get("ampm1"));
+        }else{
+            time1.add("-");
+        }
+        if(map.get("hour2")!=null){
+            time2.add(map.get("hour2") + map.get("minute2") + map.get("ampm2"));
+        }else{
+            time2.add("-");
+        }
+        if(map.get("hour3")!=null){
+            time3.add(map.get("hour3") + map.get("minute3") + map.get("ampm3"));
+        }else{
+            time3.add("-");
+        }
+        ListView l = (ListView)findViewById(R.id.listview_medications);
+        l.setAdapter(adapter1);
+    }
+
 
     public void clear_ArrayList(){
         if(!prioritized_left1.isEmpty())
@@ -231,10 +343,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void create_list(ArrayList<All_Results> obj){
+        Log.i("check", "obj "+obj.size());
         if(obj!=null && !obj.isEmpty()){
             for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1());
             }
-
         }
     }
 
@@ -250,6 +362,24 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    public void clear_medication_list(){
+        tablet_name_list.clear();
+        time1.clear();
+        time2.clear();
+        time3.clear();
+        adapter1.notifyDataSetChanged();
+    }
+
+    public void create_alarm_notification(long time) {
+        //TODO do something here to make notifications work
+    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    Log.e("check", "time in miliseconds "+time);
+
+    alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+    Log.e("check", "end");
+    }
     public void go_figure_the_fuck_out(Map map){
         ArrayList<String> sorting, sorting1, sorting2;
         sorting = new ArrayList<String>();
@@ -270,7 +400,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(map.get("WBC")!=null){
             sorting1.add("WBC");
-            Log.i("check", "WBC added in sorting 1");
         }
         if(map.get("blood urea nitrogen")!=null){
             sorting1.add("blood urea nitrogen");
@@ -297,12 +426,10 @@ public class MainActivity extends AppCompatActivity {
                 //do nothing
             }else if(map.get(all_tests[i])!=null) {
                 sorting2.add(all_tests[i]);
-                Log.i("check", "checking value of sorting" + all_tests[i]);
 
             }
         }
 
-            Log.i("check", "size of sorting2"+ sorting2.size());
         //TODO change this algorithm to be more personalized.
         if(!sorting.isEmpty()){
             rand_int1 = rand.nextInt(sorting.size());
@@ -320,7 +447,6 @@ public class MainActivity extends AppCompatActivity {
                 rand_int4 = rand.nextInt(sorting1.size());
                 if(!prioritized_left.contains(sorting1.get(rand_int4))){
                     prioritized_left1.add(sorting1.get(rand_int4));
-                    Log.i("check", "added WBC to left1"+ sorting1.get(rand_int4));
                     break;
                 }
             }
@@ -339,16 +465,13 @@ public class MainActivity extends AppCompatActivity {
         if(!sorting2.isEmpty() && prioritized_left1.isEmpty()){
             for(int i = 0; i<sorting2.size();i++){
                 rand_int6 = rand.nextInt(sorting2.size());
-                Log.i("check", "value"+ sorting2.get(rand_int6));
                 if(!prioritized_left.contains(sorting2.get(rand_int6))){
-                    Log.i("check", "tri");
                     prioritized_left1.add(sorting2.get(rand_int6));
                     break;
                 }
             }
         }
         if(prioritized_left1.isEmpty()){
-            Log.i("check", "left1 is empty");
             prioritized_left1.add("-");
         }
 
@@ -400,17 +523,11 @@ public class MainActivity extends AppCompatActivity {
         String left2 = mini_map2.get("p2").toString();
         main_value_text.add(left);
         main_value.add(mini_map.get(left));
-        Log.i("check", "left_value "+ mini_map.get(left));
         if(!left1.isEmpty()) {
-
-            Log.i("check", "value of left1"+left1);
-           // Log.i("check", "left1_value "+ mini_map.get(left1.get(0)));
             if (left1.equals("-")) {
                 second_value_text.add(" ");
                 second_value.add("-");
             } else {
-                Log.i("check", "second value"+ mini_map.get(left1));
-                Log.i("check", "check mini_map "+ mini_map.get("WBC"));
                 second_value_text.add(mini_map.get(left1));
                 second_value.add(left1);
             }
@@ -426,7 +543,6 @@ public class MainActivity extends AppCompatActivity {
                 third_value_text.add(" ");
                 third_value.add(" ");
             } else {
-             //   Log.i("check", "all_values "+ mini_map.get(left2.get(0)));
                 third_value_text.add(mini_map.get(left2));
                 third_value.add(left2);
             }
@@ -435,7 +551,43 @@ public class MainActivity extends AppCompatActivity {
             third_value.add("-");
         }
         v = (ListView)findViewById(R.id.listview_main);
+
         v.setAdapter(adapter);
+    }
+
+    public class Customadapter2 extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return tablet_name_list.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return tablet_name_list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(final int i, View view, ViewGroup viewGroup){
+            view = getLayoutInflater().inflate(R.layout.medication_list, null);
+            TextView text1 = (TextView)view .findViewById(R.id.tablet_name_text);
+            TextView text2 = (TextView)view.findViewById(R.id.time1_text);
+            TextView text3 = (TextView)view.findViewById(R.id.time2_text);
+            TextView text4 = (TextView)view.findViewById(R.id.time3_text);
+            TextView text5 = (TextView)view.findViewById(R.id.tablet_remaining_text);
+            text1.setText(tablet_name_list.get(i));
+            text2.setText(time1.get(i));
+            text3.setText(time2.get(i));
+            text4.setText(time3.get(i));
+            text5.setText("add code for this");
+            return view;
+        }
+
     }
     public class Customadapter1 extends BaseAdapter {
 
@@ -498,4 +650,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
 //TODO BuGs to fix 1.Lipid panel list view is not displaying(must add scrollview). 2. WBC(This bug fixing in progress) (prioritized left must be cleared before storing new value)

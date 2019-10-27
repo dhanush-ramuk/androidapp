@@ -171,7 +171,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         proteins_lhs = new ArrayList<String>();
         proteins_rhs = new ArrayList<String>();
         aaa6 = new Customadapter6();
-        listview_electrolyte.setAdapter(aaa6);
+        listview_proteins.setAdapter(aaa6);
     }
 
     public void take_eight(){

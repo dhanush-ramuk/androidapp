@@ -15,7 +15,7 @@ public class All_Results implements Serializable {
 
     public All_Results(Map<String, String> a, Map<String, String> b){
        this.map = a;
-        this.map1 = b;
+       this.map1 = b;
     }
 
 

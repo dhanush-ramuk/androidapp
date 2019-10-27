@@ -32,6 +32,7 @@ public class Activity3 extends AppCompatActivity  {
     String tablet_name;
     ArrayList<String> hour = new ArrayList<>();
     ArrayList<String> minute = new ArrayList<>();
+    ArrayList<Integer> hourin12 = new ArrayList<>();
 
     ArrayList<String> ampm = new ArrayList<>();
     ArrayList<TimePicker> timepicker_list = new ArrayList<TimePicker>();
@@ -104,12 +105,14 @@ public class Activity3 extends AppCompatActivity  {
             //TODO make the following code to support on API's  below 21.
             if(Build.VERSION.SDK_INT < 23) {
                 h = timepicker_list.get(i).getCurrentHour();
+                hourin12.add(h);
                 ampm.add(find_ampm(h, 0));
                 hour.add(find_ampm(h, 1));
                 minute.add(Integer.toString(timepicker_list.get(i).getCurrentMinute()));
             }
             else {
                 h = timepicker_list.get(i).getHour();
+                hourin12.add(h);
                 ampm.add(find_ampm(h, 0));
                 hour.add(find_ampm(h, 1));
                 minute.add(Integer.toString(timepicker_list.get(i).getMinute()));
@@ -120,6 +123,8 @@ public class Activity3 extends AppCompatActivity  {
         i.putStringArrayListExtra("ampm", ampm);
         i.putStringArrayListExtra("hour", hour);
         i.putStringArrayListExtra("minute", minute);
+        Log.e("check", "hourin12 "+hourin12.get(0));
+        i.putIntegerArrayListExtra("hourin24", hourin12);
         setResult(RESULT_OK, i);
         finish();
     }
