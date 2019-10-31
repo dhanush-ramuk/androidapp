@@ -4,10 +4,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("check", "create started");
+
 
         // Using shared preference to get the object that contains all the previous results.
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("check", "time "+hourin12.get(i));
                 Log.i("check", "time1 "+minute.get(i));
 
-                create_alarm_notification(startTime.getTimeInMillis());
+                create_alarm_notification(startTime.getTimeInMillis(), tablet_name);
             }
 
             //TODO create a method to issue notification for medications remainder
@@ -370,15 +374,23 @@ public class MainActivity extends AppCompatActivity {
         adapter1.notifyDataSetChanged();
     }
 
-    public void create_alarm_notification(long time) {
+    public void create_alarm_notification(long time, String name) {
         //TODO do something here to make notifications work
+        create_Notification_Channel();
     AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+    intent.putExtra("name", name);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     Log.e("check", "time in miliseconds "+time);
 
     alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
     Log.e("check", "end");
+    }
+
+    public void create_Notification_Channel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+        }
     }
     public void go_figure_the_fuck_out(Map map){
         ArrayList<String> sorting, sorting1, sorting2;
