@@ -124,189 +124,239 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (requestCode == 998 && resultCode == RESULT_OK) {
-            //TODO add code for notification of tablet remainder and creating main list for tablet
-            tablet_name = data.getStringExtra("tablet_name");
-            hour = new ArrayList<String>();
-            hour = data.getStringArrayListExtra("hour");
-            minute = new ArrayList<String>();
-            minute = data.getStringArrayListExtra("minute");
-            ampm = new ArrayList<String>();
-            ampm = data.getStringArrayListExtra("ampm");
-            hourin12 = new ArrayList<Integer>();
-            hourin12 = data.getIntegerArrayListExtra("hourin24");
-
-            alarmStartTime = new ArrayList<>();
-            Calendar startTime = Calendar.getInstance();
-            Calendar t = Calendar.getInstance();
-            startTime.set(Calendar.SECOND, 0);
-            for(int i=0; i<hour.size(); i++) {
-                startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
-                startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
-                startTime.set(Calendar.SECOND, 00);
-                startTime.set(Calendar.MILLISECOND, 00);
-                Log.i("check", "time "+hourin12.get(i));
-                Log.i("check", "time1 "+minute.get(i));
-
-                create_alarm_notification(startTime.getTimeInMillis(), tablet_name);
+        if(requestCode == 997 && resultCode == RESULT_OK) {
+            int objectIndex = data.getIntExtra("value", -1);
+            if(objectIndex != -1){
+                obj.remove(objectIndex);
+                clear_list();
+                create_list(obj);
+                clear_ArrayList();
+                saveBloodResults();
             }
-
-            //TODO create a method to issue notification for medications remainder
-
-
-            map_med = new HashMap<>();
-            for(String a: med_info)
-                map_med.put(a, null);
-            int size;
-            size = hour.size();
-            if(size==2) {
-                map_med.put("hour1", hour.get(0));
-                map_med.put("hour2", hour.get(1));
-                map_med.put("minute1", minute.get(0));
-                map_med.put("minute2", minute.get(1));
-                map_med.put("ampm1", ampm.get(0));
-                map_med.put("ampm2", ampm.get(1));
-            }
-            else if(size==1) {
-
-                map_med.put("hour1", hour.get(0));
-                map_med.put("minute1", minute.get(0));
-                map_med.put("ampm1", ampm.get(0));
-            }
-            else {
-                map_med.put("hour1", hour.get(0));
-                map_med.put("hour2", hour.get(1));
-                map_med.put("hour3", hour.get(2));
-                map_med.put("minute1", minute.get(0));
-                map_med.put("minute2", minute.get(1));
-                map_med.put("minute3", hour.get(2));
-                map_med.put("ampm1", ampm.get(0));
-                map_med.put("ampm2", ampm.get(1));
-                map_med.put("ampm3", hour.get(2));
-
-            }
-            map_med.put("name", tablet_name);
-            obj_med.add(new All_Medications(map_med));
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(obj_med);
-            editor.putString("mylist1", json);
-            editor.apply();
-
-            clear_medication_list();
-            create_medications_list(obj_med);
-
-
         }
 
+        if(requestCode == 996 && resultCode == RESULT_OK) {
+            int objectIndex = data.getIntExtra("value", -1);
+            if(objectIndex != -1){
+                obj_med.remove(objectIndex);
+                clear_medication_list();
+                create_medications_list(obj_med);
+                saveMedications();
+
+            }
+        }
+
+
+        if (requestCode == 998 && resultCode == RESULT_OK) {
+            int flag = 0;
+            //TODO add code for notification of tablet remainder and creating main list for tablet
+            if (data.getIntExtra("boolean", 0) == 0) {
+                clear_medication_list();
+                create_medications_list(obj_med);
+            } else if (data.getIntExtra("boolean", 0) == 1) {
+                tablet_name = data.getStringExtra("tablet_name");
+                hour = new ArrayList<String>();
+                hour = data.getStringArrayListExtra("hour");
+                minute = new ArrayList<String>();
+                minute = data.getStringArrayListExtra("minute");
+                ampm = new ArrayList<String>();
+                ampm = data.getStringArrayListExtra("ampm");
+                hourin12 = new ArrayList<Integer>();
+                hourin12 = data.getIntegerArrayListExtra("hourin24");
+                if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
+
+                    alarmStartTime = new ArrayList<>();
+                    Calendar startTime = Calendar.getInstance();
+                    Calendar t = Calendar.getInstance();
+                    startTime.set(Calendar.SECOND, 0);
+                    for (int i = 0; i < hour.size(); i++) {
+                        startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
+                        startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
+                        startTime.set(Calendar.SECOND, 00);
+                        startTime.set(Calendar.MILLISECOND, 00);
+                        Log.i("check", "time " + hourin12.get(i));
+                        Log.i("check", "time1 " + minute.get(i));
+
+                        create_alarm_notification(startTime.getTimeInMillis(), tablet_name);
+                    }
+
+                    //TODO create a method to issue notification for medications remainder
+
+
+                    map_med = new HashMap<>();
+                    for (String a : med_info)
+                        map_med.put(a, null);
+                    int size;
+                    size = hour.size();
+                    if (size == 2) {
+                        map_med.put("hour1", hour.get(0));
+                        map_med.put("hour2", hour.get(1));
+                        map_med.put("minute1", minute.get(0));
+                        map_med.put("minute2", minute.get(1));
+                        map_med.put("ampm1", ampm.get(0));
+                        map_med.put("ampm2", ampm.get(1));
+                    } else if (size == 1) {
+
+                        map_med.put("hour1", hour.get(0));
+                        map_med.put("minute1", minute.get(0));
+                        map_med.put("ampm1", ampm.get(0));
+                    } else {
+                        map_med.put("hour1", hour.get(0));
+                        map_med.put("hour2", hour.get(1));
+                        map_med.put("hour3", hour.get(2));
+                        map_med.put("minute1", minute.get(0));
+                        map_med.put("minute2", minute.get(1));
+                        map_med.put("minute3", hour.get(2));
+                        map_med.put("ampm1", ampm.get(0));
+                        map_med.put("ampm2", ampm.get(1));
+                        map_med.put("ampm3", hour.get(2));
+
+                    }
+                    map_med.put("name", tablet_name);
+                    obj_med.add(new All_Medications(map_med));
+                    saveMedications();
+
+                    clear_medication_list();
+                    create_medications_list(obj_med);
+
+                }
+            }else {
+                //do nothing
+
+            }        }
+
         if (requestCode == 999 && resultCode == RESULT_OK) {
-            basic_test_lhs = new ArrayList<String>();
-            basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
-            basic_test_rhs = new ArrayList<String>();
-            basic_test_rhs = data.getStringArrayListExtra("basic_test_values");
-            CBC_lhs = new ArrayList<String>();
-            CBC_lhs = data.getStringArrayListExtra("CBC_test_names");
-            CBC_rhs = new ArrayList<String>();
-            CBC_rhs = data.getStringArrayListExtra("CBC_test_values");
-            general_test_lhs = new ArrayList<String>();
-            general_test_lhs = data.getStringArrayListExtra("general_test_names");
-            general_test_rhs = new ArrayList<String>();
-            general_test_rhs = data.getStringArrayListExtra("general_test_values");
-            kidney_test_lhs = new ArrayList<String>();
-            kidney_test_lhs = data.getStringArrayListExtra("kidney_test_names");
-            kidney_test_rhs = new ArrayList<String>();
-            kidney_test_rhs = data.getStringArrayListExtra("kidney_test_values");
-            liver_test_lhs = new ArrayList<String>();
-            liver_test_lhs = data.getStringArrayListExtra("liver_test_names");
-            liver_test_rhs = new ArrayList<String>();
-            liver_test_rhs = data.getStringArrayListExtra("liver_test_values");
-            electrolytes_lhs = new ArrayList<String>();
-            electrolytes_lhs = data.getStringArrayListExtra("electrolytes_test_names");
-            electrolytes_rhs = new ArrayList<String>();
-            electrolytes_rhs = data.getStringArrayListExtra("electrolytes_test_values");
-            proteins_lhs = new ArrayList<String>();
-            proteins_lhs = data.getStringArrayListExtra("proteins_test_names");
-            proteins_rhs = new ArrayList<String>();
-            proteins_rhs = data.getStringArrayListExtra("proteins_test_values");
-            lipid_panel_lhs = new ArrayList<String>();
-            lipid_panel_lhs = data.getStringArrayListExtra("lipid_test_names");
-            lipid_panel_rhs = new ArrayList<String>();
-            lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
-            date = data.getStringExtra("date");
-            day = data.getStringExtra("day");
+            int flag = 0;
+            if (data.getIntExtra("boolean", 0) == 0) {
+                clear_list();
+                create_list(obj);
+                clear_ArrayList();
+            } else if (data.getIntExtra("boolean", 0) == 1) {
+                basic_test_lhs = new ArrayList<String>();
+                basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
+                basic_test_rhs = new ArrayList<String>();
+                basic_test_rhs = data.getStringArrayListExtra("basic_test_values");
+                CBC_lhs = new ArrayList<String>();
+                CBC_lhs = data.getStringArrayListExtra("CBC_test_names");
+                CBC_rhs = new ArrayList<String>();
+                CBC_rhs = data.getStringArrayListExtra("CBC_test_values");
+                general_test_lhs = new ArrayList<String>();
+                general_test_lhs = data.getStringArrayListExtra("general_test_names");
+                general_test_rhs = new ArrayList<String>();
+                general_test_rhs = data.getStringArrayListExtra("general_test_values");
+                kidney_test_lhs = new ArrayList<String>();
+                kidney_test_lhs = data.getStringArrayListExtra("kidney_test_names");
+                kidney_test_rhs = new ArrayList<String>();
+                kidney_test_rhs = data.getStringArrayListExtra("kidney_test_values");
+                liver_test_lhs = new ArrayList<String>();
+                liver_test_lhs = data.getStringArrayListExtra("liver_test_names");
+                liver_test_rhs = new ArrayList<String>();
+                liver_test_rhs = data.getStringArrayListExtra("liver_test_values");
+                electrolytes_lhs = new ArrayList<String>();
+                electrolytes_lhs = data.getStringArrayListExtra("electrolytes_test_names");
+                electrolytes_rhs = new ArrayList<String>();
+                electrolytes_rhs = data.getStringArrayListExtra("electrolytes_test_values");
+                proteins_lhs = new ArrayList<String>();
+                proteins_lhs = data.getStringArrayListExtra("proteins_test_names");
+                proteins_rhs = new ArrayList<String>();
+                proteins_rhs = data.getStringArrayListExtra("proteins_test_values");
+                lipid_panel_lhs = new ArrayList<String>();
+                lipid_panel_lhs = data.getStringArrayListExtra("lipid_test_names");
+                lipid_panel_rhs = new ArrayList<String>();
+                lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
+                date = data.getStringExtra("date");
+                day = data.getStringExtra("day");
 
 
-            map = new HashMap<String, String>();
-            for (String a : all_tests) {
-                map.put(a, null);
+                map = new HashMap<String, String>();
+                for (String a : all_tests) {
+                    map.put(a, null);
+                }
+
+
+                if (!basic_test_rhs.isEmpty()) {
+                    for (int i = 0; i < basic_test_lhs.size(); i++)
+                        map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
+                    flag = 1;
+                }
+
+                if (!kidney_test_rhs.isEmpty()) {
+                    for (int i = 0; i < kidney_test_lhs.size(); i++)
+                        map.put(kidney_test_lhs.get(i), kidney_test_rhs.get(i));
+                    flag = 1;
+                }
+                if (!CBC_rhs.isEmpty()) {
+                    for (int i = 0; i < CBC_lhs.size(); i++)
+                        map.put(CBC_lhs.get(i), CBC_rhs.get(i));
+                    flag = 1;
+                }
+                if (!liver_test_rhs.isEmpty()) {
+                    for (int i = 0; i < liver_test_lhs.size(); i++)
+                        map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
+                    flag = 1;
+                }
+                if (!electrolytes_lhs.isEmpty()) {
+                    for (int i = 0; i < electrolytes_lhs.size(); i++)
+                        map.put(electrolytes_lhs.get(i), electrolytes_rhs.get(i));
+                    flag = 1;
+                }
+                if (!lipid_panel_rhs.isEmpty()) {
+                    for (int i = 0; i < lipid_panel_lhs.size(); i++)
+                        map.put(lipid_panel_lhs.get(i), lipid_panel_rhs.get(i));
+                    flag = 1;
+                }
+                if (!proteins_rhs.isEmpty()) {
+                    for (int i = 0; i < proteins_lhs.size(); i++)
+                        map.put(proteins_lhs.get(i), proteins_rhs.get(i));
+                    flag = 1;
+                }
+                if (!general_test_rhs.isEmpty()) {
+                    for (int i = 0; i < general_test_lhs.size(); i++)
+                        map.put(general_test_lhs.get(i), general_test_rhs.get(i));
+                    flag = 1;
+                }
+                if(flag == 1) {
+                    go_figure_the_fuck_out(map);
+                    map1 = new HashMap<String, String>();
+                    map1.put("p", prioritized_left.get(0));
+                    map1.put("p1", prioritized_left1.get(0));
+                    map1.put("p2", prioritized_left2.get(0));
+
+
+                    obj.add(new All_Results(map, map1));
+
+                    //Saving the object that contains the current values entered by the user in shared preference
+                    //Saving it in the onStop method
+                    saveBloodResults();
+
+                    clear_list();
+                    create_list(obj);
+                    clear_ArrayList();
+                }
+                //do nothing
             }
-
-
-            if (!basic_test_rhs.isEmpty()) {
-                for (int i = 0; i < basic_test_lhs.size(); i++)
-                    map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
-            }
-
-            if (!kidney_test_rhs.isEmpty()) {
-                for (int i = 0; i < kidney_test_lhs.size(); i++)
-                    map.put(kidney_test_lhs.get(i), kidney_test_rhs.get(i));
-            }
-            if (!CBC_rhs.isEmpty()) {
-                for (int i = 0; i < CBC_lhs.size(); i++)
-                    map.put(CBC_lhs.get(i), CBC_rhs.get(i));
-            }
-            if (!liver_test_rhs.isEmpty()) {
-                for (int i = 0; i < liver_test_lhs.size(); i++)
-                    map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
-            }
-            if (!electrolytes_lhs.isEmpty()) {
-                for (int i = 0; i < electrolytes_lhs.size(); i++)
-                    map.put(electrolytes_lhs.get(i), electrolytes_rhs.get(i));
-            }
-            if (!lipid_panel_rhs.isEmpty()) {
-                for (int i = 0; i < lipid_panel_lhs.size(); i++)
-                    map.put(lipid_panel_lhs.get(i), lipid_panel_rhs.get(i));
-            }
-            if (!proteins_rhs.isEmpty()) {
-                for (int i = 0; i < proteins_lhs.size(); i++)
-                    map.put(proteins_lhs.get(i), proteins_rhs.get(i));
-            }
-            if (!general_test_rhs.isEmpty()) {
-                for (int i = 0; i < general_test_lhs.size(); i++)
-                    map.put(general_test_lhs.get(i), general_test_rhs.get(i));
-            }
-
-            go_figure_the_fuck_out(map);
-            map1 = new HashMap<String, String>();
-            map1.put("p", prioritized_left.get(0));
-            map1.put("p1", prioritized_left1.get(0));
-            map1.put("p2", prioritized_left2.get(0));
-
-
-            obj.add(new All_Results(map, map1));
-
-            //Saving the object that contains the current values entered by the user in shared preference
-            //Saving it in the onStop method
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(obj);
-            editor.putString("mylist", json);
-            editor.apply();
-
-            clear_list();
-            create_list(obj);
-            clear_ArrayList();
-
         }
     }
 
+    public void saveBloodResults(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+        editor.putString("mylist", json);
+        editor.apply();
+    }
 
+    public void saveMedications(){
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj_med);
+        editor.putString("mylist1", json);
+        editor.apply();    }
 
     public void create_medications_list(ArrayList<All_Medications> obj){
         for(int i=0; i<obj.size(); i++){
@@ -597,6 +647,22 @@ public class MainActivity extends AppCompatActivity {
             text3.setText(time2.get(i));
             text4.setText(time3.get(i));
             text5.setText("add code for this");
+            RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.medicationListLayout);
+
+            rel.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    Toast.makeText(getApplicationContext(), "Ta da", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), medicationResultsActivity.class);
+                    intent.putExtra("object index", i);
+                    intent.putExtra("list", obj_med);
+                    Log.e("check", "1");
+                    startActivityForResult(intent, 996);
+                    Log.e("check", "2");
+
+                }
+            });
             return view;
         }
 
@@ -653,8 +719,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Ta da", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), FullResult.class);
                     intent.putExtra("object index", i);
-                   intent.putExtra("list", obj);
-                    startActivity(intent);
+                    intent.putExtra("list", obj);
+                    startActivityForResult(intent, 997);
 
                 }
             });

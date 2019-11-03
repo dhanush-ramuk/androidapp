@@ -123,8 +123,14 @@ public class Activity3 extends AppCompatActivity  {
         i.putStringArrayListExtra("ampm", ampm);
         i.putStringArrayListExtra("hour", hour);
         i.putStringArrayListExtra("minute", minute);
-        Log.e("check", "hourin12 "+hourin12.get(0));
         i.putIntegerArrayListExtra("hourin24", hourin12);
+        setResult(RESULT_OK, i);
+        finish();
+    }
+    public void closeActivity(View v){
+        Intent i = new Intent();
+        i.putExtra("boolean", 0);
+
         setResult(RESULT_OK, i);
         finish();
     }

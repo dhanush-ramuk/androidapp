@@ -624,8 +624,18 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
         i.putExtra("date", strDate);
         i.putExtra("day", strDay);
+        i.putExtra("boolean", 1);
+
         setResult(RESULT_OK, i);
         finish();
 
+    }
+
+    public void closeActivity(View v){
+        Intent i = new Intent();
+        i.putExtra("boolean", 0);
+
+        setResult(RESULT_OK, i);
+        finish();
     }
 }
