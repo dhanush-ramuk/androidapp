@@ -6,18 +6,15 @@
     android:padding="5dp"
     android:id="@+id/rel">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/buttons"
-        >
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="50dp">
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-
+    android:layout_height="match_parent">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,10 +23,6 @@
             android:id="@+id/dateview"
             android:layout_margin="5dp"
             />
-
-
-
-
     <TextView
         android:id="@+id/basic_test_text"
         android:layout_width="match_parent"
@@ -84,13 +77,14 @@
     <ListView
         android:id="@+id/listview_basic_lab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@+id/grid_basic_lab"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:isScrollContainer="false"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -483,7 +477,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/grid_lipidstestest"
+        android:id="@+id/grid_lipidstest"
         android:layout_below="@+id/lipidstest_text"
         android:padding="10dp">
 
@@ -521,18 +515,16 @@
         android:id="@+id/listview_lipidstest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/grid_electrolytestest"
+        android:layout_below="@+id/grid_lipidstest"
         android:layout_marginLeft="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"/>
-
-
-
-
+        android:layout_marginTop="10dp"
+/>
 </RelativeLayout>
 </ScrollView>
+
     <RelativeLayout
         android:id="@+id/buttons"
         android:layout_width="match_parent"
@@ -543,6 +535,7 @@
             android:id="@+id/fab_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:onClick="closeActivity" />
 

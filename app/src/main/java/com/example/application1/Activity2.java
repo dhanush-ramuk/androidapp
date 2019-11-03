@@ -12,7 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +90,24 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         basic_test_lhs =new ArrayList<String>();
         aaa = new Customadapter();
         listview_basic_test.setAdapter(aaa);
+    }
+    public static void updateListViewHeight(ListView myListView) {
+        ListAdapter myListAdapter = myListView.getAdapter();
+        if (myListAdapter == null) {
+            return;
+        }
+        // get listview height
+        int totalHeight = 0;
+        int adapterCount = myListAdapter.getCount();
+        for (int size = 0; size < adapterCount; size++) {
+            View listItem = myListAdapter.getView(size, null, myListView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        // Change Height of ListView
+        ViewGroup.LayoutParams params = myListView.getLayoutParams();
+        params.height = totalHeight + (myListView.getDividerHeight() * (adapterCount));
+        myListView.setLayoutParams(params);
     }
 
     public void take_two(){
@@ -197,10 +217,11 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             Toast.makeText(getApplicationContext(), "no value entered babe", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(basic_test_lhs.contains(a)){
-            Toast.makeText(getApplicationContext(), "value already entered babe", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        //TODO create a new check function
+       // if(basic_test_lhs.contains(a)){
+         //   Toast.makeText(getApplicationContext(), "value already entered babe", Toast.LENGTH_SHORT).show();
+           // return false;
+        //}
         return true;
     }
     public void onclick(View v){
@@ -212,6 +233,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                 basic_test_rhs.add(rhs);
                 aaa.notifyDataSetChanged();
             }
+            updateListViewHeight(listview_basic_test);
     }
 
     public void onclick_CBC(View v){
@@ -223,6 +245,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             CBC_rhs.add(rhs);
             aaa1.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_CBC);
     }
 
     public void onclick_general_test(View v){
@@ -234,6 +257,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             general_test_rhs.add(rhs);
             aaa2.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_general_test);
     }
 
     public void onclick_kidney_test(View v){
@@ -245,6 +269,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             kidney_test_rhs.add(rhs);
             aaa3.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_kidney_test);
     }
 
     public void onclick_liver_test(View v){
@@ -256,6 +281,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             liver_test_rhs.add(rhs);
             aaa4.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_liver_test);
     }
 
     public void onclick_electrolytes_test(View v){
@@ -267,6 +293,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             electrolytes_rhs.add(rhs);
             aaa5.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_electrolyte);
     }
 
     public void onclick_protein_test(View v){
@@ -278,6 +305,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             proteins_rhs.add(rhs);
             aaa6.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_proteins);
     }
 
     public void onclick_lipids_test(View v){
@@ -289,6 +317,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             lipid_panel_rhs.add(rhs);
             aaa7.notifyDataSetChanged();
         }
+        updateListViewHeight(listview_lipid);
     }
 
     @Override
@@ -569,12 +598,12 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
 
         @Override
         public int getCount() {
-            return electrolytes_lhs.size();
+            return lipid_panel_lhs.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return electrolytes_lhs.get(i);
+            return lipid_panel_lhs.get(i);
         }
 
         @Override
