@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="textColorPrimary">#000000</color>
     <color name="colorBackground">#FFFFFF</color>
+    <color name="labPrimary">#E64A19</color>
+    <color name="labSecondary">#ff5722</color>
+    <color name="labThird">#ff7043</color>
 </resources>

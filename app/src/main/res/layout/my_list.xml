@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/labSecondary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:elevation="10dp"
+    android:background="@color/labSecondary"
+    >
 
     <TextView
         android:id="@+id/lab_lhs"
@@ -10,7 +18,8 @@
         android:layout_row="0"
         android:layout_column="0"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/lab_rhs"
@@ -20,7 +29,8 @@
         android:layout_column="2"
         android:layout_marginLeft="0dp"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/delete_button_listview"
@@ -29,7 +39,9 @@
         android:layout_row="0"
         android:layout_column="3"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/delete_button_my_list"
         android:onClick="delete"
-        android:text="X" />
+        android:text="X"
+        />
 </GridLayout>
+</androidx.cardview.widget.CardView>

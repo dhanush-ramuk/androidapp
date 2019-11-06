@@ -1,10 +1,7 @@
 package com.example.application1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,20 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String [] basic_test = {"weight", "BP"};
@@ -73,8 +67,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         strDate = new SimpleDateFormat("yyyy / MM / dd ").format(calendar.getTime());
         strDay = new SimpleDateFormat("EEEE").format(now);
-        TextView dateview = (TextView) findViewById(R.id.dateview);
-        dateview.setText(strDate + "    " + strDay);
+       // TextView dateview = (TextView) findViewById(R.id.dateview);
+       // dateview.setText(strDate + "    " + strDay);
 
     }
 
@@ -83,7 +77,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         spin_basic_test = findViewById(R.id.spinner_basic_lab);
         spin_basic_test.setOnItemSelectedListener(this);
         basic_test_spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design,basic_test);
-        basic_test_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        basic_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_basic_test.setAdapter(basic_test_spin_elements);
         listview_basic_test = (ListView) findViewById(R.id.listview_basic_lab);
         basic_test_rhs = new ArrayList<String>();
@@ -363,6 +357,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     basic_test_lhs.remove(i);
                     basic_test_rhs.remove(i);
                     aaa.notifyDataSetChanged();
+                    updateListViewHeight(listview_basic_test);
                 }
             });
             return view;
@@ -401,6 +396,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     CBC_lhs.remove(i);
                     CBC_rhs.remove(i);
                     aaa1.notifyDataSetChanged();
+                    updateListViewHeight(listview_CBC);
+
                 }
             });
             return view;
@@ -439,6 +436,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     general_test_lhs.remove(i);
                     general_test_rhs.remove(i);
                     aaa2.notifyDataSetChanged();
+                    updateListViewHeight(listview_general_test);
+
                 }
             });
             return view;
@@ -476,6 +475,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     kidney_test_lhs.remove(i);
                     kidney_test_rhs.remove(i);
                     aaa3.notifyDataSetChanged();
+                    updateListViewHeight(listview_kidney_test);
                 }
             });
             return view;
@@ -513,6 +513,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     liver_test_lhs.remove(i);
                     liver_test_rhs.remove(i);
                     aaa4.notifyDataSetChanged();
+                    updateListViewHeight(listview_liver_test);
                 }
             });
             return view;
@@ -551,6 +552,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     electrolytes_lhs.remove(i);
                     electrolytes_rhs.remove(i);
                     aaa5.notifyDataSetChanged();
+                    updateListViewHeight(listview_electrolyte);
                 }
             });
             return view;
@@ -588,6 +590,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     proteins_lhs.remove(i);
                     proteins_rhs.remove(i);
                     aaa6.notifyDataSetChanged();
+                    updateListViewHeight(listview_proteins);
                 }
             });
             return view;
@@ -626,6 +629,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     lipid_panel_lhs.remove(i);
                     lipid_panel_rhs.remove(i);
                     aaa7.notifyDataSetChanged();
+                    updateListViewHeight(listview_lipid);
                 }
             });
             return view;
@@ -668,3 +672,4 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         finish();
     }
 }
+//TODO 1.Change name to shorter form 2. Entering same value bug fix
