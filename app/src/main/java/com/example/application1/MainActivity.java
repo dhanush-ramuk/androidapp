@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> basic_test_lhs, CBC_lhs, kidney_test_lhs, liver_test_lhs, electrolytes_lhs, proteins_lhs, general_test_lhs, lipid_panel_lhs;
     ArrayList<String> basic_test_rhs, CBC_rhs, kidney_test_rhs, liver_test_rhs, electrolytes_rhs, proteins_rhs, general_test_rhs, lipid_panel_rhs;
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
-            "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine aminotransferase", "aspartate aminotransferase", "bilirubin",
+            "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     String[] med_info = {"name", "hour1", "hour2", "hour3", "minute1", "minute2", "minute3", "ampm1", "ampm2", "ampm3"};
     int rand_int1, rand_int2, rand_int3, rand_int4, rand_int5, rand_int6;
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     String tablet_name;
     Map<String, String> map;
     Map<String, String> map1;
+    Map<String, String> map2;
     Map<String, String> map_med;
 
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         if(start_obj!=null) {
                 obj.addAll(start_obj);
             create_list(obj);
+            Log.e("check", "hello "+start_obj.get(0));
         }
         if(start_obj1!=null){
             obj_med.addAll(start_obj1);
@@ -268,8 +270,12 @@ public class MainActivity extends AppCompatActivity {
                 lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
                 date = data.getStringExtra("date");
                 day = data.getStringExtra("day");
+                Log.e("check", "day "+day);
 
 
+                map2 = new HashMap<>();
+                map2.put("date", date);
+                map2.put("day", day);
                 map = new HashMap<String, String>();
                 for (String a : all_tests) {
                     map.put(a, null);
@@ -325,7 +331,8 @@ public class MainActivity extends AppCompatActivity {
                     map1.put("p2", prioritized_left2.get(0));
 
 
-                    obj.add(new All_Results(map, map1));
+
+                    obj.add(new All_Results(map, map1, map2));
 
                     //Saving the object that contains the current values entered by the user in shared preference
                     //Saving it in the onStop method
@@ -399,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
     public void create_list(ArrayList<All_Results> obj){
         Log.i("check", "obj "+obj.size());
         if(obj!=null && !obj.isEmpty()){
-            for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1());
+            for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1(), obj.get(i).get_map2());
             }
         }
     }
@@ -477,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
             sorting.add("creatinine");
         }
         if(map.get("glucose[fasting]")!= null){
-            sorting.add("glucose[random]");
+            sorting.add("glucose[fasting]");
         }
         if(map.get("cholesterol")!=null){
             sorting.add("cholesterol");
@@ -536,20 +543,7 @@ public class MainActivity extends AppCompatActivity {
         if(prioritized_left1.isEmpty()){
             prioritized_left1.add("-");
         }
-
-        if(!sorting2.isEmpty()){
-            for(int i = 0; i<sorting2.size();i++){
-                rand_int4 = rand.nextInt(sorting2.size());
-                if(!prioritized_left.contains(sorting2.get(rand_int4)))
-                    if(!prioritized_left1.contains(sorting2.get(rand_int4))) {
-                        prioritized_left2.add(sorting2.get(rand_int4));
-                        break;
-                    }
-            }
-
-
-        }
-        if(!sorting.isEmpty() && prioritized_left2.isEmpty()){
+        if(!sorting.isEmpty() ){
             for(int i = 0; i<sorting.size();i++){
                 rand_int5 = rand.nextInt(sorting.size());
                 if(!prioritized_left.contains(sorting.get(rand_int5)))
@@ -571,19 +565,32 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        if(!sorting2.isEmpty() && prioritized_left2.isEmpty()){
+            for(int i = 0; i<sorting2.size();i++){
+                rand_int4 = rand.nextInt(sorting2.size());
+                if(!prioritized_left.contains(sorting2.get(rand_int4)))
+                    if(!prioritized_left1.contains(sorting2.get(rand_int4))) {
+                        prioritized_left2.add(sorting2.get(rand_int4));
+                        break;
+                    }
+            }
+        }
         if(prioritized_left2.isEmpty()){
-
             prioritized_left2.add(" ");
         }
     }
 
 
-    public void the_brain(Map<String, String> mini_map, Map<String, String> mini_map2 ){
+    public void the_brain(Map<String, String> mini_map, Map<String, String> mini_map2, Map<String, String> mini_map3 ){
 //TODO add more lab tests in the main list and polish UI.
         String left = mini_map2.get("p").toString();
         String left1 = mini_map2.get("p1").toString();
         String left2 = mini_map2.get("p2").toString();
-        main_value_text.add(left);
+        date_text.add(mini_map3.get("date").toString());
+        day_text.add(mini_map3.get("day").toString());
+
+
+        main_value_text.add(change_text1(left));
         main_value.add(mini_map.get(left));
         if(!left1.isEmpty()) {
             if (left1.equals("-")) {
@@ -591,13 +598,13 @@ public class MainActivity extends AppCompatActivity {
                 second_value.add("-");
             } else {
                 second_value_text.add(mini_map.get(left1));
-                second_value.add(left1);
+                second_value.add(change_text(left1));
             }
 
         } else{
 
-            second_value_text.add(" ");
-            second_value.add("-");
+            second_value_text.add(" - ");
+            second_value.add(" - ");
         }
 
         if(!left2.isEmpty()) {
@@ -606,15 +613,75 @@ public class MainActivity extends AppCompatActivity {
                 third_value.add(" ");
             } else {
                 third_value_text.add(mini_map.get(left2));
-                third_value.add(left2);
+                third_value.add(change_text(left2));
             }
         } else{
-            third_value_text.add(" ");
-            third_value.add("-");
+            third_value_text.add(" - ");
+            third_value.add(" - ");
         }
         v = (ListView)findViewById(R.id.listview_main);
 
         v.setAdapter(adapter);
+    }
+public String change_text1(String a){
+        String str = null;
+    if(a.equals("blood urea nitrogen"))
+        str = "Blood Urea";
+    else if(a.equals("alanine amino transferase"))
+        str = "ALT";
+    else if(a.equals("aspartate amino transferase"))
+        str = "AST";
+    else if(a.equals("total protein"))
+        str = "protein";
+    else if(a.equals("glucose[fasting]"))
+        str = "glucose[F]";
+    else if(a.equals("glucose[random]"))
+        str = "glucose[R]";
+    else
+        str = a;
+
+    return str;
+}
+    public String change_text(String a){
+       String str = null;
+        if(a.equals("blood urea nitrogen"))
+             str = "BUN";
+        else if(a.equals("alanine amino transferase"))
+            str = "ALT";
+        else if(a.equals("aspartate amino transferase"))
+            str = "AST";
+
+        else if(a.equals("glucose[fasting]"))
+            str = "BG[F]";
+        else if(a.equals("glucose[random]"))
+            str = "BG[R]";
+        else if(a.equals("weight"))
+            str = "Wt";
+        else if(a.equals("cholesterol"))
+            str = "chol";
+        else if(a.equals("calcium"))
+            str = "Ca";
+        else if(a.equals("albumin"))
+            str = "ALB";
+        else if(a.equals("total protein"))
+            str = "TP";
+        else if(a.equals("sodium"))
+            str = "Na";
+        else if(a.equals("potassium"))
+            str = "K";
+        else if(a.equals("chloride"))
+            str = "Cl";
+        else if(a.equals("bilirubin"))
+            str = "Bn";
+        else if(a.equals("hemoglobin"))
+            str = "Hgb";
+        else if(a.equals("hematocrit"))
+            str = "Hct";
+        else if(a.equals("platelets"))
+            str = "PLT";
+        else str = a;
+
+        return str;
     }
 
     public class Customadapter2 extends BaseAdapter {
@@ -689,15 +756,23 @@ public class MainActivity extends AppCompatActivity {
             view = getLayoutInflater().inflate(R.layout.main_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.main_value);
             TextView text2 = (TextView)view.findViewById(R.id.main_value_name);
+            TextView t1 = (TextView)view.findViewById(R.id.main_value_updown);
             TextView text3 = (TextView)view.findViewById(R.id.second_value);
             TextView text4 = (TextView)view.findViewById(R.id.second_value_text);
+            TextView t2 = (TextView)view.findViewById(R.id.second_value_updown);
+
             TextView text5 = (TextView)view.findViewById(R.id.third_value);
             TextView text6 = (TextView)view.findViewById(R.id.third_value_text);
+            TextView t3 = (TextView)view.findViewById(R.id.third_value_updown);
+
             TextView text7 = (TextView)view.findViewById(R.id.date_text);
             TextView text8 = (TextView)view.findViewById(R.id.day_text);
 
             text1.setText(main_value.get(i));
             text2.setText(main_value_text.get(i));
+            t1.setText(" ");
+            t2.setText(" ");
+            t3.setText(" ");
             if(!second_value.isEmpty()) {
                 text4.setText(second_value.get(i));
                 text3.setText(second_value_text.get(i));

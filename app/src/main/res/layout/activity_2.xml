@@ -10,7 +10,7 @@
 <ScrollView
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:paddingBottom="60dp">
+>
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -60,7 +60,7 @@ android:paddingBottom="60dp">
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:text="@string/basic_test"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/labTextHeading"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif-condensed" />
@@ -94,8 +94,10 @@ android:paddingBottom="60dp">
                     android:inputType=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="18dp"
-                    android:textColor="#ffffff"
-                    android:theme="@style/MyEditText"/>
+                    android:textColor="@color/labText"
+                    android:theme="@style/MyEditText"
+                    android:textStyle="bold"
+                    app:fontFamily="sans-serif-smallcaps"/>
 
                 <Button
                     style="@style/Widget.AppCompat.Button"
@@ -106,8 +108,10 @@ android:paddingBottom="60dp">
                     android:onClick="onclick"
                     android:text="@string/ok_button_basic_lab"
                     android:textSize="18sp"
-                    android:background="@color/labThird"
-                    android:textColor="#fff"/>
+                    android:background="@drawable/button_rounded_corner"
+                    android:textColor="@color/labText"
+                    android:textStyle="bold"
+                    app:fontFamily="sans-serif-smallcaps"/>
             </GridLayout>
             <ListView
                 android:id="@+id/listview_basic_lab"
@@ -141,7 +145,7 @@ android:paddingBottom="60dp">
         android:padding="5dp"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         app:fontFamily="sans-serif-condensed"
         />
     <GridLayout
@@ -170,9 +174,11 @@ android:paddingBottom="60dp">
             android:layout_marginLeft="5dp"
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#ffffff"
+            android:textColor="@color/labText"
             android:textSize="18dp"
-            android:theme="@style/MyEditText"/>
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -183,8 +189,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_CBC"
             android:text="@string/ok_button_basic_lab"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff"/>
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -202,7 +210,7 @@ android:paddingBottom="60dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/my_list_rounded_corner"
         android:id="@+id/headingComprehensiveMetabolicPanel"
         android:layout_below="@id/layoutCardViewLipidTest"
         android:elevation="20dp"
@@ -215,10 +223,12 @@ android:paddingBottom="60dp">
         android:id="@+id/CMP_text"
         android:text="@string/comprehensive_metabolic_panel"
         android:padding="5dp"
+
+        android:textColor="#FFFFFF"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:fontFamily="sans-serif-condensed"
+        android:typeface="normal"
+        app:fontFamily="sans-serif-smallcaps"
         />
     </LinearLayout>
 
@@ -239,7 +249,7 @@ android:paddingBottom="60dp">
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="General test"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -272,8 +282,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -284,8 +296,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_general_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff" />
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -316,7 +330,7 @@ android:paddingBottom="60dp">
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Kidney panel"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="24sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -349,8 +363,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -361,8 +377,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_kidney_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff"/>
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -394,7 +412,7 @@ android:paddingBottom="60dp">
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Liver panel"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -427,8 +445,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -439,8 +459,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_liver_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff" />
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -471,7 +493,7 @@ android:paddingBottom="60dp">
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Electrolytes"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -504,8 +526,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -516,8 +540,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_electrolytes_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff" />
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -541,14 +567,15 @@ android:paddingBottom="60dp">
         android:background="@color/labSecondary"
         android:layout_marginTop="5dp"
         android:layout_marginRight="2.5dp"
-        android:layout_marginLeft="2.5dp">
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="55dp">
     <TextView
         android:id="@+id/proteintest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Proteins"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -581,8 +608,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -593,8 +622,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_protein_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff" />
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView
@@ -625,7 +656,7 @@ android:paddingBottom="60dp">
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Lipid panel"
-        android:textColor="#ffffff"
+        android:textColor="@color/labTextHeading"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -658,8 +689,10 @@ android:paddingBottom="60dp">
             android:inputType=""
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:theme="@style/MyEditText"/>
+            android:textColor="@color/labText"
+            android:theme="@style/MyEditText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
@@ -670,8 +703,10 @@ android:paddingBottom="60dp">
             android:onClick="onclick_lipids_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/labThird"
-            android:textColor="#fff"/>
+            android:background="@drawable/button_rounded_corner"
+            android:textColor="@color/labText"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-smallcaps"/>
     </GridLayout>
 
     <ListView

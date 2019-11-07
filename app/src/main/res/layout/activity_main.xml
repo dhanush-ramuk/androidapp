@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:padding="10dp"
+
     android:id="@+id/main_relout"
     >
 
@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_medications"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        >
 
     </ListView>
 
@@ -20,7 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_main"
-        android:layout_below="@+id/listview_medications">
+        android:layout_below="@+id/listview_medications"
+        android:layout_margin="5dp"
+        android:dividerHeight="5.0sp">
 
     </ListView>
 

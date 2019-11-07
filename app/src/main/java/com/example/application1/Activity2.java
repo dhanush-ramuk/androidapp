@@ -2,6 +2,7 @@ package com.example.application1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -656,6 +657,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("lipid_test_names", lipid_panel_lhs);
         i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
         i.putExtra("date", strDate);
+        Log.e("check", "date "+strDate);
         i.putExtra("day", strDay);
         i.putExtra("boolean", 1);
 
