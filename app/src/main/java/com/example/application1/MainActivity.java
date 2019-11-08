@@ -2,6 +2,9 @@ package com.example.application1;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -14,9 +17,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,19 +66,20 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> time3 = new ArrayList<>();
     ArrayList<String> hour, minute, ampm;
     ArrayList<Integer> hourin12, minutein;
-    ArrayList<Long> alarmStartTime;
+    String tname;
     String tablet_name;
     Map<String, String> map;
     Map<String, String> map1;
     Map<String, String> map2;
+    Map<String, String> map3;
     Map<String, String> map_med;
 
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
     ArrayList<All_Medications> obj_med = new ArrayList<>();
     String day, date;
-    ListView v;
+    ListView v, l;
     Customadapter1 adapter = new Customadapter1();
-    Customadapter2 adapter1 = new Customadapter2();
+    RecyclerViewAdapter Radapter;
     Random rand = new Random();
 
     @Override
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("check", "create started");
+        v = (ListView)findViewById(R.id.listview_main);
 
 
         // Using shared preference to get the object that contains all the previous results.
@@ -101,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             create_medications_list(obj_med);
 
         }
+
         //button click -> activity to get all the results from user.
         FloatingActionButton fab = findViewById(R.id.fab_lab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,25 +148,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(requestCode == 996 && resultCode == RESULT_OK) {
-            int objectIndex = data.getIntExtra("value", -1);
-            if(objectIndex != -1){
-                obj_med.remove(objectIndex);
-                clear_medication_list();
-                create_medications_list(obj_med);
-                saveMedications();
-
-            }
-        }
+        //if(requestCode == 996 && resultCode == RESULT_OK) {
+          //  int objectIndex = data.getIntExtra("value", -1);
+           // if(objectIndex != -1){
+             //   obj_med.remove(objectIndex);
+               // clear_medication_list();
+                // create_medications_list(obj_med);
+                // saveMedications();
+            // }
+        //}
 
 
         if (requestCode == 998 && resultCode == RESULT_OK) {
             int flag = 0;
             //TODO add code for notification of tablet remainder and creating main list for tablet
-            if (data.getIntExtra("boolean", 0) == 0) {
+            Log.e("check", "working");
+            int l = data.getIntExtra("boolean", 0);
+            if (l == 0) {
+                Log.e("check", "working1");
                 clear_medication_list();
                 create_medications_list(obj_med);
-            } else if (data.getIntExtra("boolean", 0) == 1) {
+
+            } else if (l == 1) {
                 tablet_name = data.getStringExtra("tablet_name");
                 hour = new ArrayList<String>();
                 hour = data.getStringArrayListExtra("hour");
@@ -169,20 +181,12 @@ public class MainActivity extends AppCompatActivity {
                 hourin12 = data.getIntegerArrayListExtra("hourin24");
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
 
-                    alarmStartTime = new ArrayList<>();
+
                     Calendar startTime = Calendar.getInstance();
                     Calendar t = Calendar.getInstance();
                     startTime.set(Calendar.SECOND, 0);
-                    for (int i = 0; i < hour.size(); i++) {
-                        startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
-                        startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
-                        startTime.set(Calendar.SECOND, 00);
-                        startTime.set(Calendar.MILLISECOND, 00);
-                        Log.i("check", "time " + hourin12.get(i));
-                        Log.i("check", "time1 " + minute.get(i));
+                    Log.e("check", "working");
 
-                        create_alarm_notification(startTime.getTimeInMillis(), tablet_name);
-                    }
 
                     //TODO create a method to issue notification for medications remainder
 
@@ -210,19 +214,46 @@ public class MainActivity extends AppCompatActivity {
                         map_med.put("hour3", hour.get(2));
                         map_med.put("minute1", minute.get(0));
                         map_med.put("minute2", minute.get(1));
-                        map_med.put("minute3", hour.get(2));
+                        map_med.put("minute3", minute.get(2));
                         map_med.put("ampm1", ampm.get(0));
                         map_med.put("ampm2", ampm.get(1));
-                        map_med.put("ampm3", hour.get(2));
+                        map_med.put("ampm3", ampm.get(2));
 
                     }
+                    map_med.put("size", String.valueOf(size));
                     map_med.put("name", tablet_name);
+                    int kk = 0;
+
+                    for(int ii = 0; ii<obj_med.size(); ii++){
+                        kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
+
+                    }
+                    Log.e("check", "kk "+kk);
+
+                    for (int i = 0; i < hour.size(); i++) {
+                        startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
+                        startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
+                        startTime.set(Calendar.SECOND, 00);
+                        startTime.set(Calendar.MILLISECOND, 00);
+
+                        create_Notification_Channel();
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
+                        //tname = check_name(startTime, obj_med);
+
+                            intentAlarm.putExtra("name", tablet_name);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), kk, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
+                        map_med.put(String.valueOf(i) , String.valueOf(kk));
+                        map_med.put(String.valueOf(i)+"mili", String.valueOf(startTime.getTimeInMillis()));
+                        kk = kk + 1;
+                        alarmManager.setRepeating(AlarmManager.RTC, startTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                    }
+
                     obj_med.add(new All_Medications(map_med));
                     saveMedications();
-
                     clear_medication_list();
+                    Log.e("check", "working4");
                     create_medications_list(obj_med);
-
                 }
             }else {
                 //do nothing
@@ -346,7 +377,43 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+public String check_name(Calendar s, ArrayList<All_Medications> o){
+        ArrayList<String> tnames = new ArrayList<>();
+        String tname = "";
+        for(int i = 0; i < o.size(); i++){
+            for(int j = 0; j < Integer.parseInt(o.get(i).return_map().get("size")); j++){
+                Log.e("check", "mili "+o.get(i).return_map().get(String.valueOf(i)+"mili"));
+                Log.e("check", "mili "+String.valueOf(s.getTimeInMillis()));
+                Log.e("check", "check "+ String.valueOf(s.getTimeInMillis()).equals((o.get(i).return_map().get(String.valueOf(i)+"mili"))));
+                if(String.valueOf(s.getTimeInMillis()).equals((o.get(i).return_map().get(String.valueOf(j)+"mili")))){
+                    Log.e("check", "enter");
+                    tnames.add(o.get(i).return_map().get("name"));
+                }
+            }
+        }
 
+        for(int k = 0; k < tnames.size(); k++){
+            tname = tname + tnames.get(k) + "&";
+        }
+    Log.e("check", "tname "+tname);
+
+    return tname;
+
+}
+
+public void delete_Alarm(int i){
+    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
+    Map<String, String> m = new HashMap<>();
+    m = obj_med.get(i).return_map();
+    for(int ii = 0; ii < Integer.parseInt(m.get("size")); ii++){
+Log.e("check", "delete"+ m.get("mili"+ ii));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getApplicationContext(),   Integer.parseInt(m.get(String.valueOf(ii))), intentAlarm, 0);
+
+        alarmManager.cancel(pendingIntent);
+    }
+}
     public void saveBloodResults(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
@@ -375,22 +442,31 @@ public class MainActivity extends AppCompatActivity {
 
         tablet_name_list.add(map.get("name"));
         if(map.get("hour1")!=null){
-            time1.add(map.get("hour1") + map.get("minute1") + map.get("ampm1"));
+            time1.add(map.get("hour1") +":"+ map.get("minute1") + " " + map.get("ampm1"));
         }else{
             time1.add("-");
         }
         if(map.get("hour2")!=null){
-            time2.add(map.get("hour2") + map.get("minute2") + map.get("ampm2"));
+            time2.add(map.get("hour2") +":"+ map.get("minute2") + " " + map.get("ampm2"));
         }else{
             time2.add("-");
         }
         if(map.get("hour3")!=null){
-            time3.add(map.get("hour3") + map.get("minute3") + map.get("ampm3"));
+            time3.add(map.get("hour3") +":"+ map.get("minute3") +" " + map.get("ampm3"));
+            Log.e("check", "time3 "+time3.get(0));
         }else{
             time3.add("-");
         }
-        ListView l = (ListView)findViewById(R.id.listview_medications);
-        l.setAdapter(adapter1);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.listview_medications);
+        recyclerView.setLayoutManager(layoutManager);
+         Radapter = new RecyclerViewAdapter(this, tablet_name_list, time1, time2, time3);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setAdapter(Radapter);
+        Log.e("check", "working");
     }
 
 
@@ -428,16 +504,17 @@ public class MainActivity extends AppCompatActivity {
         time1.clear();
         time2.clear();
         time3.clear();
-        adapter1.notifyDataSetChanged();
+        if(Radapter!=null)
+        Radapter.notifyDataSetChanged();
     }
 
-    public void create_alarm_notification(long time, String name) {
+    public void create_alarm_notification(long time, String name, int i) {
         //TODO do something here to make notifications work
         create_Notification_Channel();
     AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
     intent.putExtra("name", name);
-    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100 + i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     Log.e("check", "time in miliseconds "+time);
 
     alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -594,8 +671,8 @@ public class MainActivity extends AppCompatActivity {
         main_value.add(mini_map.get(left));
         if(!left1.isEmpty()) {
             if (left1.equals("-")) {
-                second_value_text.add(" ");
-                second_value.add("-");
+                second_value_text.add(" - ");
+                second_value.add("");
             } else {
                 second_value_text.add(mini_map.get(left1));
                 second_value.add(change_text(left1));
@@ -609,17 +686,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(!left2.isEmpty()) {
             if (left2.equals(" ")) {
-                third_value_text.add(" ");
+                third_value_text.add(" - ");
                 third_value.add(" ");
             } else {
                 third_value_text.add(mini_map.get(left2));
                 third_value.add(change_text(left2));
             }
         } else{
-            third_value_text.add(" - ");
-            third_value.add(" - ");
+            third_value_text.add(" ");
+            third_value.add(" ");
         }
-        v = (ListView)findViewById(R.id.listview_main);
 
         v.setAdapter(adapter);
     }
@@ -684,56 +760,77 @@ public String change_text1(String a){
         return str;
     }
 
-    public class Customadapter2 extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            return tablet_name_list.size();
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+
+        private static final String TAG = "RecyclerViewAdapter";
+
+        //vars
+        private ArrayList<String> mtime1 = new ArrayList<>();
+        private ArrayList<String> mtime2 = new ArrayList<>();
+        private ArrayList<String> mtime3 = new ArrayList<>();
+        private ArrayList<String> name = new ArrayList<>();
+
+        private Context mContext;
+
+        public RecyclerViewAdapter(Context context, ArrayList<String> names, ArrayList<String> time1, ArrayList<String> time2, ArrayList<String> time3) {
+            name = names;
+            mtime1 = time1;
+            mtime2 = time2;
+            mtime3 = time3;
+            mContext = context;
         }
 
         @Override
-        public Object getItem(int i) {
-            return tablet_name_list.get(i);
+        public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medication_list, parent, false);
+            Button b = (Button) view.findViewById(R.id.delete_button);
+
+            return new RecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
-        public long getItemId(int i) {
-            return i;
-        }
+        public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, final int position) {
 
-        @Override
-        public View getView(final int i, View view, ViewGroup viewGroup){
-            view = getLayoutInflater().inflate(R.layout.medication_list, null);
-            TextView text1 = (TextView)view .findViewById(R.id.tablet_name_text);
-            TextView text2 = (TextView)view.findViewById(R.id.time1_text);
-            TextView text3 = (TextView)view.findViewById(R.id.time2_text);
-            TextView text4 = (TextView)view.findViewById(R.id.time3_text);
-            TextView text5 = (TextView)view.findViewById(R.id.tablet_remaining_text);
-            text1.setText(tablet_name_list.get(i));
-            text2.setText(time1.get(i));
-            text3.setText(time2.get(i));
-            text4.setText(time3.get(i));
-            text5.setText("add code for this");
-            RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.medicationListLayout);
-
-            rel.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-                    Toast.makeText(getApplicationContext(), "Ta da", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), medicationResultsActivity.class);
-                    intent.putExtra("object index", i);
-                    intent.putExtra("list", obj_med);
-                    Log.e("check", "1");
-                    startActivityForResult(intent, 996);
-                    Log.e("check", "2");
-
+            holder.time1.setText(mtime1.get(position));
+            holder.time2.setText(mtime2.get(position));
+            holder.time3.setText(mtime3.get(position));
+            holder.name.setText(name.get(position));
+            holder.b.setOnClickListener((new View.OnClickListener() {
+                public void onClick(View v) {
+                    delete_Alarm(position);
+                    obj_med.remove(position);
+                    clear_medication_list();
+                    create_medications_list(obj_med);
                 }
-            });
-            return view;
+            }));
         }
 
+        @Override
+        public int getItemCount() {
+            return name.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+
+            TextView name;
+            TextView time1;
+            TextView time2;
+            TextView time3;
+            Button b;
+
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                name = itemView.findViewById(R.id.tablet_name_text);
+                time1 = itemView.findViewById(R.id.time1_text);
+                time2 = itemView.findViewById(R.id.time2_text);
+                time3 = itemView.findViewById(R.id.time3_text);
+                b = itemView.findViewById(R.id.delete_button);
+            }
+        }
     }
+
     public class Customadapter1 extends BaseAdapter {
 
         @Override

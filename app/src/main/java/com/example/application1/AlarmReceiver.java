@@ -13,8 +13,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
-
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e("check", "alarm is working");

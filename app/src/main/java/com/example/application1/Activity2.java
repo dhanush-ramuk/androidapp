@@ -66,7 +66,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     public void set_date(){
         Date now = new Date();
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        strDate = new SimpleDateFormat("yyyy / MM / dd ").format(calendar.getTime());
+        strDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
         strDay = new SimpleDateFormat("EEEE").format(now);
        // TextView dateview = (TextView) findViewById(R.id.dateview);
        // dateview.setText(strDate + "    " + strDay);
@@ -207,26 +207,24 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         Intent i = new Intent(getApplicationContext(), Camera_Activity.class);
         startActivity(i);
     }
-    public boolean check_text(String a, String b){
+    public boolean check_text(String a, String b, ArrayList<String> c){
         if( b.isEmpty()){
             Toast.makeText(getApplicationContext(), "no value entered babe", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        //TODO create a new check function
-       // if(basic_test_lhs.contains(a)){
-         //   Toast.makeText(getApplicationContext(), "value already entered babe", Toast.LENGTH_SHORT).show();
-           // return false;
-        //}
-        return true;
+        } else if(c.contains(a)) {
+            Toast.makeText(getApplicationContext(), "value already entered babe", Toast.LENGTH_SHORT).show();
+            return false;
+        } else return true;
     }
     public void onclick(View v){
         String Text = spin_basic_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_basic_lab);
         String rhs = e.getText().toString();
-            if(check_text(Text, rhs)){
-                basic_test_lhs.add(Text.toString());
-                basic_test_rhs.add(rhs);
-                aaa.notifyDataSetChanged();
+        e.getText().clear();
+        if(check_text(Text, rhs, basic_test_lhs)){
+                    basic_test_lhs.add(Text.toString());
+                    basic_test_rhs.add(rhs);
+                    aaa.notifyDataSetChanged();
             }
             updateListViewHeight(listview_basic_test);
     }
@@ -235,10 +233,12 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_CBC.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_CBC);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, CBC_lhs)) {
             CBC_lhs.add(Text.toString());
-            CBC_rhs.add(rhs);
-            aaa1.notifyDataSetChanged();
+                CBC_rhs.add(rhs);
+                aaa1.notifyDataSetChanged();
+
         }
         updateListViewHeight(listview_CBC);
     }
@@ -247,10 +247,11 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_general_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_generaltest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
-            general_test_lhs.add(Text.toString());
-            general_test_rhs.add(rhs);
-            aaa2.notifyDataSetChanged();
+        e.getText().clear();
+        if(check_text(Text, rhs, general_test_lhs)) {
+                general_test_lhs.add(Text.toString());
+                general_test_rhs.add(rhs);
+                aaa2.notifyDataSetChanged();
         }
         updateListViewHeight(listview_general_test);
     }
@@ -259,7 +260,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_kidney_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_kidneytest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, kidney_test_lhs)){
             kidney_test_lhs.add(Text.toString());
             kidney_test_rhs.add(rhs);
             aaa3.notifyDataSetChanged();
@@ -271,7 +273,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_liver_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_livertest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, liver_test_lhs)){
             liver_test_lhs.add(Text.toString());
             liver_test_rhs.add(rhs);
             aaa4.notifyDataSetChanged();
@@ -283,7 +286,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_electrolyte.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_electrolytestest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, electrolytes_lhs)){
             electrolytes_lhs.add(Text.toString());
             electrolytes_rhs.add(rhs);
             aaa5.notifyDataSetChanged();
@@ -295,7 +299,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_proteins.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_proteintest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, proteins_lhs)){
             proteins_lhs.add(Text.toString());
             proteins_rhs.add(rhs);
             aaa6.notifyDataSetChanged();
@@ -307,7 +312,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         String Text = spin_lipid.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_lipidstest);
         String rhs = e.getText().toString();
-        if(check_text(Text, rhs)){
+        e.getText().clear();
+        if(check_text(Text, rhs, lipid_panel_lhs)){
             lipid_panel_lhs.add(Text.toString());
             lipid_panel_rhs.add(rhs);
             aaa7.notifyDataSetChanged();

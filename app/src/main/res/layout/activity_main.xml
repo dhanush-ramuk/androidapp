@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-
     android:id="@+id/main_relout"
     >
 
 
-    <ListView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_medications"
         android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        android:dividerHeight="5.0sp"
         >
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ListView
         android:layout_width="match_parent"
@@ -23,11 +26,16 @@
         android:id="@+id/listview_main"
         android:layout_below="@+id/listview_medications"
         android:layout_margin="5dp"
-        android:dividerHeight="5.0sp">
+        android:elevation="10dp"
+        android:dividerHeight="5.0sp"
+        >
 
     </ListView>
 
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/buttons">
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,5 +52,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:id="@+id/fab_tab"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:backgroundTint="#1976d2"
+        android:src="@drawable/alarm96"/>
+</RelativeLayout>
 </RelativeLayout>

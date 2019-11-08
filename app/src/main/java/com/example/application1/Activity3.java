@@ -1,6 +1,7 @@
 package com.example.application1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import android.content.Intent;
 import android.os.Build;
@@ -26,20 +27,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Activity3 extends AppCompatActivity  {
+public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String time = null;
     View view;
     String tablet_name;
     ArrayList<String> hour = new ArrayList<>();
     ArrayList<String> minute = new ArrayList<>();
     ArrayList<Integer> hourin12 = new ArrayList<>();
-
+    Spinner spin;
     ArrayList<String> ampm = new ArrayList<>();
     ArrayList<TimePicker> timepicker_list = new ArrayList<TimePicker>();
+    ArrayAdapter<String> spin_elements;
+    String test[] = {"once", "twice", "thrice"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
+        spin = (Spinner) findViewById(R.id.spinner_tab_times);
+        spin.setOnItemSelectedListener(this);
+        spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design_medication, test);
+        spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_medication_design);
+        spin.setAdapter(spin_elements);
+
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 
@@ -51,9 +69,8 @@ public class Activity3 extends AppCompatActivity  {
             }
             else {
                 Log.e("check", "ta da");
-                LinearLayout parent_linearlayout = (LinearLayout) findViewById(R.id.main_linear_layout);
+                LinearLayout parent_linearlayout = (LinearLayout) findViewById(R.id.timer);
                 edittext.setFocusable(false);
-                Spinner spin = (Spinner) findViewById(R.id.spinner_tab_times);
                 spin.setClickable(false);
                 spin.setEnabled(false);
                 Button but = (Button) findViewById(R.id.go_to_timepicker);
@@ -124,6 +141,7 @@ public class Activity3 extends AppCompatActivity  {
         i.putStringArrayListExtra("hour", hour);
         i.putStringArrayListExtra("minute", minute);
         i.putIntegerArrayListExtra("hourin24", hourin12);
+        i.putExtra("boolean", 1);
         setResult(RESULT_OK, i);
         finish();
     }

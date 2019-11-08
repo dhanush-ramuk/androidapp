@@ -5,42 +5,75 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainHeading"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corner_medication_heading"
+        android:elevation="20dp"
+    >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:text="Medications"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:fontFamily="sans-serif-smallcaps"
+        android:text="Medication Remainder"
         android:id="@+id/medication_text"
-        android:layout_margin="5dp"
+        android:padding="3dp"
         />
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/buttons"
+        android:layout_below="@+id/mainHeading"
         >
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/main_linear_layout"
-            android:layout_marginTop="20dp">
+            android:background="@color/medicationSecondary"
+            android:elevation="10dp"
+            android:padding="5dp"
+            android:layout_marginTop="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="3dp"
+                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tablet name"/>
+                        android:text="Tablet name"
+                        android:textColor="@color/medicationText"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:fontFamily="sans-serif-condensed"/>
                     <EditText
-                        android:layout_width="100sp"
+                        android:layout_width="150sp"
                         android:layout_height="wrap_content"
                         android:id="@+id/tablet_name"
                         android:layout_marginLeft="40dp"
                         android:hint="name"
+                        android:inputType=""
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="18dp"
+                        android:textColor="@color/medicationText"
+                        android:theme="@style/MyEditTextMedication"
+                        android:textStyle="bold"
+                        app:fontFamily="sans-serif-smallcaps"
                         />
                 </LinearLayout>
 
@@ -48,32 +81,59 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:padding="3dp"
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Times a day"/>
+                    android:text="Times a day"
+                    android:textColor="@color/medicationText"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="sans-serif-condensed"/>
                 <Spinner
                     android:id="@+id/spinner_tab_times"
                     style="@android:style/Widget.Material.Spinner"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:entries="@array/types"
-                    android:layout_marginLeft="40dp"/>
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/spinner_background_medication"
+                    android:popupBackground="@color/medicationThird"/>
             </LinearLayout>
             <Button
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:onClick="onclick_listview_for_time_enter"
                 android:text="@string/ok"
-                android:textSize="14sp"
                 android:layout_gravity="end"
                 android:id="@+id/go_to_timepicker"
+                android:textSize="18sp"
+                android:background="@drawable/button_rounded_corner_medication"
+                android:textColor="@color/labText"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif-smallcaps"
                 />
 
         </LinearLayout>
-    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer"
+        android:orientation="vertical"
+        android:layout_below="@+id/main_linear_layout"
+        android:padding="3dp"
+        android:layout_marginTop="10dp"
+        >
+        >
+
+    </LinearLayout>
+        </RelativeLayout>
+</ScrollView>
     <RelativeLayout
         android:id="@+id/buttons"
         android:layout_width="match_parent"
@@ -86,14 +146,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:onClick="closeActivity" />
+            android:onClick="closeActivity"
+            android:backgroundTint="#d50000"
+            android:src="@drawable/baseline_clear_white_48dp" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_back_lab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:onClick="back_to_main" />
+            android:onClick="back_to_main"
+            android:src="@drawable/baseline_done_white_48dp"
+            android:backgroundTint="#00c853"/>
 
 
     </RelativeLayout>

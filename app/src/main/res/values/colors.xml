@@ -11,4 +11,8 @@
     <color name="labTextHeading">#37474f</color>
     <color name="labText">#212121</color>
     <color name="mainLabValueMainList">#ffffff</color>
+    <color name="medicationPrimary">#1976d2</color>
+    <color name="medicationSecondary">#64b5f6</color>
+    <color name="medicationThird">#2196f3</color>
+    <color name="medicationText">#212121</color>
 </resources>
