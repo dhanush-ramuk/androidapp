@@ -1,10 +1,15 @@
 package com.example.application1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -18,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +35,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     String [] basic_test = {"weight", "BP"};
     String [] CBC = {"WBC", "RBC", "hemoglobin", "platelets", "hematocrit"};
     String [] kidney_panel = {"blood urea nitrogen", "creatinine"};
-    String [] liver_panel = { "alkaline phosphatase", "alanine aminotransferase", "aspartate aminotransferase", "bilirubin"};
+    String [] liver_panel = { "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin"};
     String [] electrolyte_panel ={"C02", "sodium", "potassium", "chloride"};
     String [] proteins = {"albumin", "total protein"};
     String [] general_test = {"glucose[fasting]", "glucose[random]", "calcium"};
@@ -52,6 +59,28 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
+        final FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fab_camera);
+        final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
+        final View rootView = findViewById(R.id.rel);
+
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
+                if (heightDiff > dpToPx(Activity2.this, 200)) { // if more than 200 dp, it's probably a keyboard...
+                    // ... do something here
+                    b.setVisibility(View.INVISIBLE);
+                    b1.setVisibility(View.INVISIBLE);
+
+                }else {
+                    b.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
+
         set_date();
         take_one();
         take_two();
@@ -61,6 +90,10 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         take_six();
         take_seven();
         take_eight();
+    }
+    public static float dpToPx(Context context, float valueInDp) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
 
     public void set_date(){
@@ -110,7 +143,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_CBC = (ListView) findViewById(R.id.listview_CBC);
         spin_CBC.setOnItemSelectedListener(this);
         CBC_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, CBC);
-        CBC_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        CBC_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_CBC.setAdapter(CBC_spin_elements);
         CBC_lhs = new ArrayList<String>();
         CBC_rhs = new ArrayList<String>();
@@ -124,7 +157,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_general_test = (ListView) findViewById(R.id.listview_generaltest);
         spin_general_test.setOnItemSelectedListener(this);
         general_test_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, general_test);
-        general_test_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        general_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_general_test.setAdapter(general_test_spin_elements);
         general_test_lhs = new ArrayList<String>();
         general_test_rhs = new ArrayList<String>();
@@ -138,7 +171,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_kidney_test = (ListView) findViewById(R.id.listview_kidneytest);
         spin_kidney_test.setOnItemSelectedListener(this);
         kidney_test_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, kidney_panel);
-        kidney_test_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        kidney_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_kidney_test.setAdapter(kidney_test_spin_elements);
         kidney_test_lhs = new ArrayList<String>();
         kidney_test_rhs = new ArrayList<String>();
@@ -153,7 +186,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_liver_test = (ListView) findViewById(R.id.listview_livertest);
         spin_liver_test.setOnItemSelectedListener(this);
         liver_test_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, liver_panel);
-        liver_test_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        liver_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_liver_test.setAdapter(liver_test_spin_elements);
         liver_test_lhs = new ArrayList<String>();
         liver_test_rhs = new ArrayList<String>();
@@ -167,7 +200,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_electrolyte = (ListView) findViewById(R.id.listview_electrolytestest);
         spin_electrolyte.setOnItemSelectedListener(this);
         electrolyte_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, electrolyte_panel);
-        electrolyte_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        electrolyte_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_electrolyte.setAdapter(electrolyte_spin_elements);
         electrolytes_lhs = new ArrayList<String>();
         electrolytes_rhs = new ArrayList<String>();
@@ -181,7 +214,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_proteins = (ListView) findViewById(R.id.listview_proteintest);
         spin_proteins.setOnItemSelectedListener(this);
         proteins_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, proteins);
-        proteins_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        proteins_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_proteins.setAdapter(proteins_spin_elements);
         proteins_lhs = new ArrayList<String>();
         proteins_rhs = new ArrayList<String>();
@@ -194,7 +227,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         listview_lipid = (ListView) findViewById(R.id.listview_lipidstest);
         spin_lipid.setOnItemSelectedListener(this);
         lipid_spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design, lipid_panel);
-        lipid_spin_elements.setDropDownViewResource(R.layout.spinner_design);
+        lipid_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
         spin_lipid.setAdapter(lipid_spin_elements);
         lipid_panel_lhs = new ArrayList<String>();
         lipid_panel_rhs = new ArrayList<String>();
@@ -217,10 +250,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         } else return true;
     }
     public void onclick(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_basic_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_basic_lab);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, basic_test_lhs)){
                     basic_test_lhs.add(Text.toString());
                     basic_test_rhs.add(rhs);
@@ -230,10 +269,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_CBC(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_CBC.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_CBC);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, CBC_lhs)) {
             CBC_lhs.add(Text.toString());
                 CBC_rhs.add(rhs);
@@ -244,10 +289,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_general_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_general_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_generaltest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, general_test_lhs)) {
                 general_test_lhs.add(Text.toString());
                 general_test_rhs.add(rhs);
@@ -257,10 +308,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_kidney_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_kidney_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_kidneytest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, kidney_test_lhs)){
             kidney_test_lhs.add(Text.toString());
             kidney_test_rhs.add(rhs);
@@ -270,10 +327,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_liver_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_liver_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_livertest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, liver_test_lhs)){
             liver_test_lhs.add(Text.toString());
             liver_test_rhs.add(rhs);
@@ -283,10 +346,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_electrolytes_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_electrolyte.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_electrolytestest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, electrolytes_lhs)){
             electrolytes_lhs.add(Text.toString());
             electrolytes_rhs.add(rhs);
@@ -296,10 +365,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_protein_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_proteins.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_proteintest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, proteins_lhs)){
             proteins_lhs.add(Text.toString());
             proteins_rhs.add(rhs);
@@ -309,10 +384,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void onclick_lipids_test(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String Text = spin_lipid.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_lipidstest);
         String rhs = e.getText().toString();
         e.getText().clear();
+        e.setCursorVisible(false);
         if(check_text(Text, rhs, lipid_panel_lhs)){
             lipid_panel_lhs.add(Text.toString());
             lipid_panel_rhs.add(rhs);

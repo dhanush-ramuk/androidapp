@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_list_relout"
@@ -62,28 +61,28 @@
         android:padding="3dp"
         >
 
-    <TextView
-        android:id="@+id/date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:fontFamily="sans-serif-condensed-medium" />
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:fontFamily="sans-serif-smallcaps" />
 
-    <TextView
-        android:id="@+id/day_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date_text"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:fontFamily="sans-serif-condensed-medium" />
+        <TextView
+            android:id="@+id/day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_text"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:fontFamily="sans-serif-smallcaps" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="145dp"
@@ -98,18 +97,19 @@
             android:layout_height="50dp"
             android:id="@+id/second_value_main"
             android:paddingBottom="1dp">
+
             <TextView
-        android:id="@+id/second_value"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="TextView"
-        android:autoSizeTextType="uniform"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="38sp"
-        android:textStyle="bold"
-        app:fontFamily="serif" />
+                android:id="@+id/second_value"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:fontFamily="serif" />
 
             <TextView
                 android:id="@+id/second_value_text"
@@ -143,15 +143,16 @@
             android:layout_height="50dp"
             android:layout_below="@+id/second_value_main"
             android:paddingTop="1dp">
+
             <TextView
                 android:id="@+id/third_value"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:autoSizeTextType="uniform"
+                android:gravity="center"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
-                android:textSize="38sp"
+                android:textSize="34sp"
                 android:textStyle="bold"
                 app:fontFamily="serif" />
 

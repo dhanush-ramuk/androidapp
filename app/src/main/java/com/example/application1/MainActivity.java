@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +15,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -32,7 +30,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -161,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 998 && resultCode == RESULT_OK) {
             int flag = 0;
+            if(obj_med.size()==1){
+
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "Swipe ->", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 80);
+                toast.show();
+            }
             //TODO add code for notification of tablet remainder and creating main list for tablet
             Log.e("check", "working");
             int l = data.getIntExtra("boolean", 0);
@@ -235,7 +239,11 @@ public class MainActivity extends AppCompatActivity {
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
                         startTime.set(Calendar.SECOND, 00);
                         startTime.set(Calendar.MILLISECOND, 00);
-
+                        Log.e("check", "calender "+Calendar.getInstance());
+                        if(startTime.before(Calendar.getInstance())) {
+                            Log.e("check", "calender "+ startTime);
+                            startTime.add(Calendar.DATE, 1);
+                        }
                         create_Notification_Channel();
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
@@ -330,8 +338,11 @@ public class MainActivity extends AppCompatActivity {
                     flag = 1;
                 }
                 if (!liver_test_rhs.isEmpty()) {
-                    for (int i = 0; i < liver_test_lhs.size(); i++)
+                    for (int i = 0; i < liver_test_lhs.size(); i++) {
+                        Log.e("check", "liver "+liver_test_lhs.get(i));
+                       Log.e("check", "liver "+liver_test_rhs.get(i));
                         map.put(liver_test_lhs.get(i), liver_test_rhs.get(i));
+                    }
                     flag = 1;
                 }
                 if (!electrolytes_lhs.isEmpty()) {
@@ -377,6 +388,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 public String check_name(Calendar s, ArrayList<All_Medications> o){
         ArrayList<String> tnames = new ArrayList<>();
         String tname = "";
@@ -575,7 +587,8 @@ Log.e("check", "delete"+ m.get("mili"+ ii));
 
             }
         }
-
+        Log.e("check", "amt");
+Log.e("check", "size "+sorting2.size());
         //TODO change this algorithm to be more personalized.
         if(!sorting.isEmpty()){
             rand_int1 = rand.nextInt(sorting.size());
@@ -584,7 +597,9 @@ Log.e("check", "delete"+ m.get("mili"+ ii));
             rand_int2 = rand.nextInt(sorting1.size());
             prioritized_left.add(sorting1.get(rand_int2));
         } else if(!sorting2.isEmpty()){
+
             rand_int3 = rand.nextInt(sorting2.size());
+            Log.e("check", "pl"+ sorting2.size() );
             prioritized_left.add(sorting2.get(rand_int3));
         }
 
@@ -713,6 +728,8 @@ public String change_text1(String a){
         str = "glucose[F]";
     else if(a.equals("glucose[random]"))
         str = "glucose[R]";
+    else if(a.equals("alkaline phosphatase"))
+        str = "ALP";
     else
         str = a;
 
@@ -726,7 +743,8 @@ public String change_text1(String a){
             str = "ALT";
         else if(a.equals("aspartate amino transferase"))
             str = "AST";
-
+        else if(a.equals("alkaline phosphatase"))
+            str = "ALP";
         else if(a.equals("glucose[fasting]"))
             str = "BG[F]";
         else if(a.equals("glucose[random]"))
@@ -802,6 +820,7 @@ public String change_text1(String a){
                     obj_med.remove(position);
                     clear_medication_list();
                     create_medications_list(obj_med);
+                    saveMedications();
                 }
             }));
         }

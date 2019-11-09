@@ -6,6 +6,8 @@
     <string name="comprehensive_metabolic_panel">Comprehensive Metabolic Panel</string>
     <string name="ok">Ok</string>
     <string name="labResultMainHeading">Blood Work</string>
+    <string name="bloodTracking">Lab Results Tracking</string>
+
     <string-array name="types">
         <item>once</item>
         <item>twice</item>

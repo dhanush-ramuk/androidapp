@@ -18,24 +18,35 @@
         android:dividerHeight="5.0sp"
         >
 
+
     </androidx.recyclerview.widget.RecyclerView>
 
+
+
+
+    <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/listview_medications"
+    >
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_main"
-        android:layout_below="@+id/listview_medications"
         android:layout_margin="5dp"
         android:elevation="10dp"
         android:dividerHeight="5.0sp"
-        >
 
+        >
     </ListView>
+
+</RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@id/buttons">
+        android:id="@id/buttons"
+        >
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

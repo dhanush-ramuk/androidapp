@@ -4,38 +4,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+
     >
-    <GridLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corner"
+        android:id="@+id/toolbarLabResult"
+        android:elevation="20dp"
+
+        android:layout_marginBottom="2.5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/labResultMainHeading"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            app:fontFamily="sans-serif-smallcaps" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLabResult"
+        android:id="@+id/dateday"
         android:orientation="horizontal"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:id="@+id/gridlayout_reults">
-   <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_column="0"
-       android:layout_row="0"
-       android:id="@+id/textView"/>
-
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_column="1"
-        android:layout_row="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
-    </GridLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:id="@+id/okayButton"
+        android:gravity="end"
         android:layout_alignParentEnd="true"
-        android:onClick="backToMain"/>
+        android:layout_alignParentRight="true"
+       >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateText"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            android:typeface="normal"
+            app:fontFamily="sans-serif-smallcaps">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dayText"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            android:typeface="normal"
+            app:fontFamily="sans-serif-smallcaps"
+            android:layout_marginLeft="10dp">
+
+        </TextView>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateday"
+        >
+    <LinearLayout
+        android:id="@+id/parent_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:layout_gravity="center"
+
+        android:background="@color/labSecondary"
+        android:elevation="10dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:id="@+id/okayButton"
+    android:layout_alignParentEnd="true"
+    android:onClick="backToMain"
+    android:src="@drawable/baseline_done_white_48dp"
+    android:backgroundTint="#00c853"/>
+
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -44,6 +102,28 @@
         android:layout_alignParentLeft="true"
         android:id="@+id/deleteButton"
         android:layout_alignParentStart="true"
-        android:onClick="deleteResult"/>
+        android:onClick="deleteResult"
+        android:backgroundTint="#ff0000"
+        android:src="@drawable/baseline_delete_outline_white_36dp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:layout_toStartOf="@+id/okayButton"
+        android:layout_toLeftOf="@+id/okayButton"
+        android:layout_toEndOf="@+id/deleteButton"
+        android:layout_toRightOf="@+id/deleteButton"
+        android:background="@drawable/button_rounded_corner"
+        android:onClick="gotoTrackPage"
+        android:text="TRACK"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -3,12 +3,17 @@ package com.example.application1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -20,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
@@ -39,16 +46,43 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<TimePicker> timepicker_list = new ArrayList<TimePicker>();
     ArrayAdapter<String> spin_elements;
     String test[] = {"once", "twice", "thrice"};
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
+        final FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fab_camera);
+        final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
+        final View rootView = findViewById(R.id.root);
+
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
+                if (heightDiff > dpToPx(getApplicationContext(), 200)) { // if more than 200 dp, it's probably a keyboard...
+                    // ... do something here
+                    b.setVisibility(View.INVISIBLE);
+                    b1.setVisibility(View.INVISIBLE);
+
+                }else {
+                    b.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
         spin = (Spinner) findViewById(R.id.spinner_tab_times);
         spin.setOnItemSelectedListener(this);
         spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design_medication, test);
         spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_medication_design);
         spin.setAdapter(spin_elements);
 
+    }
+    public static float dpToPx(Context context, float valueInDp) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -62,6 +96,11 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
 
 
     public void onclick_listview_for_time_enter(View v){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         EditText edittext = (EditText) findViewById(R.id.tablet_name);
         tablet_name = edittext.getText().toString();
             if(edittext.getText().toString().isEmpty()){
@@ -152,4 +191,5 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         setResult(RESULT_OK, i);
         finish();
     }
+
 }
