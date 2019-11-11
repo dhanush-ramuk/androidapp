@@ -17,11 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:fontFamily="sans-serif-smallcaps"
-        android:text="Medication Remainder"
+        android:text="Medication Remainder - Daily"
         android:id="@+id/medication_text"
         android:padding="3dp"
         />

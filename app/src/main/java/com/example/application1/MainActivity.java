@@ -11,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     Map<String, String> map1;
     Map<String, String> map2;
     Map<String, String> map3;
-    Map<String, String> map_med;
+    Map<String, String> map_med, map_med1;
 
     ArrayList<All_Results> obj = new ArrayList<All_Results>();
     ArrayList<All_Medications> obj_med = new ArrayList<>();
@@ -78,14 +81,18 @@ public class MainActivity extends AppCompatActivity {
     Customadapter1 adapter = new Customadapter1();
     RecyclerViewAdapter Radapter;
     Random rand = new Random();
-
+    TextView textView;
+    AlarmManager alarmManager;
+    Intent intentAlarm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("check", "create started");
         v = (ListView)findViewById(R.id.listview_main);
-
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+         intentAlarm =  new Intent(MainActivity.this, AlarmReceiver.class);
+        textView = (TextView) findViewById(R.id.noListEnteredText);
 
         // Using shared preference to get the object that contains all the previous results.
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -96,15 +103,29 @@ public class MainActivity extends AppCompatActivity {
                 new TypeToken<List<All_Results>>(){}.getType());
         ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
                 new TypeToken<List<All_Medications>>(){}.getType());
-        if(start_obj!=null) {
+        if(start_obj!=null && !start_obj.isEmpty()) {
                 obj.addAll(start_obj);
             create_list(obj);
             Log.e("check", "hello "+start_obj.get(0));
         }
-        if(start_obj1!=null){
+        if(start_obj1!=null && !start_obj1.isEmpty()){
             obj_med.addAll(start_obj1);
             create_medications_list(obj_med);
 
+        }
+
+        if(obj.isEmpty()) {
+            Log.e("check", "1");
+            if (obj_med.isEmpty()) {
+              textView.setVisibility(View.VISIBLE);
+                //setContentView(textView);
+            } else{
+                textView.setVisibility(View.INVISIBLE);
+
+
+            }
+        } else {
+            textView.setVisibility(View.INVISIBLE);
         }
 
         //button click -> activity to get all the results from user.
@@ -123,9 +144,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(getApplicationContext(), Activity3.class), 998);
             }
         });
+
+
     }
 
-
+public void gotoinfopage(View v){
+        Intent i = new Intent(MainActivity.this, infoPage.class);
+        startActivity(i);
+}
 
     protected void onResume(){
         super.onResume();
@@ -158,13 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 998 && resultCode == RESULT_OK) {
             int flag = 0;
-            if(obj_med.size()==1){
 
-                Toast toast= Toast.makeText(getApplicationContext(),
-                        "Swipe ->", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 80);
-                toast.show();
-            }
             //TODO add code for notification of tablet remainder and creating main list for tablet
             Log.e("check", "working");
             int l = data.getIntExtra("boolean", 0);
@@ -196,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     map_med = new HashMap<>();
+                    map_med1 = new HashMap<>();
                     for (String a : med_info)
                         map_med.put(a, null);
                     int size;
@@ -203,22 +224,22 @@ public class MainActivity extends AppCompatActivity {
                     if (size == 2) {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("hour2", hour.get(1));
-                        map_med.put("minute1", minute.get(0));
-                        map_med.put("minute2", minute.get(1));
+                        map_med.put("minute1", check_minute(minute.get(0)));
+                        map_med.put("minute2", check_minute(minute.get(1)));
                         map_med.put("ampm1", ampm.get(0));
                         map_med.put("ampm2", ampm.get(1));
                     } else if (size == 1) {
 
                         map_med.put("hour1", hour.get(0));
-                        map_med.put("minute1", minute.get(0));
+                        map_med.put("minute1", check_minute(minute.get(0)));
                         map_med.put("ampm1", ampm.get(0));
                     } else {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("hour2", hour.get(1));
                         map_med.put("hour3", hour.get(2));
-                        map_med.put("minute1", minute.get(0));
-                        map_med.put("minute2", minute.get(1));
-                        map_med.put("minute3", minute.get(2));
+                        map_med.put("minute1", check_minute(minute.get(0)));
+                        map_med.put("minute2", check_minute(minute.get(1)));
+                        map_med.put("minute3", check_minute(minute.get(2)));
                         map_med.put("ampm1", ampm.get(0));
                         map_med.put("ampm2", ampm.get(1));
                         map_med.put("ampm3", ampm.get(2));
@@ -244,24 +265,27 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("check", "calender "+ startTime);
                             startTime.add(Calendar.DATE, 1);
                         }
-                        create_Notification_Channel();
-                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                        Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
-                        //tname = check_name(startTime, obj_med);
-
-                            intentAlarm.putExtra("name", tablet_name);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), kk, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
+                      //  check_name(startTime);
+                    schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name );
                         map_med.put(String.valueOf(i) , String.valueOf(kk));
                         map_med.put(String.valueOf(i)+"mili", String.valueOf(startTime.getTimeInMillis()));
                         kk = kk + 1;
-                        alarmManager.setRepeating(AlarmManager.RTC, startTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                        map_med1.put("name", tablet_name);
+                        map_med1.put("time", String.valueOf(startTime));
                     }
 
-                    obj_med.add(new All_Medications(map_med));
+                    obj_med.add(new All_Medications(map_med, map_med1));
                     saveMedications();
                     clear_medication_list();
                     Log.e("check", "working4");
                     create_medications_list(obj_med);
+                    if(obj_med.size()==2){
+
+                        Toast toast= Toast.makeText(getApplicationContext(),
+                                "Swipe ->", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 80);
+                        toast.show();
+                    }
                 }
             }else {
                 //do nothing
@@ -383,34 +407,56 @@ public class MainActivity extends AppCompatActivity {
                     clear_list();
                     create_list(obj);
                     clear_ArrayList();
+
                 }
                 //do nothing
             }
         }
+        Log.e("check", "object empty "+obj.isEmpty());
+        Log.e("check", "object empty "+obj_med.isEmpty());
+        if(obj.isEmpty()) {
+            Log.e("check", "1");
+            if (obj_med.isEmpty()) {
+            textView.setVisibility(View.VISIBLE);
+                //setContentView(textView);
+            } else{
+                textView.setVisibility(View.INVISIBLE);
+                        }
+        } else {
+            textView.setVisibility(View.INVISIBLE);
+              }
     }
 
-public String check_name(Calendar s, ArrayList<All_Medications> o){
-        ArrayList<String> tnames = new ArrayList<>();
-        String tname = "";
-        for(int i = 0; i < o.size(); i++){
-            for(int j = 0; j < Integer.parseInt(o.get(i).return_map().get("size")); j++){
-                Log.e("check", "mili "+o.get(i).return_map().get(String.valueOf(i)+"mili"));
-                Log.e("check", "mili "+String.valueOf(s.getTimeInMillis()));
-                Log.e("check", "check "+ String.valueOf(s.getTimeInMillis()).equals((o.get(i).return_map().get(String.valueOf(i)+"mili"))));
-                if(String.valueOf(s.getTimeInMillis()).equals((o.get(i).return_map().get(String.valueOf(j)+"mili")))){
-                    Log.e("check", "enter");
-                    tnames.add(o.get(i).return_map().get("name"));
+    public void schedule_alarm(Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, Long startTime, String tablet_name) {
+        create_Notification_Channel();
+
+        //tname = check_name(startTime, obj_med);
+
+
+        intentAlarm.putExtra("name", tablet_name);
+        intentAlarm.putExtra("kk", kk);
+        intentAlarm.putExtra("time", String.valueOf(startTime));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, kk, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (Build.VERSION.SDK_INT < 23) {
+                if (Build.VERSION.SDK_INT >= 19) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
                 }
+            } else {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
             }
+
+            Log.e("check", "alarm2");
+
         }
 
-        for(int k = 0; k < tnames.size(); k++){
-            tname = tname + tnames.get(k) + "&";
+public String check_minute(String a){
+        if(a.length()==1){
+            a = "0"+a;
         }
-    Log.e("check", "tname "+tname);
 
-    return tname;
-
+        return a;
 }
 
 public void delete_Alarm(int i){
@@ -444,9 +490,23 @@ Log.e("check", "delete"+ m.get("mili"+ ii));
         editor.putString("mylist1", json);
         editor.apply();    }
 
-    public void create_medications_list(ArrayList<All_Medications> obj){
-        for(int i=0; i<obj.size(); i++){
-            the_medication_brain(obj.get(i).return_map());
+    public void create_medications_list(ArrayList<All_Medications> o){
+        if(obj.isEmpty()) {
+
+            if (obj_med.isEmpty()) {
+textView.setVisibility(View.VISIBLE);
+            }else {
+                textView.setVisibility(View.INVISIBLE);
+
+            }
+        } else{
+            textView.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        for(int i=0; i<o.size(); i++){
+            the_medication_brain(o.get(i).return_map());
         }
     }
 
@@ -712,7 +772,9 @@ Log.e("check", "size "+sorting2.size());
             third_value.add(" ");
         }
 
-        v.setAdapter(adapter);
+v.setAdapter(adapter);
+//        v.getChildAt((adapter.getCount()-1)).setPadding(0,0,0,55);
+
     }
 public String change_text1(String a){
         String str = null;
@@ -889,6 +951,7 @@ public String change_text1(String a){
             t1.setText(" ");
             t2.setText(" ");
             t3.setText(" ");
+
             if(!second_value.isEmpty()) {
                 text4.setText(second_value.get(i));
                 text3.setText(second_value_text.get(i));

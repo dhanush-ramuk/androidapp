@@ -99,6 +99,7 @@ android:layout_height="match_parent"
                     android:theme="@style/MyEditText"
                     android:textStyle="bold"
                     android:maxLength="8"
+                    android:onClick="show_cursor"
                     app:fontFamily="sans-serif-smallcaps"/>
 
                 <Button
@@ -179,6 +180,7 @@ android:layout_marginEnd="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/labText"
             android:textSize="18dp"
+            android:onClick="show_cursor"
             android:maxLength="8"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
@@ -290,6 +292,7 @@ android:layout_marginEnd="10dp"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
             android:maxLength="8"
+            android:onClick="show_cursor"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
@@ -372,6 +375,7 @@ android:layout_marginEnd="10dp"
             android:textColor="@color/labText"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
+            android:onClick="show_cursor"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
@@ -455,6 +459,7 @@ android:layout_marginEnd="10dp"
             android:textColor="@color/labText"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
+            android:onClick="show_cursor"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
@@ -532,6 +537,7 @@ android:layout_marginEnd="10dp"
             android:layout_marginLeft="5dp"
             android:inputType=""
             android:maxLength="8"
+            android:onClick="show_cursor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
             android:textColor="@color/labText"
@@ -620,6 +626,7 @@ android:layout_marginEnd="10dp"
             android:textColor="@color/labText"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
+            android:onClick="show_cursor"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
@@ -697,6 +704,7 @@ android:layout_marginEnd="10dp"
             android:maxLength="8"
             android:layout_marginLeft="5dp"
             android:inputType=""
+            android:onClick="show_cursor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18dp"
             android:textColor="@color/labText"

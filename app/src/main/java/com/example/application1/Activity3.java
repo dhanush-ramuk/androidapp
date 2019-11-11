@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -112,8 +113,10 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                 edittext.setFocusable(false);
                 spin.setClickable(false);
                 spin.setEnabled(false);
+
                 Button but = (Button) findViewById(R.id.go_to_timepicker);
                 but.setClickable(false);
+                but.setTextColor(Color.parseColor("#bdbdbd"));
                 time = spin.getSelectedItem().toString();
                 Log.e("check", "value of time in original string" + time);
                 if (time.equals("once"))

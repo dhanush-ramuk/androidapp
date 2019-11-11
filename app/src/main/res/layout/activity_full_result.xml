@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dateText"
             android:textSize="24sp"
+            android:layout_margin="10dp"
             android:textStyle="normal"
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps">
@@ -58,6 +59,7 @@
             android:id="@+id/dayText"
             android:textSize="24sp"
             android:textStyle="normal"
+            android:layout_marginTop="10dp"
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps"
             android:layout_marginLeft="10dp">
@@ -69,17 +71,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateday"
         >
-    <LinearLayout
-        android:id="@+id/parent_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:layout_gravity="center"
 
-        android:background="@color/labSecondary"
-        android:elevation="10dp"
-        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/parent_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:background="@color/labSecondary"
+            android:elevation="15dp"
+            android:layout_margin="10dp"
+            >
 
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:layout_width="wrap_content"

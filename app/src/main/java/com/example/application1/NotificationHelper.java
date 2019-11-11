@@ -4,9 +4,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
@@ -38,8 +41,11 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotification(String name) {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                .setContentTitle("Medication Remainder")
-                .setContentText("time to take tablets")
-                .setSmallIcon(R.drawable.rounded_corner);
+                .setContentTitle("APP NAME")
+                .setContentText("time to take "+name.toUpperCase())
+                .setSmallIcon(R.drawable.ic_notification)
+                .setColor(getResources().getColor(R.color.appIconColor))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification));
+
     }
 }

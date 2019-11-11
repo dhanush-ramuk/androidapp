@@ -21,7 +21,8 @@
         android:layout_column="0"
         android:text="TextView"
         android:textColor="@color/labText"
-        android:textSize="16sp"
+        android:layout_marginLeft="2dp"
+        android:textSize="15sp"
         app:fontFamily="sans-serif-condensed-medium" />
 
     <TextView

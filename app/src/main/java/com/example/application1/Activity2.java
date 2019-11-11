@@ -402,6 +402,45 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         updateListViewHeight(listview_lipid);
     }
 
+    public void show_cursor(View v){
+        EditText e;
+        switch (v.getId()){
+            case R.id.enter_basic_lab:
+                 e = (EditText) findViewById(R.id.enter_basic_lab);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_generaltest:
+                 e = (EditText) findViewById(R.id.enter_generaltest);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_CBC:
+                 e = (EditText) findViewById(R.id.enter_CBC);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_kidneytest:
+                 e = (EditText) findViewById(R.id.enter_kidneytest);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_livertest:
+                 e = (EditText) findViewById(R.id.enter_livertest);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_lipidstest:
+                 e = (EditText) findViewById(R.id.enter_lipidstest);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_electrolytestest:
+                 e = (EditText) findViewById(R.id.enter_electrolytestest);
+                 e.setCursorVisible(true);
+                 break;
+            case R.id.enter_proteintest:
+                 e = (EditText) findViewById(R.id.enter_proteintest);
+                 e.setCursorVisible(true);
+                 break;
+
+        }
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
