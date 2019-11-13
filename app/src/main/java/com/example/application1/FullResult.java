@@ -21,10 +21,12 @@ ArrayList<All_Results> obj;
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     int i;
+    HelperClass helperClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_result);
+        helperClass = new HelperClass();
         Intent intent = getIntent();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
         i = intent.getIntExtra("object index", 0);
@@ -46,7 +48,7 @@ ArrayList<All_Results> obj;
                 TextView t1 = (TextView) v.findViewById(R.id.textView);
                 TextView t2 = (TextView) v.findViewById(R.id.textView2);
                 t1.setText(all_tests[j]);
-                t2.setText(map.get(all_tests[j]));
+                t2.setText(map.get(all_tests[j]) + " " +"[" + helperClass.UnitIncluder(all_tests[j]) + "]");
                 layout.addView(v);
             }
         }

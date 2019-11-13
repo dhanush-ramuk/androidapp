@@ -23,7 +23,8 @@
         <activity android:name=".FullResult" />
         <activity android:name=".Camera_Activity" />
         <activity android:name=".Activity2" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

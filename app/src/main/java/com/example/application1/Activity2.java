@@ -54,7 +54,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     ListView listview_basic_test, listview_CBC, listview_kidney_test, listview_liver_test, listview_electrolyte, listview_proteins, listview_general_test, listview_lipid;
     Spinner spin_basic_test, spin_CBC, spin_kidney_test, spin_liver_test, spin_electrolyte, spin_proteins, spin_general_test, spin_lipid;
     ArrayAdapter<String> basic_test_spin_elements, CBC_spin_elements, kidney_test_spin_elements, liver_test_spin_elements, electrolyte_spin_elements, proteins_spin_elements, general_test_spin_elements, lipid_spin_elements;
-
+    HelperClass helperClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +62,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         final FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fab_camera);
         final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
         final View rootView = findViewById(R.id.rel);
-
+helperClass = new HelperClass();
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -475,7 +475,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(basic_test_lhs.get(i));
-            text2.setText(basic_test_rhs.get(i));
+            text2.setText(basic_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(basic_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -514,7 +514,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(CBC_lhs.get(i));
-            text2.setText(CBC_rhs.get(i));
+            text2.setText(CBC_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(CBC_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -554,7 +554,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(general_test_lhs.get(i));
-            text2.setText(general_test_rhs.get(i));
+            text2.setText(general_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(general_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -593,7 +593,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(kidney_test_lhs.get(i));
-            text2.setText(kidney_test_rhs.get(i));
+            text2.setText(kidney_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(kidney_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -631,7 +631,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(liver_test_lhs.get(i));
-            text2.setText(liver_test_rhs.get(i));
+            text2.setText(liver_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(liver_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -670,7 +670,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(electrolytes_lhs.get(i));
-            text2.setText(electrolytes_rhs.get(i));
+            text2.setText(electrolytes_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(electrolytes_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -708,7 +708,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(proteins_lhs.get(i));
-            text2.setText(proteins_rhs.get(i));
+            text2.setText(proteins_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(proteins_lhs.get(i)) +")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -747,7 +747,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(lipid_panel_lhs.get(i));
-            text2.setText(lipid_panel_rhs.get(i));
+            text2.setText(lipid_panel_rhs.get(i) + " " + "(" +helperClass.UnitIncluder(lipid_panel_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 

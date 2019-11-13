@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
         Log.i("check", "create started");
         v = (ListView)findViewById(R.id.listview_main);
@@ -480,7 +481,9 @@ Log.e("check", "delete"+ m.get("mili"+ ii));
         editor.putString("mylist", json);
         editor.apply();
     }
+public void save_switch(String i){
 
+}
     public void saveMedications(){
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -815,6 +818,8 @@ public String change_text1(String a){
             str = "Wt";
         else if(a.equals("cholesterol"))
             str = "chol";
+        else if(a.equals("creatinine"))
+            str = "Cr";
         else if(a.equals("calcium"))
             str = "Ca";
         else if(a.equals("albumin"))

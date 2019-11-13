@@ -21,10 +21,12 @@ public class trackpage extends AppCompatActivity {
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
 int flag = 0;
+HelperClass helperClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackpage);
+        helperClass = new HelperClass();
         Intent intent = getIntent();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
 
@@ -66,7 +68,7 @@ int flag = 0;
                 TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
                 dateanddayString = all_tests[i];
                 Log.e("check", "dateandtime " + dateanddayString);
-                datenday.setText(dateanddayString);
+                datenday.setText(dateanddayString +" " + "[" + helperClass.UnitIncluder(dateanddayString) + "]");
                 parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
                 for (int j = 0; j < o.size(); j++) {
                     Log.e("check", "check "+o.get(j).get_map().get(all_tests[i]));
