@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> time3 = new ArrayList<>();
     ArrayList<String> hour, minute, ampm;
     ArrayList<Integer> hourin12, minutein;
+    String a;
     String tname;
     String tablet_name;
     Map<String, String> map;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     Customadapter1 adapter = new Customadapter1();
     RecyclerViewAdapter Radapter;
     Random rand = new Random();
-    TextView textView;
+    TextView textview_NO_LIST_ENTERED;
     AlarmManager alarmManager;
     Intent intentAlarm;
     @Override
@@ -89,47 +90,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
-        Log.i("check", "create started");
         v = (ListView)findViewById(R.id.listview_main);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-         intentAlarm =  new Intent(MainActivity.this, AlarmReceiver.class);
-        textView = (TextView) findViewById(R.id.noListEnteredText);
+        intentAlarm =  new Intent(MainActivity.this, AlarmReceiver.class);
+        textview_NO_LIST_ENTERED = (TextView) findViewById(R.id.noListEnteredText);
 
-        // Using shared preference to get the object that contains all the previous results.
+        /*Using shared preference to get the Medication Remainder and All BloodWork Results object that contains 
+        all the previous results*/
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
         String json1 = sharedPrefs.getString("mylist1", "");
+        
         ArrayList<All_Results> start_obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
         ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
                 new TypeToken<List<All_Medications>>(){}.getType());
+        
         if(start_obj!=null && !start_obj.isEmpty()) {
-                obj.addAll(start_obj);
+            obj.addAll(start_obj);
             create_list(obj);
-            Log.e("check", "hello "+start_obj.get(0));
         }
+        
         if(start_obj1!=null && !start_obj1.isEmpty()){
             obj_med.addAll(start_obj1);
             create_medications_list(obj_med);
-
         }
 
+        //Display NOTHING ENTERED when both the objects are NULL.
         if(obj.isEmpty()) {
-            Log.e("check", "1");
             if (obj_med.isEmpty()) {
-              textView.setVisibility(View.VISIBLE);
-                //setContentView(textView);
+              textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
             } else{
-                textView.setVisibility(View.INVISIBLE);
-
-
+                textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
             }
         } else {
-            textView.setVisibility(View.INVISIBLE);
+            textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
         }
 
-        //button click -> activity to get all the results from user.
+        //FAB click to goto Activity2(BloodWork Entering) 
         FloatingActionButton fab = findViewById(R.id.fab_lab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //FAB click to goto Activity3(Medication Remainder) 
         FloatingActionButton fab_tab = findViewById(R.id.fab_tab);
         fab_tab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,22 +146,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-public void gotoinfopage(View v){
+    //FAB click to goto App's information page
+    public void gotoinfopage(View v){
         Intent i = new Intent(MainActivity.this, infoPage.class);
         startActivity(i);
-}
-
-    protected void onResume(){
-        super.onResume();
     }
 
-
+    /*The main function which activates when finish() function gets excecuted in other Activity. finish() finction 
+    started from startActivityForResult() function from MainActivity*/ 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        
+        //TODO maybe remove cancel button in FullResult Activity as it is same as back button
+        //finish() from FullResult Activity 
         if(requestCode == 997 && resultCode == RESULT_OK) {
+
+            //does nothing, clears and creates BloodWork main list when user clicks Okay(i.e goToMain) button
             int objectIndex = data.getIntExtra("value", -1);
             if(objectIndex != -1){
                 obj.remove(objectIndex);
@@ -172,29 +174,22 @@ public void gotoinfopage(View v){
             }
         }
 
-        //if(requestCode == 996 && resultCode == RESULT_OK) {
-          //  int objectIndex = data.getIntExtra("value", -1);
-           // if(objectIndex != -1){
-             //   obj_med.remove(objectIndex);
-               // clear_medication_list();
-                // create_medications_list(obj_med);
-                // saveMedications();
-            // }
-        //}
-
-
+        //finish() from Activity3(Medication Remainder)
         if (requestCode == 998 && resultCode == RESULT_OK) {
             int flag = 0;
-
-            //TODO add code for notification of tablet remainder and creating main list for tablet
-            Log.e("check", "working");
             int l = data.getIntExtra("boolean", 0);
+
+            /*clears and creates medication main list i.e. user clicked cancel button. 
+            User not created any new remainder(l==0)*/
             if (l == 0) {
-                Log.e("check", "working1");
                 clear_medication_list();
                 create_medications_list(obj_med);
+            } 
 
-            } else if (l == 1) {
+            //User created a new medication remainder(l==1)
+            else if (l == 1) {
+
+                //get the returned tablet name and time value
                 tablet_name = data.getStringExtra("tablet_name");
                 hour = new ArrayList<String>();
                 hour = data.getStringArrayListExtra("hour");
@@ -204,24 +199,26 @@ public void gotoinfopage(View v){
                 ampm = data.getStringArrayListExtra("ampm");
                 hourin12 = new ArrayList<Integer>();
                 hourin12 = data.getIntegerArrayListExtra("hourin24");
+
+                //if not empty, save and create a remainder
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
-
-
                     Calendar startTime = Calendar.getInstance();
                     Calendar t = Calendar.getInstance();
                     startTime.set(Calendar.SECOND, 0);
-                    Log.e("check", "working");
 
-
-                    //TODO create a method to issue notification for medications remainder
-
-
+                    //map_med to store hour, minute, ampm, name of tablet remainder
                     map_med = new HashMap<>();
                     map_med1 = new HashMap<>();
+
+
                     for (String a : med_info)
                         map_med.put(a, null);
-                    int size;
-                    size = hour.size();
+                    
+                    int size = hour.size();
+                    
+                    /*Saving tablet time and name info based on size. Maximum only 3 remainders can be set 
+                    for a tablet(morning, afternoon, night). User could give one, two, or three remainders/
+                    Could've used for loop mmm*/
                     if (size == 2) {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("hour2", hour.get(1));
@@ -229,12 +226,15 @@ public void gotoinfopage(View v){
                         map_med.put("minute2", check_minute(minute.get(1)));
                         map_med.put("ampm1", ampm.get(0));
                         map_med.put("ampm2", ampm.get(1));
-                    } else if (size == 1) {
+                    } 
 
+                    else if (size == 1) {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("minute1", check_minute(minute.get(0)));
                         map_med.put("ampm1", ampm.get(0));
-                    } else {
+                    }
+
+                     else {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("hour2", hour.get(1));
                         map_med.put("hour3", hour.get(2));
@@ -248,40 +248,38 @@ public void gotoinfopage(View v){
                     }
                     map_med.put("size", String.valueOf(size));
                     map_med.put("name", tablet_name);
+                    
+                    //kk is unique value for each remainder used in creating Pending intent. 
                     int kk = 0;
 
-                    for(int ii = 0; ii<obj_med.size(); ii++){
+                    //My way of creating unique value for each remainder 
+                    for(int ii = 0; ii<obj_med.size(); ii++){  
                         kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
-
                     }
-                    Log.e("check", "kk "+kk);
+
 
                     for (int i = 0; i < hour.size(); i++) {
+                        //changing time to calender instance for setting alarm, every time for each tablet name
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
                         startTime.set(Calendar.SECOND, 00);
-                        startTime.set(Calendar.MILLISECOND, 00);
-                        Log.e("check", "calender "+Calendar.getInstance());
-                        if(startTime.before(Calendar.getInstance())) {
-                            Log.e("check", "calender "+ startTime);
-                            startTime.add(Calendar.DATE, 1);
-                        }
-                      //  check_name(startTime);
-                    schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name );
+                        startTime.set(Calendar.MILLISECOND, 00);                        
+                        schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name );
                         map_med.put(String.valueOf(i) , String.valueOf(kk));
                         map_med.put(String.valueOf(i)+"mili", String.valueOf(startTime.getTimeInMillis()));
                         kk = kk + 1;
                         map_med1.put("name", tablet_name);
                         map_med1.put("time", String.valueOf(startTime));
                     }
-
+                    
+                    //obj_med, Arraylist of All_Medication object to save every created map for mediaction remainder
                     obj_med.add(new All_Medications(map_med, map_med1));
+
+                    //saving 
                     saveMedications();
                     clear_medication_list();
-                    Log.e("check", "working4");
                     create_medications_list(obj_med);
                     if(obj_med.size()==2){
-
                         Toast toast= Toast.makeText(getApplicationContext(),
                                 "Swipe ->", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 80);
@@ -433,7 +431,10 @@ public void gotoinfopage(View v){
 
         //tname = check_name(startTime, obj_med);
 
-
+            if(startTime.before(Calendar.getInstance())) {
+                            Log.e("check", "calender "+ startTime);
+                            startTime.add(Calendar.DATE, 1);
+                        }
         intentAlarm.putExtra("name", tablet_name);
         intentAlarm.putExtra("kk", kk);
         intentAlarm.putExtra("time", String.valueOf(startTime));
