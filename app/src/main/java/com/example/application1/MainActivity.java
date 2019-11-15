@@ -161,17 +161,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
+        //finish() from Activity3(Medication Remainder)
         if (requestCode == 998 && resultCode == RESULT_OK) {
             ArrayList<String> hour, minute, ampm;
             ArrayList<Integer> hourin12;
             String tablet_name;
             int l = data.getIntExtra("boolean", 0);
+
+            /*clears and creates medication main list i.e. user clicked cancel button.
+            User not created any new remainder(l==0)*/
             if (l == 0) {
                 clear_medication_list();
                 create_medications_list(obj_med);
 
-            } else if (l == 1) {
+            }
+
+            //User created a new medication remainder(l==1)
+            else if (l == 1) {
+
+                //get the returned tablet name and time value
                 tablet_name = data.getStringExtra("tablet_name");
                 hour = new ArrayList<String>();
                 hour = data.getStringArrayListExtra("hour");
@@ -181,24 +189,24 @@ public class MainActivity extends AppCompatActivity {
                 ampm = data.getStringArrayListExtra("ampm");
                 hourin12 = new ArrayList<Integer>();
                 hourin12 = data.getIntegerArrayListExtra("hourin24");
+
+                //if not empty, save and create a remainder
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
-
-
                     Calendar startTime = Calendar.getInstance();
                     Calendar t = Calendar.getInstance();
                     startTime.set(Calendar.SECOND, 0);
-                    Log.e("check", "working");
 
-
-                    //TODO create a method to issue notification for medications remainder
-
-
+                    //map_med to store hour, minute, ampm, name of tablet remainder
                     map_med = new HashMap<>();
                     map_med1 = new HashMap<>();
                     for (String a : med_info)
                         map_med.put(a, null);
                     int size;
                     size = hour.size();
+
+                    /*Saving tablet time and name info based on size. Maximum only 3 remainders can be set
+                    for a tablet(morning, afternoon, night). User could give one, two, or three remainders/
+                    Could've used for loop mmm*/
                     if (size == 2) {
                         map_med.put("hour1", hour.get(0));
                         map_med.put("hour2", hour.get(1));
@@ -207,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                         map_med.put("ampm1", ampm.get(0));
                         map_med.put("ampm2", ampm.get(1));
                     } else if (size == 1) {
-
                         map_med.put("hour1", hour.get(0));
                         map_med.put("minute1", check_minute(minute.get(0)));
                         map_med.put("ampm1", ampm.get(0));
@@ -225,14 +232,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                     map_med.put("size", String.valueOf(size));
                     map_med.put("name", tablet_name);
+
+                    //kk is unique value for each remainder used in creating Pending intent.
                     int kk = 0;
 
+                    //My way of creating unique value for each remainder
                     for(int ii = 0; ii<obj_med.size(); ii++){
                         kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
 
                     }
-                    Log.e("check", "kk "+kk);
 
+                    //changing time to calender instance for setting alarm, every time for each tablet name
                     for (int i = 0; i < hour.size(); i++) {
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
@@ -243,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                         kk = kk + 1;
                     }
 
+                    //obj_med, Arraylist of All_Medication object to save every created map for mediaction remainder
                     obj_med.add(new All_Medications(map_med));
                     saveMedications();
                     clear_medication_list();
