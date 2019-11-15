@@ -15,27 +15,20 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    Long t;
-    private static int NOTIFICATION_ID = 1;
 
+    private static int NOTIFICATION_ID = 1;
+HelperClass helperClass;
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("check", "alarm is working");
         String name = intent.getStringExtra("name");
         int kk = intent.getIntExtra("kk", 0);
         String time = intent.getStringExtra("time");
-
         NotificationHelper helper = new NotificationHelper(context);
         NotificationCompat.Builder builder = helper.getChannelNotification(name);
-            helper.getManager().notify(NOTIFICATION_ID++, builder.build());
-
+        helper.getManager().notify(NOTIFICATION_ID++, builder.build());
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-     Intent my = new Intent(context, AlarmReceiver.class);
-        PendingIntent p = PendingIntent.getBroadcast(context, kk, my,PendingIntent.FLAG_UPDATE_CURRENT );
-        MainActivity m = new MainActivity();
-        m.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)+  86400000), name);
-
-Log.e("check", "alarm");
+        Intent my = new Intent(context, AlarmReceiver.class);
+        helperClass = new HelperClass();
+        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)+ 86400000), name);
     }
-
 }

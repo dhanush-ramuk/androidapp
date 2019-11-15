@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BootReceiver extends BroadcastReceiver {
-    private static int NOTIFICATION_ID = 1;
-
+    HelperClass helperClass = new HelperClass();
     @Override
     public void onReceive(Context context, Intent intent) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -32,25 +31,22 @@ public class BootReceiver extends BroadcastReceiver {
         String json1 = sharedPrefs.getString("mylist1", "");
         ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
                 new TypeToken<List<All_Medications>>(){}.getType());
-  for(int i = 0; i < start_obj1.size(); i++) {
-      for (int j = 0; j < Integer.parseInt(start_obj1.get(i).return_map().get("size")); j++) {
-        int kk = Integer.parseInt(start_obj1.get(i).return_map().get(String.valueOf(j)));
-        String name = start_obj1.get(i).return_map().get("name");
-        String time = start_obj1.get(i).return_map().get(String.valueOf(j)+"mili");
-            schedule_alarm(context, kk, name, time);
-
-
-      }
-  }
-    }
+        if(start_obj1 != null && !start_obj1.isEmpty())
+            for(int i = 0; i < start_obj1.size(); i++) {
+                for (int j = 0; j < Integer.parseInt(start_obj1.get(i).return_map().get("size")); j++) {
+                    int kk = Integer.parseInt(start_obj1.get(i).return_map().get(String.valueOf(j)));
+                    String name = start_obj1.get(i).return_map().get("name");
+                    String time = start_obj1.get(i).return_map().get(j+"time");
+                    schedule_alarm(context, kk, name, time);
+                }
+            }
+        }
 
     public void schedule_alarm(Context context, int kk, String name, String time){
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent my = new Intent(context, AlarmReceiver.class);
-        PendingIntent p = PendingIntent.getBroadcast(context, kk, my, PendingIntent.FLAG_UPDATE_CURRENT);
-        MainActivity m = new MainActivity();
-        m.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name);
+        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name);
     }
 
 }

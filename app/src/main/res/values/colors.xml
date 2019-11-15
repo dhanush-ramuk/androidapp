@@ -15,5 +15,5 @@
     <color name="medicationSecondary">#64b5f6</color>
     <color name="medicationThird">#2196f3</color>
     <color name="medicationText">#212121</color>
-    <color name="appIconColor">#FF3D00</color>
+    <color name="appIconColor">#f50057</color>
 </resources>

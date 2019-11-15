@@ -22,7 +22,7 @@
         android:text="TextView"
         android:textColor="@color/labText"
         android:layout_marginLeft="2dp"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:fontFamily="sans-serif-condensed-medium" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="2"
-        android:layout_marginLeft="0dp"
+        android:layout_marginLeft="2dp"
         android:text="TextView"
         android:textColor="@color/labText"
         android:textSize="16sp"
@@ -43,7 +43,7 @@
         android:layout_height="30dp"
         android:layout_row="0"
         android:layout_column="3"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="5dp"
         android:background="@drawable/delete_button_my_list"
         android:onClick="delete"
         android:text="X"

@@ -33,11 +33,11 @@
 
     <ImageView
         android:id="@+id/appImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/web_hi_res_512"
+        android:background="@drawable/splash_screen_app_icon"
         android:maxWidth="2500dp"
         android:maxHeight="250dp"
         android:minWidth="200dp"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/feedback"
         android:id="@+id/upcominf_features"
+        android:layout_marginBottom="10dp"
         android:paddingLeft="10dp">
 
         <TextView
@@ -64,7 +65,7 @@
         <TextView
             android:id="@+id/updownButton"
             android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_height="28dp"
             android:layout_marginStart="3dp"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="3dp"
@@ -74,7 +75,8 @@
             android:layout_toRightOf="@+id/workingId"
             android:background="#fafafa"
             android:drawableTop="@drawable/down"
-            android:onClick="show">
+            android:onClick="show"
+            android:paddingTop="3dp">
 
         </TextView>
 <LinearLayout
@@ -130,8 +132,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_above="@+id/upcominf_features"
-        android:padding="10dp">
+        android:layout_below="@+id/appImage"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/switch_layout">
 
 
         <Switch
@@ -204,18 +209,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/feedback"
-        android:layout_toRightOf="@+id/feedback"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+
         android:onClick="icons8"
         android:text="icons downloaded from ICONS8"
         android:textColor="#303F9F"
+        android:textSize="10sp"
         android:textStyle="italic">
 
     </TextView>

@@ -2,7 +2,7 @@
     <string name="app_name">Application1</string>
     <string name="ok_button_basic_lab">Ok</string>
     <string name="basic_test">Routine checkup</string>
-    <string name="complete_blood_count_panel">Complete Blood Count Panel</string>
+    <string name="complete_blood_count_panel">Complete Blood Count</string>
     <string name="comprehensive_metabolic_panel">Comprehensive Metabolic Panel</string>
     <string name="ok">Ok</string>
     <string name="labResultMainHeading">Blood Work</string>
