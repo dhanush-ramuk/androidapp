@@ -16,7 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -24,20 +23,19 @@
 
     <TextView
         android:id="@+id/time1_text"
-android:gravity="center"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_below="@+id/tablet_name_text"
         android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
+        android:gravity="center"
         android:textColor="#37474F"
-        android:textSize="22sp"
+        android:textSize="21sp"
         app:fontFamily="sans-serif-smallcaps" />
 
     <TextView
         android:id="@+id/time2_text"
-        android:gravity="center"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_below="@+id/tablet_name_text"
@@ -46,26 +44,25 @@ android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/time1_text"
         android:layout_toRightOf="@+id/time1_text"
-        android:text="TextView"
+        android:gravity="center"
         android:textColor="#37474F"
-        android:textSize="22sp"
-        app:fontFamily="sans-serif-smallcaps"/>
+        android:textSize="21sp"
+        app:fontFamily="sans-serif-smallcaps" />
 
     <TextView
         android:id="@+id/time3_text"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:gravity="center"
-
         android:layout_below="@+id/tablet_name_text"
+
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/time2_text"
         android:layout_toRightOf="@+id/time2_text"
-        android:text="TextView"
+        android:gravity="center"
         android:textColor="#37474F"
-        android:textSize="22sp"
+        android:textSize="21sp"
         app:fontFamily="sans-serif-smallcaps" />
 
     <Button

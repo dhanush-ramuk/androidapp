@@ -25,10 +25,9 @@
             android:id="@+id/main_value"
             android:layout_width="wrap_content"
             android:layout_height="75dp"
-            android:text="TextView"
             android:textColor="@color/mainLabValueMainList"
             android:autoSizeTextType="uniform"
-        android:textSize="66sp"
+             android:textSize="66sp"
             android:textStyle="bold"
             app:fontFamily="cursive" />
 
@@ -38,8 +37,7 @@
             android:layout_height="25dp"
             android:layout_below="@+id/main_value"
             android:autoSizeTextType="uniform"
-        android:layout_marginTop="3dp"
-            android:text="TextView"
+            android:layout_marginTop="3dp"
             android:textColor="#37474F"
             android:textSize="24sp"
             app:fontFamily="sans-serif-smallcaps" />
@@ -51,7 +49,7 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/main_value_name"
             android:layout_toRightOf="@+id/main_value_name"
-            android:text="T" />
+             />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="130dp"
@@ -105,7 +103,6 @@
                 android:layout_alignParentTop="true"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 android:textStyle="bold"
@@ -117,27 +114,25 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@+id/second_value"
                 android:layout_toRightOf="@+id/second_value"
-
                 android:autoSizeTextType="uniform"
-                android:text="TextView"
                 android:textColor="#37474F"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif-smallcaps" />
 
             <TextView
-        android:id="@+id/second_value_updown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        android:layout_toEndOf="@+id/second_value_text"
-        android:layout_toRightOf="@+id/second_value_text"
-        android:text="T" />
+            android:id="@+id/second_value_updown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/second_value_text"
+            android:layout_toRightOf="@+id/second_value_text" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -150,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 android:textStyle="bold"
@@ -162,23 +156,23 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@+id/third_value"
                 android:layout_toRightOf="@+id/third_value"
                 android:autoSizeTextType="uniform"
-                android:text="TextView"
                 android:textColor="#37474F"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif-smallcaps" />
 
             <TextView
-                    android:id="@+id/third_value_updown"
-                    android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/third_value_text"
-                    android:layout_toRightOf="@+id/third_value_text"
-                    android:text="T" />
+                android:id="@+id/third_value_updown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/third_value_text"
+                android:layout_toRightOf="@+id/third_value_text"
+                     />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

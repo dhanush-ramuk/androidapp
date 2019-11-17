@@ -1,10 +1,9 @@
-package com.example.application1;
+package com.example.sick;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,31 +54,31 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     Spinner spin_basic_test, spin_CBC, spin_kidney_test, spin_liver_test, spin_electrolyte, spin_proteins, spin_general_test, spin_lipid;
     ArrayAdapter<String> basic_test_spin_elements, CBC_spin_elements, kidney_test_spin_elements, liver_test_spin_elements, electrolyte_spin_elements, proteins_spin_elements, general_test_spin_elements, lipid_spin_elements;
     HelperClass helperClass;
+    String Text;
+    EditText e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
+        helperClass = new HelperClass();
         final FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fab_camera);
         final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
         final View rootView = findViewById(R.id.rel);
-helperClass = new HelperClass();
+
+        //Callback function to hide/show FAB when keyboard is opened/closed
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
                 if (heightDiff > dpToPx(Activity2.this, 200)) { // if more than 200 dp, it's probably a keyboard...
-                    // ... do something here
                     b.setVisibility(View.INVISIBLE);
                     b1.setVisibility(View.INVISIBLE);
-
                 }else {
                     b.setVisibility(View.VISIBLE);
                     b1.setVisibility(View.VISIBLE);
-
                 }
             }
         });
-
 
         set_date();
         take_one();
@@ -91,6 +90,8 @@ helperClass = new HelperClass();
         take_seven();
         take_eight();
     }
+
+
     public static float dpToPx(Context context, float valueInDp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
@@ -101,24 +102,9 @@ helperClass = new HelperClass();
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         strDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
         strDay = new SimpleDateFormat("EEEE").format(now);
-       // TextView dateview = (TextView) findViewById(R.id.dateview);
-       // dateview.setText(strDate + "    " + strDay);
-
     }
 
-    public void take_one(){
-
-        spin_basic_test = findViewById(R.id.spinner_basic_lab);
-        spin_basic_test.setOnItemSelectedListener(this);
-        basic_test_spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design,basic_test);
-        basic_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
-        spin_basic_test.setAdapter(basic_test_spin_elements);
-        listview_basic_test = (ListView) findViewById(R.id.listview_basic_lab);
-        basic_test_rhs = new ArrayList<String>();
-        basic_test_lhs =new ArrayList<String>();
-        aaa = new Customadapter();
-        listview_basic_test.setAdapter(aaa);
-    }
+    //Function to dynamically adjust height of entered Bloodwork values in the listview as listview in enclosed between scrollview
     public static void updateListViewHeight(ListView myListView) {
         ListAdapter myListAdapter = myListView.getAdapter();
         if (myListAdapter == null) {
@@ -136,6 +122,19 @@ helperClass = new HelperClass();
         ViewGroup.LayoutParams params = myListView.getLayoutParams();
         params.height = totalHeight + (myListView.getDividerHeight() * (adapterCount));
         myListView.setLayoutParams(params);
+    }
+
+    public void take_one(){
+        spin_basic_test = findViewById(R.id.spinner_basic_lab);
+        spin_basic_test.setOnItemSelectedListener(this);
+        basic_test_spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design,basic_test);
+        basic_test_spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_design);
+        spin_basic_test.setAdapter(basic_test_spin_elements);
+        listview_basic_test = (ListView) findViewById(R.id.listview_basic_lab);
+        basic_test_rhs = new ArrayList<String>();
+        basic_test_lhs =new ArrayList<String>();
+        aaa = new Customadapter();
+        listview_basic_test.setAdapter(aaa);
     }
 
     public void take_two(){
@@ -163,7 +162,6 @@ helperClass = new HelperClass();
         general_test_rhs = new ArrayList<String>();
         aaa2 = new Customadapter2();
         listview_general_test.setAdapter(aaa2);
-
     }
 
     public void take_four(){
@@ -177,9 +175,7 @@ helperClass = new HelperClass();
         kidney_test_rhs = new ArrayList<String>();
         aaa3 = new Customadapter3();
         listview_kidney_test.setAdapter(aaa3);
-
     }
-
 
     public void take_five(){
         spin_liver_test = findViewById(R.id.spinner_livertest);
@@ -192,7 +188,6 @@ helperClass = new HelperClass();
         liver_test_rhs = new ArrayList<String>();
         aaa4 = new Customadapter4();
         listview_liver_test.setAdapter(aaa4);
-
     }
 
     public void take_six(){
@@ -207,7 +202,6 @@ helperClass = new HelperClass();
         aaa5 = new Customadapter5();
         listview_electrolyte.setAdapter(aaa5);
     }
-
 
     public void take_seven(){
         spin_proteins = findViewById(R.id.spinner_proteintest);
@@ -235,28 +229,23 @@ helperClass = new HelperClass();
         listview_lipid.setAdapter(aaa7);
     }
 
-
-    public void go_to_camera(View v){
-        Intent i = new Intent(getApplicationContext(), Camera_Activity.class);
-        startActivity(i);
-    }
+    //helper function for edittext to check if test value is already there/ edittext is empty when user clicks okay button. UX enhancement
     public boolean check_text(String a, String b, ArrayList<String> c){
         if( b.isEmpty()){
-            Toast.makeText(getApplicationContext(), "no value entered babe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "no value entered", Toast.LENGTH_SHORT).show();
             return false;
         } else if(c.contains(a)) {
-            Toast.makeText(getApplicationContext(), "value already entered babe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "value already entered", Toast.LENGTH_SHORT).show();
             return false;
         } else return true;
     }
+
     public void onclick(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        String Text = spin_basic_test.getSelectedItem().toString();
-        EditText e = (EditText) findViewById(R.id.enter_basic_lab);
+        //Code to hide keyboard when user clicks okay button. UX enhancement
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        Text = spin_basic_test.getSelectedItem().toString();
+        e = (EditText) findViewById(R.id.enter_basic_lab);
         String rhs = e.getText().toString();
         e.getText().clear();
         e.setCursorVisible(false);
@@ -269,13 +258,10 @@ helperClass = new HelperClass();
     }
 
     public void onclick_CBC(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        String Text = spin_CBC.getSelectedItem().toString();
-        EditText e = (EditText) findViewById(R.id.enter_CBC);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        Text = spin_CBC.getSelectedItem().toString();
+        e = (EditText) findViewById(R.id.enter_CBC);
         String rhs = e.getText().toString();
         e.getText().clear();
         e.setCursorVisible(false);
@@ -283,17 +269,13 @@ helperClass = new HelperClass();
             CBC_lhs.add(Text.toString());
                 CBC_rhs.add(rhs);
                 aaa1.notifyDataSetChanged();
-
         }
         updateListViewHeight(listview_CBC);
     }
 
     public void onclick_general_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_general_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_generaltest);
         String rhs = e.getText().toString();
@@ -308,11 +290,8 @@ helperClass = new HelperClass();
     }
 
     public void onclick_kidney_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_kidney_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_kidneytest);
         String rhs = e.getText().toString();
@@ -327,11 +306,8 @@ helperClass = new HelperClass();
     }
 
     public void onclick_liver_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_liver_test.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_livertest);
         String rhs = e.getText().toString();
@@ -346,11 +322,8 @@ helperClass = new HelperClass();
     }
 
     public void onclick_electrolytes_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_electrolyte.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_electrolytestest);
         String rhs = e.getText().toString();
@@ -365,11 +338,8 @@ helperClass = new HelperClass();
     }
 
     public void onclick_protein_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_proteins.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_proteintest);
         String rhs = e.getText().toString();
@@ -384,11 +354,8 @@ helperClass = new HelperClass();
     }
 
     public void onclick_lipids_test(View v){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         String Text = spin_lipid.getSelectedItem().toString();
         EditText e = (EditText) findViewById(R.id.enter_lipidstest);
         String rhs = e.getText().toString();
@@ -402,6 +369,7 @@ helperClass = new HelperClass();
         updateListViewHeight(listview_lipid);
     }
 
+    //function to show cursor in edittext, as it disappears after entered once. Edittext onclick function UX enhancement
     public void show_cursor(View v){
         EditText e;
         switch (v.getId()){
@@ -437,7 +405,6 @@ helperClass = new HelperClass();
                  e = (EditText) findViewById(R.id.enter_proteintest);
                  e.setCursorVisible(true);
                  break;
-
         }
     }
 
@@ -477,6 +444,8 @@ helperClass = new HelperClass();
             text1.setText(basic_test_lhs.get(i));
             text2.setText(basic_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(basic_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
+
+            //delete button click listener for BloodWork listview, removes the entered value
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -524,7 +493,6 @@ helperClass = new HelperClass();
                     CBC_rhs.remove(i);
                     aaa1.notifyDataSetChanged();
                     updateListViewHeight(listview_CBC);
-
                 }
             });
             return view;
@@ -564,7 +532,6 @@ helperClass = new HelperClass();
                     general_test_rhs.remove(i);
                     aaa2.notifyDataSetChanged();
                     updateListViewHeight(listview_general_test);
-
                 }
             });
             return view;
@@ -764,6 +731,7 @@ helperClass = new HelperClass();
     }
 
 
+    //onclick function. Okay button after user entered values.
     public void back_to_main(View v){
         Intent i = new Intent();
         i.putStringArrayListExtra("basic_test_names", basic_test_lhs);
@@ -783,21 +751,17 @@ helperClass = new HelperClass();
         i.putStringArrayListExtra("lipid_test_names", lipid_panel_lhs);
         i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
         i.putExtra("date", strDate);
-        Log.e("check", "date "+strDate);
         i.putExtra("day", strDay);
         i.putExtra("boolean", 1);
-
         setResult(RESULT_OK, i);
         finish();
-
     }
 
+    //onclick function. user closes the activity
     public void closeActivity(View v){
         Intent i = new Intent();
         i.putExtra("boolean", 0);
-
         setResult(RESULT_OK, i);
         finish();
     }
 }
-//TODO 1.Change name to shorter form 2. Entering same value bug fix

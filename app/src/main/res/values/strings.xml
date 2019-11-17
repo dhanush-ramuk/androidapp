@@ -5,8 +5,27 @@
     <string name="complete_blood_count_panel">Complete Blood Count</string>
     <string name="comprehensive_metabolic_panel">Comprehensive Metabolic Panel</string>
     <string name="ok">Ok</string>
-    <string name="labResultMainHeading">Blood Work</string>
+    <string name="labResultMainHeading">Today\'s Blood Work</string>
     <string name="bloodTracking">Lab Results Tracking</string>
+    <string name="medicationReminderHeading">Daily Medication Reminder</string>
+    <string name="NoListEntered">No Record Entered</string>
+    <string name="GeneralTest">General Test</string>
+    <string name="KidneyPanel">Kidney Panel</string>
+    <string name="LiverPanel">Liver Panel</string>
+    <string name="Electrolytes">Electrolytes</string>
+    <string name="Proteins">Proteins</string>
+    <string name="LipidPanel">Lipid Panel</string>
+    <string name="TabletNameEnterTextview">Tablet Name</string>
+    <string name="EdittextHintName">name</string>
+    <string name="TimesadayText">Times a day</string>
+    <string name="TRACK">TRACK</string>
+    <string name="AppNameInfoPage">App name</string>
+    <string name="VersionNumberInfoPage">Version 1.0</string>
+    <string name="iconsdownloadedfromICONS8">icons downloaded from ICONS8</string>
+    <string name="ForFeedback">For Feedback</string>
+    <string name="TraditionalUnit">Traditional Unit</string>
+    <string name="unitsSIT">[(mg/dl),(u/l), etc</string>
+    <string name="DeleteButton">X</string>
 
     <string-array name="types">
         <item>once</item>

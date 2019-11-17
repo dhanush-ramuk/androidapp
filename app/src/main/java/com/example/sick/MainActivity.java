@@ -1,18 +1,14 @@
-package com.example.application1;
-
+package com.example.sick;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,13 +22,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,47 +34,55 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     String[] med_info = {"name", "hour1", "hour2", "hour3", "minute1", "minute2", "minute3", "ampm1", "ampm2", "ampm3"};
-    ArrayList<String> main_value_text = new ArrayList<String>();
-    ArrayList<String> main_value  = new ArrayList<String>();
-    ArrayList<String> second_value_text = new ArrayList<String>();
-    ArrayList<String> second_value  = new ArrayList<String>();
-    ArrayList<String> third_value_text = new ArrayList<String>();
-    ArrayList<String> third_value  = new ArrayList<String>();
-    ArrayList<String> date_text = new ArrayList<String>();
-    ArrayList<String> day_text  = new ArrayList<String>();
+    ArrayList<String> main_value_text;
+    ArrayList<String> main_value;
+    ArrayList<String> second_value_text;
+    ArrayList<String> second_value;
+    ArrayList<String> third_value_text;
+    ArrayList<String> third_value;
+    ArrayList<String> date_text;
+    ArrayList<String> day_text;
     ArrayList<String> prioritized_left;
     ArrayList<String> prioritized_left1;
     ArrayList<String> prioritized_left2;
-    ArrayList<String> tablet_name_list = new ArrayList<>();
-    ArrayList<String> time1 = new ArrayList<>();
-    ArrayList<String> time2 = new ArrayList<>();
-    ArrayList<String> time3 = new ArrayList<>();
-    Map<String, String> map_med, map_med1;
+    ArrayList<String> tablet_name_list;
+    ArrayList<String> time1;
+    ArrayList<String> time2;
+    ArrayList<String> time3;
     TextView textview_NO_LIST_ENTERED;
-    ArrayList<All_Results> obj = new ArrayList<All_Results>();
-    ArrayList<All_Medications> obj_med = new ArrayList<>();
-    String day, date;
-    ListView v;
-    Customadapter1 adapter = new Customadapter1();
+    ArrayList<All_Results> obj;
+    ArrayList<All_Medications> obj_med;
+    Customadapter1 adapter;
     RecyclerViewAdapter Radapter;
-    Random rand = new Random();
     AlarmManager alarmManager;
     Intent intentAlarm;
-    HelperClass helperClass = new HelperClass();
+    HelperClass helperClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
-        v = (ListView)findViewById(R.id.listview_main);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         intentAlarm =  new Intent(MainActivity.this, AlarmReceiver.class);
+        helperClass = new HelperClass();
         textview_NO_LIST_ENTERED = (TextView) findViewById(R.id.noListEnteredText);
+        tablet_name_list = new ArrayList<>();
+        time1 = new ArrayList<>();
+        time2 = new ArrayList<>();
+        time3 = new ArrayList<>();
+        main_value = new ArrayList<>();
+        main_value_text = new ArrayList<>();
+        second_value = new ArrayList<>();
+        second_value_text = new ArrayList<>();
+        third_value = new ArrayList<>();
+        third_value_text = new ArrayList<>();
+        day_text = new ArrayList<>();
+        date_text = new ArrayList<>();
+
 
         /*Using shared preference to get the Medication Remainder and All BloodWork Results object that contains
         all the previous results*/
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 new TypeToken<List<All_Results>>(){}.getType());
         ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
                 new TypeToken<List<All_Medications>>(){}.getType());
+        obj = new ArrayList<>();
+        obj_med = new ArrayList<>();
 
         if(start_obj!=null && !start_obj.isEmpty()) {
             obj.addAll(start_obj);
@@ -148,11 +150,13 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO maybe remove cancel button in FullResult Activity as it is same as back button
         //finish() from FullResult Activity
-        if(requestCode == 997 && resultCode == RESULT_OK) {
+        if (requestCode == 997 && resultCode == RESULT_OK) {
 
-            //does nothing, clears and creates BloodWork main list when user clicks Okay(i.e goToMain) button
+            //user deletes the BloodWork result from FullResult Activity
+
+            //index value of deleted object
             int objectIndex = data.getIntExtra("value", -1);
-            if(objectIndex != -1){
+            if (objectIndex != -1) {
                 obj.remove(objectIndex);
                 clear_list();
                 create_list(obj);
@@ -163,9 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         //finish() from Activity3(Medication Remainder)
         if (requestCode == 998 && resultCode == RESULT_OK) {
-            ArrayList<String> hour, minute, ampm;
-            ArrayList<Integer> hourin12;
-            String tablet_name;
+
             int l = data.getIntExtra("boolean", 0);
 
             /*clears and creates medication main list i.e. user clicked cancel button.
@@ -178,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
             //User created a new medication remainder(l==1)
             else if (l == 1) {
+                ArrayList<String> hour, minute, ampm;
+                ArrayList<Integer> hourin12;
+                String tablet_name;
 
                 //get the returned tablet name and time value
                 tablet_name = data.getStringExtra("tablet_name");
@@ -193,12 +198,10 @@ public class MainActivity extends AppCompatActivity {
                 //if not empty, save and create a remainder
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
                     Calendar startTime = Calendar.getInstance();
-                    Calendar t = Calendar.getInstance();
                     startTime.set(Calendar.SECOND, 0);
 
                     //map_med to store hour, minute, ampm, name of tablet remainder
-                    map_med = new HashMap<>();
-                    map_med1 = new HashMap<>();
+                    Map<String, String> map_med = new HashMap<>();
                     for (String a : med_info)
                         map_med.put(a, null);
                     int size;
@@ -237,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                     int kk = 0;
 
                     //My way of creating unique value for each remainder
-                    for(int ii = 0; ii<obj_med.size(); ii++){
+                    for (int ii = 0; ii < obj_med.size(); ii++) {
                         kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
 
                     }
@@ -247,9 +250,9 @@ public class MainActivity extends AppCompatActivity {
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
                         startTime.set(Calendar.SECOND, 00);
-                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name );
-                        map_med.put(String.valueOf(i) , String.valueOf(kk));
-                        map_med.put(i+"time", String.valueOf(startTime.getTimeInMillis()));
+                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name);
+                        map_med.put(String.valueOf(i), String.valueOf(kk));
+                        map_med.put(i + "time", String.valueOf(startTime.getTimeInMillis()));
                         kk = kk + 1;
                     }
 
@@ -257,34 +260,35 @@ public class MainActivity extends AppCompatActivity {
                     obj_med.add(new All_Medications(map_med));
                     saveMedications();
                     clear_medication_list();
-                    Log.e("check", "working4");
                     create_medications_list(obj_med);
-                    if(obj_med.size()==2){
-
-                        Toast toast= Toast.makeText(getApplicationContext(),
-                                "Swipe ->", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 80);
+                    if (obj_med.size() == 2) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Swipe ->", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 80);
                         toast.show();
                     }
                 }
-            }else {
-                //do nothing
+            } else {
+                clear_medication_list();
+                create_medications_list(obj_med);
+            }
+        }
 
-            }        }
-
+        //From Activity2
         if (requestCode == 999 && resultCode == RESULT_OK) {
 
             int flag = 0;
+            //when user clicks close button
             if (data.getIntExtra("boolean", 0) == 0) {
                 clear_list();
                 create_list(obj);
                 clear_ArrayList();
-            } else if (data.getIntExtra("boolean", 0) == 1) {
+            }
+
+            //user clicks okay button with values entered
+            else if (data.getIntExtra("boolean", 0) == 1) {
                 ArrayList<String> basic_test_lhs, CBC_lhs, kidney_test_lhs, liver_test_lhs, electrolytes_lhs, proteins_lhs, general_test_lhs, lipid_panel_lhs;
                 ArrayList<String> basic_test_rhs, CBC_rhs, kidney_test_rhs, liver_test_rhs, electrolytes_rhs, proteins_rhs, general_test_rhs, lipid_panel_rhs;
-                prioritized_left = new ArrayList<>();
-                prioritized_left1 = new ArrayList<>();
-                prioritized_left2 = new ArrayList<>();
+                String day, date;
                 basic_test_lhs = new ArrayList<String>();
                 basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
                 basic_test_rhs = new ArrayList<String>();
@@ -319,18 +323,18 @@ public class MainActivity extends AppCompatActivity {
                 lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
                 date = data.getStringExtra("date");
                 day = data.getStringExtra("day");
-                Log.e("check", "day "+day);
-
                 Map<String, String> map1 = new HashMap<>();
                 Map<String, String> map2 = new HashMap<>();
+                Map<String, String> map = new HashMap<String, String>();
+
+                //Entering date and day value
                 map2.put("date", date);
                 map2.put("day", day);
-                Map<String, String> map = new HashMap<String, String>();
+
+                //entering BloodWorks values into Map function
                 for (String a : all_tests) {
                     map.put(a, null);
                 }
-
-
                 if (!basic_test_rhs.isEmpty()) {
                     for (int i = 0; i < basic_test_lhs.size(); i++)
                         map.put(basic_test_lhs.get(i), basic_test_rhs.get(i));
@@ -373,45 +377,56 @@ public class MainActivity extends AppCompatActivity {
                         map.put(general_test_lhs.get(i), general_test_rhs.get(i));
                     flag = 1;
                 }
-                if(flag == 1) {
+
+                //Three list to add prioritized values of user entered lab values
+                prioritized_left = new ArrayList<>();
+                prioritized_left1 = new ArrayList<>();
+                prioritized_left2 = new ArrayList<>();
+
+                //If user entered value and pressed okay, then,
+                if (flag == 1) {
+
+                    //function to prioritize lab values to display in main screen
                     go_figure_the_fuck_out(map);
+
+                    //adding prioritized value into map function
                     map1.put("p", prioritized_left.get(0));
                     map1.put("p1", prioritized_left1.get(0));
                     map1.put("p2", prioritized_left2.get(0));
 
-
-
+                    //saving map of lab values and prioritized value into Arraylist of object
                     obj.add(new All_Results(map, map1, map2));
-                    saveBloodResults();
 
+                    //function to save Arraylist of object into Shared Preferences
+                    saveBloodResults();
                     clear_list();
                     create_list(obj);
                     clear_ArrayList();
-
                 }
-                //do nothing
+
             }
         }
-        if(obj.isEmpty()) {
-            Log.e("check", "1");
-            if (obj_med.isEmpty()) {
-            textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
-                //setContentView(textView);
-            } else{
+        //If no medication Reminder or BloodWork is entered, then display "NO LIST ENTERED" text
+        if (obj.isEmpty())
+            if (obj_med.isEmpty())
+                textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
+
+            else
                 textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
-                        }
-        } else {
+        else
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
-              }
     }
+
+
     public void go_figure_the_fuck_out(Map map){
+        Random rand = new Random();
         ArrayList<String> sorting, sorting1, sorting2;
         int rand_int1, rand_int2, rand_int3, rand_int4, rand_int5, rand_int6;
         sorting = new ArrayList<String>();
         sorting1 = new ArrayList<String>();
         sorting2 = new ArrayList<String>();
 
-        // Assigning the user entered test values to different ArrayList based on the test priority.
+        //User entered tests are arranged into different list based on priority
         if(map.get("hemoglobin")!=null){
             sorting1.add("hemoglobin");
         }
@@ -455,6 +470,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /* 3 value from user entered test result is retrieved from all user entered test result to be displayed in the main view */
+        //randomly selected and entered into Prioritized list
         if(!sorting.isEmpty()){
             rand_int1 = rand.nextInt(sorting.size());
             prioritized_left.add(sorting.get(rand_int1));
@@ -462,9 +479,7 @@ public class MainActivity extends AppCompatActivity {
             rand_int2 = rand.nextInt(sorting1.size());
             prioritized_left.add(sorting1.get(rand_int2));
         } else if(!sorting2.isEmpty()){
-
             rand_int3 = rand.nextInt(sorting2.size());
-            Log.e("check", "pl"+ sorting2.size() );
             prioritized_left.add(sorting2.get(rand_int3));
         }
 
@@ -537,14 +552,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Function to loop all objects in ArrayList<Results>. Map function is retrieved from object and main view is created
     public void create_list(ArrayList<All_Results> obj){
         if(obj!=null && !obj.isEmpty()){
             for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1(), obj.get(i).get_map2());
             }
         }
     }
+
+    //Objects from create_list function is sent to the_brain function, three BloodWork values, its name, day and date is set here
     public void the_brain(Map<String, String> mini_map, Map<String, String> mini_map2, Map<String, String> mini_map3 ){
-        v = (ListView)findViewById(R.id.listview_main);
+
+        //Listview v, UI where BloodWork result to be displayed in main view
+        ListView v = (ListView)findViewById(R.id.listview_main);
         String left = mini_map2.get("p").toString();
         String left1 = mini_map2.get("p1").toString();
         String left2 = mini_map2.get("p2").toString();
@@ -580,9 +600,12 @@ public class MainActivity extends AppCompatActivity {
             third_value.add(" ");
         }
 
+        //Listview Adapter to set all BloodWork values
+        adapter = new Customadapter1();
         v.setAdapter(adapter);
-
     }
+
+    //Function to loop objects in ArrayList<Medication> to create main view
     public void create_medications_list(ArrayList<All_Medications> o){
         if(obj.isEmpty())
             if (obj_med.isEmpty())
@@ -591,12 +614,27 @@ public class MainActivity extends AppCompatActivity {
                 textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
         else
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
-
+       // check_function();
         for(int i=0; i<o.size(); i++){
             the_medication_brain(o.get(i).return_map());
         }
+
     }
 
+    public void check_function(){
+        Log.e("check", "working");
+        for(int i = 0; i < obj_med.size(); i++) {
+            for (int j = 0; j < Integer.parseInt(obj_med.get(i).return_map().get("size")); j++) {
+                int kk = Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(j)));
+                String name = obj_med.get(i).return_map().get("name");
+                String time = obj_med.get(i).return_map().get(j+"time");
+                Log.e("check", "working");
+                helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, (Long.valueOf(time)), name);            }
+        }
+    }
+
+
+    //Function to set time and tablet name from object sent from above function
     public void the_medication_brain(Map<String, String> map){
         tablet_name_list.add(map.get("name"));
         if(map.get("hour1")!=null){
@@ -611,40 +649,42 @@ public class MainActivity extends AppCompatActivity {
         }
         if(map.get("hour3")!=null){
             time3.add(map.get("hour3") +":"+ map.get("minute3") +" " + map.get("ampm3"));
-            Log.e("check", "time3 "+time3.get(0));
         }else{
             time3.add("-");
         }
 
+        //RecyclerView, place to diaply Medication remainder in main view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.listview_medications);
         recyclerView.setLayoutManager(layoutManager);
+
+        //Radapter, RecyclerView Adapter to set all Medication info in the main view
         Radapter = new RecyclerViewAdapter(this, tablet_name_list, time1, time2, time3);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(Radapter);
+        recyclerView.scrollToPosition(tablet_name_list.size());
     }
 
-
-
+    //function to add zero before minute in time if it is single digit(if time is 12:9 => 12:09)
     public String check_minute(String a){
-        if(a.length()==1){
+        if(a.length()==1)
             a = "0"+a;
-        }
         return a;
     }
 
-public void delete_Alarm(int i){
-    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-    Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
-
-    for(int ii = 0; ii < Integer.parseInt(obj_med.get(i).return_map().get("size")); ii++){
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                getApplicationContext(),   Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(ii))), intentAlarm, 0);
-        alarmManager.cancel(pendingIntent);
+    //function to delete alarm when delete button is clicked in main view medication list
+    public void delete_Alarm(int i){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
+        for(int ii = 0; ii < Integer.parseInt(obj_med.get(i).return_map().get("size")); ii++){
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),   Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(ii))), intentAlarm, 0);
+            alarmManager.cancel(pendingIntent);
+        }
     }
-}
+
+    //function to save BloodWork value in sharedpreferences
     public void saveBloodResults(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
@@ -654,14 +694,15 @@ public void delete_Alarm(int i){
         editor.apply();
     }
 
+    //function to save Medication Remainder in sharedpreferences
     public void saveMedications(){
-
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(obj_med);
         editor.putString("mylist1", json);
-        editor.apply();    }
+        editor.apply();
+    }
 
 
     public void clear_ArrayList(){
@@ -672,8 +713,6 @@ public void delete_Alarm(int i){
         if(!prioritized_left2.isEmpty())
             prioritized_left2.clear();
     }
-
-
 
     public void clear_list(){
         main_value.clear();
@@ -693,33 +732,32 @@ public void delete_Alarm(int i){
         time2.clear();
         time3.clear();
         if(Radapter!=null)
-        Radapter.notifyDataSetChanged();
+            Radapter.notifyDataSetChanged();
     }
 
-
-
-
-public String shorten_test_name_main(String a){
+    //function to shorten main test name to be displayed in main view
+    public String shorten_test_name_main(String a){
         String str = null;
-    if(a.equals("blood urea nitrogen"))
-        str = "Urea";
-    else if(a.equals("alanine amino transferase"))
-        str = "ALT";
-    else if(a.equals("aspartate amino transferase"))
-        str = "AST";
-    else if(a.equals("total protein"))
-        str = "protein";
-    else if(a.equals("glucose[fasting]"))
-        str = "glucose[F]";
-    else if(a.equals("glucose[random]"))
-        str = "glucose[R]";
-    else if(a.equals("alkaline phosphatase"))
-        str = "ALP";
-    else
-        str = a;
+        if(a.equals("blood urea nitrogen"))
+            str = "Urea";
+        else if(a.equals("alanine amino transferase"))
+            str = "ALT";
+        else if(a.equals("aspartate amino transferase"))
+            str = "AST";
+        else if(a.equals("total protein"))
+            str = "protein";
+        else if(a.equals("glucose[fasting]"))
+            str = "glucose[F]";
+        else if(a.equals("glucose[random]"))
+            str = "glucose[R]";
+        else if(a.equals("alkaline phosphatase"))
+            str = "ALP";
+        else
+            str = a;
+        return str;
+    }
 
-    return str;
-}
+    //function to shorten second and third test name to be displayed in main view
     public String shorten_test_name_second(String a){
        String str = null;
         if(a.equals("blood urea nitrogen"))
@@ -767,7 +805,6 @@ public String shorten_test_name_main(String a){
 
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
         private static final String TAG = "RecyclerViewAdapter";
 
         //vars
@@ -789,14 +826,11 @@ public String shorten_test_name_main(String a){
         @Override
         public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medication_list, parent, false);
-            Button b = (Button) view.findViewById(R.id.delete_button);
-
             return new RecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, final int position) {
-
             holder.time1.setText(mtime1.get(position));
             holder.time2.setText(mtime2.get(position));
             holder.time3.setText(mtime3.get(position));
@@ -818,7 +852,6 @@ public String shorten_test_name_main(String a){
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder{
-
             TextView name;
             TextView time1;
             TextView time2;
@@ -863,11 +896,9 @@ public String shorten_test_name_main(String a){
             TextView text3 = (TextView)view.findViewById(R.id.second_value);
             TextView text4 = (TextView)view.findViewById(R.id.second_value_text);
             TextView t2 = (TextView)view.findViewById(R.id.second_value_updown);
-
             TextView text5 = (TextView)view.findViewById(R.id.third_value);
             TextView text6 = (TextView)view.findViewById(R.id.third_value_text);
             TextView t3 = (TextView)view.findViewById(R.id.third_value_updown);
-
             TextView text7 = (TextView)view.findViewById(R.id.date_text);
             TextView text8 = (TextView)view.findViewById(R.id.day_text);
 
@@ -889,23 +920,22 @@ public String shorten_test_name_main(String a){
                 text7.setText(date_text.get(i));
                 text8.setText(day_text.get(i));
             }
+
+            //Mainview BloodWork relative layout
             RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.main_list_relout);
 
+            //When clicked, goto FullResult activity
             rel.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
-                    Toast.makeText(getApplicationContext(), "Ta da", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), FullResult.class);
                     intent.putExtra("object index", i);
                     intent.putExtra("list", obj);
                     startActivityForResult(intent, 997);
-
                 }
             });
             return view;
         }
     }
 }
-
-//TODO BuGs to fix 1.Lipid panel list view is not displaying(must add scrollview). 2. WBC(This bug fixing in progress) (prioritized left must be cleared before storing new value)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.application1">
+    package="com.example.sick">
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -16,14 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".infoPage"></activity>
-        <activity android:name=".trackpage" />
-        <activity android:name=".medicationResultsActivity" />
-        <activity android:name=".Activity3" />
-        <activity android:name=".FullResult" />
-        <activity android:name=".Camera_Activity" />
-        <activity android:name=".Activity2" />
-        <activity android:name=".MainActivity"
+        <activity android:name="com.example.sick.infoPage" />
+        <activity android:name="com.example.sick.trackpage" />
+        <activity android:name="com.example.sick.Activity3" />
+        <activity android:name="com.example.sick.FullResult" />
+        <activity android:name="com.example.sick.Activity2" />
+        <activity android:name="com.example.sick.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true">
@@ -39,6 +36,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".BootReceiver"
             android:enabled="true">
@@ -48,7 +46,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name=".PackageReplaced"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".TimeChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

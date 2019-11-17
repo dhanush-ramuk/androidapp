@@ -1,11 +1,10 @@
-package com.example.application1;
+package com.example.sick;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import java.util.Calendar;
 
@@ -17,9 +16,7 @@ public class HelperClass {
             "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     public String UnitIncluder(String testName){
         String testUnit = null;
-        infoPage obj = new infoPage();
         int i = infoPage.i;
-        Log.e("CHECK", "I VALUE "+i);
         if (i == 1) {
 
             if (testName.equals("weight"))
@@ -67,26 +64,28 @@ public class HelperClass {
     }
 
     public void schedule_alarm(Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, Long startTime, String tablet_name) {
+
+
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(startTime);
         if(cal.before(Calendar.getInstance())) {
-            Log.e("check", "alarmtime "+cal);
-            Log.e("check", "currenttime "+Calendar.getInstance());
             cal.add(Calendar.DATE, 1);
         }
-        Log.e("check", "after add "+cal);
         intentAlarm.putExtra("name", tablet_name);
         intentAlarm.putExtra("kk", kk);
         intentAlarm.putExtra("time", String.valueOf(startTime));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, kk, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
             if (Build.VERSION.SDK_INT < 23) {
                 if (Build.VERSION.SDK_INT >= 19) {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+                    if(System.currentTimeMillis()<cal.getTimeInMillis())
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
                 } else {
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+                    if(System.currentTimeMillis()<cal.getTimeInMillis())
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
                 }
             } else {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+                if(System.currentTimeMillis()<cal.getTimeInMillis())
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
             }
         }
 

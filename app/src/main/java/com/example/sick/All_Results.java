@@ -1,12 +1,6 @@
-package com.example.application1;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
+package com.example.sick;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class All_Results implements Serializable {

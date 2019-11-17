@@ -1,4 +1,4 @@
-package com.example.application1;
+package com.example.sick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,21 +8,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class infoPage extends AppCompatActivity {
@@ -89,7 +81,6 @@ public void email(View v){
         startActivity(Intent.createChooser(intent, "Choose an Email client :"));
 
         finish();
-        Log.i("Finished sending email...", "");
     } catch (android.content.ActivityNotFoundException ex) {
         Toast.makeText(infoPage.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
     }

@@ -14,9 +14,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         android:gravity="center"
-        android:text="App name"
+        android:text="@string/AppNameInfoPage"
         android:textColor="@color/labTextHeading"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold">
 
     </TextView>
@@ -29,7 +29,7 @@
         android:layout_marginTop="7dp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:text="Version 1.0" />
+        android:text="@string/VersionNumberInfoPage" />
 
     <ImageView
         android:id="@+id/appImage"
@@ -51,7 +51,8 @@
         android:layout_above="@+id/feedback"
         android:id="@+id/upcominf_features"
         android:layout_marginBottom="10dp"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,6 +74,7 @@
             android:layout_marginRight="3dp"
             android:layout_marginBottom="3dp"
             android:layout_toRightOf="@+id/workingId"
+            android:layout_toEndOf="@+id/workingId"
             android:background="#fafafa"
             android:drawableTop="@drawable/down"
             android:onClick="show"
@@ -146,9 +148,9 @@
             android:layout_below="@+id/SIunitissettext"
             android:checked="true"
             android:switchPadding="5dp"
-            android:text="Traditional Unit"
+            android:text="@string/TraditionalUnit"
             android:textColor="@color/labText"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="normal"
             android:theme="@style/SCBSwitch" />
     <TextView
@@ -156,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:text="[(mg/dl),(u/l), etc.]">
+        android:text="@string/unitsSIT">
     </TextView>
 
 
@@ -174,9 +176,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="For Feedback"
+            android:text="@string/ForFeedback"
             android:textColor="#2B2525"
-            android:textSize="26dp"
+            android:textSize="26sp"
             app:fontFamily="sans-serif-smallcaps">
 
         </TextView>
@@ -218,9 +220,8 @@
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginBottom="2dp"
-
         android:onClick="icons8"
-        android:text="icons downloaded from ICONS8"
+        android:text="@string/iconsdownloadedfromICONS8"
         android:textColor="#303F9F"
         android:textSize="10sp"
         android:textStyle="italic">

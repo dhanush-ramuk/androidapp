@@ -1,28 +1,18 @@
-package com.example.application1;
+package com.example.sick;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BootReceiver extends BroadcastReceiver {
+public class TimeChangedReceiver extends BroadcastReceiver {
     HelperClass helperClass = new HelperClass();
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,7 +30,7 @@ public class BootReceiver extends BroadcastReceiver {
                     schedule_alarm(context, kk, name, time);
                 }
             }
-        }
+    }
 
     public void schedule_alarm(Context context, int kk, String name, String time){
 
@@ -48,5 +38,4 @@ public class BootReceiver extends BroadcastReceiver {
         Intent my = new Intent(context, AlarmReceiver.class);
         helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name);
     }
-
 }

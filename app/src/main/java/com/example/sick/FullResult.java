@@ -1,22 +1,19 @@
-package com.example.application1;
+package com.example.sick;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class FullResult extends AppCompatActivity {
-ArrayList<All_Results> obj;
+    ArrayList<All_Results> obj;
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
@@ -36,7 +33,6 @@ ArrayList<All_Results> obj;
 
     public void set_value(){
         LinearLayout layout = (LinearLayout) findViewById(R.id.parent_layout);
-
         Map<String, String> map = obj.get(i).get_map();
         TextView date = (TextView) findViewById(R.id.dateText);
         TextView day = (TextView) findViewById(R.id.dayText);

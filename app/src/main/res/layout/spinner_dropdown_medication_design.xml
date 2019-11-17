@@ -5,7 +5,7 @@
     android:textColor="@color/medicationText"
     android:singleLine="true"
     android:layout_width="match_parent"
-    android:textSize="20dp"
+    android:textSize="20sp"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:ellipsize="marquee"
     android:textStyle="bold"
