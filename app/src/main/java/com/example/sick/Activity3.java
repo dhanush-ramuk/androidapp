@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -88,21 +89,18 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
 
 
     public void onclick_listview_for_time_enter(View v){
+        final TextView editTabletName = (TextView) findViewById(R.id.editTabletName);
+       final ImageButton editButton = (ImageButton) findViewById(R.id.editDeleteButton);
+
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        EditText edittext = (EditText) findViewById(R.id.tablet_name);
+        final EditText edittext = (EditText) findViewById(R.id.tablet_name);
         tablet_name = edittext.getText().toString();
+
         if(edittext.getText().toString().isEmpty()){
             Toast.makeText(getApplicationContext(), "enter tablet name", Toast.LENGTH_SHORT).show();
         }
         else {
-            LinearLayout parent_linearlayout = (LinearLayout) findViewById(R.id.timer);
-            edittext.setFocusable(false);
-            spin.setClickable(false);
-            spin.setEnabled(false);
-            Button but = (Button) findViewById(R.id.go_to_timepicker);
-            but.setClickable(false);
-            but.setTextColor(Color.parseColor("#bdbdbd"));
             time = spin.getSelectedItem().toString();
             if (time.equals("once"))
                 time = "1";
@@ -110,6 +108,19 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                 time = "2";
             if (time.equals("thrice"))
                 time = "3";
+            editTabletName.setText(tablet_name +" - "+time+" times");
+            editTabletName.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
+            final LinearLayout parent_linearlayout = (LinearLayout) findViewById(R.id.timer);
+            edittext.setCursorVisible(false);
+            //edittext.setFocusable(false);
+            edittext.setEnabled(false);
+            spin.setClickable(false);
+            spin.setEnabled(false);
+            final Button but = (Button) findViewById(R.id.go_to_timepicker);
+            but.setClickable(false);
+            but.setTextColor(Color.parseColor("#bdbdbd"));
+
             View view = this.getCurrentFocus();
             for (int i = 0; i < Integer.parseInt(time); i++) {
                 view = getLayoutInflater().inflate(R.layout.time_setfor_medication, null);
@@ -119,6 +130,26 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                 timepicker_list.add(picker);
                 parent_linearlayout.addView(view);
             }
+            editButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    spin.setSelection(0);
+                    parent_linearlayout.removeAllViews();
+                    editTabletName.setVisibility(View.GONE);
+                    editButton.setVisibility(View.GONE);
+                    edittext.setCursorVisible(true);
+                    //edittext.setFocusable(true);
+                    edittext.setEnabled(true);
+                    edittext.getText().clear();
+                    spin.setClickable(true);
+                    spin.setEnabled(true);
+                    but.setClickable(true);
+                    but.setTextColor(Color.parseColor("#000000"));
+
+                }
+            });
         }
     }
 

@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
+
         <activity android:name="com.example.sick.infoPage" />
         <activity android:name="com.example.sick.trackpage" />
         <activity android:name="com.example.sick.Activity3" />
@@ -25,8 +26,20 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:label="blah">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+            <data android:scheme="http"
+                android:host="www.example.com"
+                android:pathPrefix="/gizmos" />
+            <!-- note that the leading "/" is required for pathPrefix-->
+            <!-- Accepts URIs that begin with "example://gizmos” -->
+            <data android:scheme="example"
+                android:host="gizmos" />
             </intent-filter>
         </activity>
         <receiver
@@ -51,11 +64,6 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".TimeChangedReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
     </application>

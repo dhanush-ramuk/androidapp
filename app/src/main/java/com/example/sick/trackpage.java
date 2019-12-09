@@ -2,8 +2,11 @@ package com.example.sick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,14 +34,13 @@ public class trackpage extends AppCompatActivity {
     }
 
     public String shorten_test_name_main(String a){
-        String str = null;
         if(a.equals("blood urea nitrogen"))
-            str = "blood urea";
+            a = "blood urea";
         else if(a.equals("alanine amino transferase"))
-            str = "alanine aminotransferase";
+            a = "alanine aminotransferase";
         else if(a.equals("aspartate amino transferase"))
-            str = "aspartate aminotransferase";
-        return str;
+            a = "aspartate aminotransferase";
+        return a;
     }
 
     public void figure_out(ArrayList<All_Results> o) {
@@ -47,7 +49,7 @@ public class trackpage extends AppCompatActivity {
             View v1 = getLayoutInflater().inflate(R.layout.bloodtracking1, null);
             TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
             dateanddayString = all_tests[i];
-            datenday.setText(shorten_test_name_main(dateanddayString) +" " + "[" + helperClass.UnitIncluder(dateanddayString) + "]");
+            datenday.setText(shorten_test_name_main(dateanddayString) +" " + "[" + UnitIncluder(dateanddayString) + "]");
             parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
             for (int j = 0; j < o.size(); j++) {
                 if (o.get(j).get_map().get(all_tests[i]) != null) {
@@ -65,6 +67,58 @@ public class trackpage extends AppCompatActivity {
                 parent.addView(v1);
             }
         }
+    }
+    public String UnitIncluder(String testName){
+        String testUnit = null;
+        int i = Integer.parseInt(getPrefs("flag",getApplicationContext()));
+        if (i == 1) {
+
+            if (testName.equals("weight"))
+                testUnit = "kg";
+            else if (testName.equals("cholesterol") || testName.equals("triglyceride") || testName.equals("creatinine") || testName.equals("HDL") || testName.equals("LDL") || testName.equals("blood urea nitrogen") || testName.equals("glucose[fasting]") || testName.equals("glucose[random]") || testName.equals("bilirubin"))
+                testUnit = "mg/dl";
+            else if (testName.equals("alanine amino transferase") || testName.equals("alkaline phosphatase") || testName.equals("aspartate amino transferase"))
+                testUnit = "u/l";
+            else if (testName.equals("WBC") || testName.equals("RBC") || testName.equals("platelets"))
+                testUnit = "μL−1";
+            else if (testName.equals("hematocrit"))
+                testUnit = "%";
+            else if (testName.equals("hemoglobin") || testName.equals("albumin") || testName.equals("total protein"))
+                testUnit = "g/dl";
+            else if (testName.equals("BP"))
+                testUnit = "mmHg";
+            else if (testName.equals("C02") || testName.equals("sodium") || testName.equals("potassium") || testName.equals("chloride"))
+                testUnit = "mEq/L";
+            else
+                testUnit = "";
+            return testUnit;
+        } else if(i==0){
+
+            if (testName.equals("weight"))
+                testUnit = "kg";
+            else if (testName.equals("cholesterol") || testName.equals("triglyceride") || testName.equals("creatinine") || testName.equals("HDL") || testName.equals("LDL") || testName.equals("blood urea nitrogen") || testName.equals("glucose[fasting]") || testName.equals("glucose[random]") || testName.equals("bilirubin"))
+                testUnit = "mmol/L";
+            else if (testName.equals("alanine amino transferase") || testName.equals("alkaline phosphatase") || testName.equals("aspartate amino transferase"))
+                testUnit = "u/l";
+            else if (testName.equals("WBC") || testName.equals("RBC") || testName.equals("platelets"))
+                testUnit = "L−1";
+            else if (testName.equals("hematocrit"))
+                testUnit = "/ of 1.0";
+            else if (testName.equals("hemoglobin") || testName.equals("albumin") || testName.equals("total protein"))
+                testUnit = "g/l";
+            else if (testName.equals("BP"))
+                testUnit = "mmHg";
+            else if (testName.equals("C02") || testName.equals("sodium") || testName.equals("potassium") || testName.equals("chloride"))
+                testUnit = "mmol/L";
+            else
+                testUnit = "";
+            return testUnit;
+        }
+        return "b";
+    }
+    public static String getPrefs(String key, Context context){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPrefs.getString(key, "notfound");
     }
 
     public void back_to(View v){

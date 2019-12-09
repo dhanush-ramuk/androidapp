@@ -39,7 +39,7 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotification(String name) {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                .setContentTitle("Medication Remainder")
+                .setContentTitle("Medication Reminder")
                 .setContentText("time to take "+name.toUpperCase())
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.appIconColor))

@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     AlarmManager alarmManager;
     Intent intentAlarm;
     HelperClass helperClass;
+    int flag1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
         third_value_text = new ArrayList<>();
         day_text = new ArrayList<>();
         date_text = new ArrayList<>();
+        adapter = new Customadapter1();
+
+        //Three list to add prioritized values of user entered lab values
+        prioritized_left = new ArrayList<>();
+        prioritized_left1 = new ArrayList<>();
+        prioritized_left2 = new ArrayList<>();
 
 
         /*Using shared preference to get the Medication Remainder and All BloodWork Results object that contains
@@ -198,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
                 //if not empty, save and create a remainder
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
                     Calendar startTime = Calendar.getInstance();
-                    startTime.set(Calendar.SECOND, 0);
 
                     //map_med to store hour, minute, ampm, name of tablet remainder
                     Map<String, String> map_med = new HashMap<>();
@@ -245,16 +251,20 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
+                    flag1 = 1;
+
                     //changing time to calender instance for setting alarm, every time for each tablet name
                     for (int i = 0; i < hour.size(); i++) {
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
-                        startTime.set(Calendar.SECOND, 00);
+                        startTime.set(Calendar.SECOND, 0);
                         helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name);
                         map_med.put(String.valueOf(i), String.valueOf(kk));
                         map_med.put(i + "time", String.valueOf(startTime.getTimeInMillis()));
                         kk = kk + 1;
                     }
+
+
 
                     //obj_med, Arraylist of All_Medication object to save every created map for mediaction remainder
                     obj_med.add(new All_Medications(map_med));
@@ -377,11 +387,6 @@ public class MainActivity extends AppCompatActivity {
                         map.put(general_test_lhs.get(i), general_test_rhs.get(i));
                     flag = 1;
                 }
-
-                //Three list to add prioritized values of user entered lab values
-                prioritized_left = new ArrayList<>();
-                prioritized_left1 = new ArrayList<>();
-                prioritized_left2 = new ArrayList<>();
 
                 //If user entered value and pressed okay, then,
                 if (flag == 1) {
@@ -601,7 +606,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Listview Adapter to set all BloodWork values
-        adapter = new Customadapter1();
         v.setAdapter(adapter);
     }
 
@@ -614,7 +618,9 @@ public class MainActivity extends AppCompatActivity {
                 textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
         else
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
-       // check_function();
+       // if(flag1 != 1)
+            //check_function();
+
         for(int i=0; i<o.size(); i++){
             the_medication_brain(o.get(i).return_map());
         }
@@ -622,13 +628,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void check_function(){
-        Log.e("check", "working");
         for(int i = 0; i < obj_med.size(); i++) {
             for (int j = 0; j < Integer.parseInt(obj_med.get(i).return_map().get("size")); j++) {
                 int kk = Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(j)));
                 String name = obj_med.get(i).return_map().get("name");
                 String time = obj_med.get(i).return_map().get(j+"time");
-                Log.e("check", "working");
                 helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, (Long.valueOf(time)), name);            }
         }
     }
@@ -676,13 +680,12 @@ public class MainActivity extends AppCompatActivity {
 
     //function to delete alarm when delete button is clicked in main view medication list
     public void delete_Alarm(int i){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intentAlarm= new Intent(MainActivity.this, AlarmReceiver.class);
-        for(int ii = 0; ii < Integer.parseInt(obj_med.get(i).return_map().get("size")); ii++){
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),   Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(ii))), intentAlarm, 0);
+        for (int ii = 0; ii < Integer.parseInt(obj_med.get(i).return_map().get("size")); ii++) {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(obj_med.get(i).return_map().get(String.valueOf(ii))), intentAlarm, PendingIntent.FLAG_CANCEL_CURRENT);
             alarmManager.cancel(pendingIntent);
         }
     }
+
 
     //function to save BloodWork value in sharedpreferences
     public void saveBloodResults(){

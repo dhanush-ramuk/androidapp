@@ -25,9 +25,9 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/labResultMainHeading"
+            android:text="@string/bloodWork"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps" />

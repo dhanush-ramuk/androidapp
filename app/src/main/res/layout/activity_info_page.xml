@@ -38,10 +38,7 @@
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
         android:background="@drawable/splash_screen_app_icon"
-        android:maxWidth="2500dp"
-        android:maxHeight="250dp"
-        android:minWidth="200dp"
-        android:minHeight="200dp">
+       >
 
     </ImageView>
 
@@ -57,16 +54,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upcoming Features"
+            android:text="@string/UpcomingFeatures"
             android:textColor="@color/labText"
             android:textSize="20sp"
             android:id="@+id/workingId">
         </TextView>
 
-        <TextView
+        <ImageButton
             android:id="@+id/updownButton"
             android:layout_width="24dp"
-            android:layout_height="28dp"
+            android:layout_height="24dp"
             android:layout_marginStart="3dp"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="3dp"
@@ -75,12 +72,11 @@
             android:layout_marginBottom="3dp"
             android:layout_toRightOf="@+id/workingId"
             android:layout_toEndOf="@+id/workingId"
-            android:background="#fafafa"
-            android:drawableTop="@drawable/down"
+            android:background="@drawable/up"
             android:onClick="show"
             android:paddingTop="3dp">
 
-        </TextView>
+        </ImageButton>
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -100,10 +96,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="2dp"
-            android:text="Remainder to refill your pills">
+            android:text="Reminder to refill your pills">
 
         </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="Medication Reminder by day">
 
+    </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,11 +143,24 @@
         android:id="@+id/switch_layout">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forBloodWork"
+            android:textSize="22sp"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/SIunitissettext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:text="@string/unitsSIT">
+        </TextView>
         <Switch
             android:id="@+id/simpleSwitch"
             android:layout_width="200dp"
+            android:layout_marginTop="3dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/SIunitissettext"
             android:checked="true"
             android:switchPadding="5dp"
             android:text="@string/TraditionalUnit"
@@ -153,14 +168,19 @@
             android:textSize="20sp"
             android:textStyle="normal"
             android:theme="@style/SCBSwitch" />
-    <TextView
-        android:id="@+id/SIunitissettext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:text="@string/unitsSIT">
-    </TextView>
 
+        <Switch
+            android:id="@+id/simpleSwitchStandard"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:switchPadding="5dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/StandardUnit"
+            android:textColor="@color/labText"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:theme="@style/SCBSwitch" />
 
     </LinearLayout>
 
@@ -191,6 +211,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_margin="5dp"
                 android:drawableTop="@drawable/email_icon"
                 android:onClick="email">
@@ -200,6 +221,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_margin="5dp"
                 android:drawableTop="@drawable/twitter_icon"
                 android:onClick="twitter">

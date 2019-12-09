@@ -23,10 +23,13 @@
     <string name="VersionNumberInfoPage">Version 1.0</string>
     <string name="iconsdownloadedfromICONS8">icons downloaded from ICONS8</string>
     <string name="ForFeedback">For Feedback</string>
-    <string name="TraditionalUnit">Traditional Unit</string>
-    <string name="unitsSIT">[(mg/dl),(u/l), etc</string>
+    <string name="TraditionalUnit">Traditional</string>
+    <string name="StandardUnit">Standard</string>
+    <string name="unitsSIT">[(mg/dl),(u/l), etc.]</string>
+    <string name="forBloodWork">Units for BloodWork</string>
     <string name="DeleteButton">X</string>
-
+    <string name="UpcomingFeatures">Upcoming Features</string>
+<string name="bloodWork">Blood Work</string>
     <string-array name="types">
         <item>once</item>
         <item>twice</item>

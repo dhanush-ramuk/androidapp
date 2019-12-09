@@ -34,7 +34,6 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
     public void schedule_alarm(Context context, int kk, String name, String time){
-
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent my = new Intent(context, AlarmReceiver.class);
         helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name);

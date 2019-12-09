@@ -2,7 +2,9 @@ package com.example.sick;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -408,6 +410,58 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         }
     }
 
+    public String UnitIncluder(String testName){
+        String testUnit = null;
+        int i = Integer.parseInt(getPrefs("flag",getApplicationContext()));
+        if (i == 1) {
+
+            if (testName.equals("weight"))
+                testUnit = "kg";
+            else if (testName.equals("cholesterol") || testName.equals("triglyceride") || testName.equals("creatinine") || testName.equals("HDL") || testName.equals("LDL") || testName.equals("blood urea nitrogen") || testName.equals("glucose[fasting]") || testName.equals("glucose[random]") || testName.equals("bilirubin"))
+                testUnit = "mg/dl";
+            else if (testName.equals("alanine amino transferase") || testName.equals("alkaline phosphatase") || testName.equals("aspartate amino transferase"))
+                testUnit = "u/l";
+            else if (testName.equals("WBC") || testName.equals("RBC") || testName.equals("platelets"))
+                testUnit = "μL−1";
+            else if (testName.equals("hematocrit"))
+                testUnit = "%";
+            else if (testName.equals("hemoglobin") || testName.equals("albumin") || testName.equals("total protein"))
+                testUnit = "g/dl";
+            else if (testName.equals("BP"))
+                testUnit = "mmHg";
+            else if (testName.equals("C02") || testName.equals("sodium") || testName.equals("potassium") || testName.equals("chloride"))
+                testUnit = "mEq/L";
+            else
+                testUnit = "";
+            return testUnit;
+        } else if(i==0){
+
+            if (testName.equals("weight"))
+                testUnit = "kg";
+            else if (testName.equals("cholesterol") || testName.equals("triglyceride") || testName.equals("creatinine") || testName.equals("HDL") || testName.equals("LDL") || testName.equals("blood urea nitrogen") || testName.equals("glucose[fasting]") || testName.equals("glucose[random]") || testName.equals("bilirubin"))
+                testUnit = "mmol/L";
+            else if (testName.equals("alanine amino transferase") || testName.equals("alkaline phosphatase") || testName.equals("aspartate amino transferase"))
+                testUnit = "u/l";
+            else if (testName.equals("WBC") || testName.equals("RBC") || testName.equals("platelets"))
+                testUnit = "L−1";
+            else if (testName.equals("hematocrit"))
+                testUnit = "/ of 1.0";
+            else if (testName.equals("hemoglobin") || testName.equals("albumin") || testName.equals("total protein"))
+                testUnit = "g/l";
+            else if (testName.equals("BP"))
+                testUnit = "mmHg";
+            else if (testName.equals("C02") || testName.equals("sodium") || testName.equals("potassium") || testName.equals("chloride"))
+                testUnit = "mmol/L";
+            else
+                testUnit = "";
+            return testUnit;
+        }
+        return "b";
+    }
+    public static String getPrefs(String key, Context context){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPrefs.getString(key, "notfound");
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -442,7 +496,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(basic_test_lhs.get(i));
-            text2.setText(basic_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(basic_test_lhs.get(i)) + ")");
+            text2.setText(basic_test_rhs.get(i) + " " + "(" + UnitIncluder(basic_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
 
             //delete button click listener for BloodWork listview, removes the entered value
@@ -483,7 +537,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(CBC_lhs.get(i));
-            text2.setText(CBC_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(CBC_lhs.get(i)) + ")");
+            text2.setText(CBC_rhs.get(i) + " " + "(" + UnitIncluder(CBC_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -522,7 +576,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(general_test_lhs.get(i));
-            text2.setText(general_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(general_test_lhs.get(i)) + ")");
+            text2.setText(general_test_rhs.get(i) + " " + "(" + UnitIncluder(general_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -560,7 +614,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(kidney_test_lhs.get(i));
-            text2.setText(kidney_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(kidney_test_lhs.get(i)) + ")");
+            text2.setText(kidney_test_rhs.get(i) + " " + "(" + UnitIncluder(kidney_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -598,7 +652,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(liver_test_lhs.get(i));
-            text2.setText(liver_test_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(liver_test_lhs.get(i)) + ")");
+            text2.setText(liver_test_rhs.get(i) + " " + "(" + UnitIncluder(liver_test_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -637,7 +691,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(electrolytes_lhs.get(i));
-            text2.setText(electrolytes_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(electrolytes_lhs.get(i)) + ")");
+            text2.setText(electrolytes_rhs.get(i) + " " + "(" + UnitIncluder(electrolytes_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -675,7 +729,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(proteins_lhs.get(i));
-            text2.setText(proteins_rhs.get(i) + " " + "(" + helperClass.UnitIncluder(proteins_lhs.get(i)) +")");
+            text2.setText(proteins_rhs.get(i) + " " + "(" + UnitIncluder(proteins_lhs.get(i)) +")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
@@ -714,7 +768,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
             text1.setText(lipid_panel_lhs.get(i));
-            text2.setText(lipid_panel_rhs.get(i) + " " + "(" +helperClass.UnitIncluder(lipid_panel_lhs.get(i)) + ")");
+            text2.setText(lipid_panel_rhs.get(i) + " " + "(" + UnitIncluder(lipid_panel_lhs.get(i)) + ")");
             Button b = (Button)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 

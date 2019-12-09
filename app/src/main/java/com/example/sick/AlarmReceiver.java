@@ -1,27 +1,54 @@
 package com.example.sick;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.PowerManager;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.Calendar;
+
 public class AlarmReceiver extends BroadcastReceiver {
 
-    private static int NOTIFICATION_ID = 1;
-HelperClass helperClass;
+    private PowerManager.WakeLock screenWakeLock;
+    HelperClass helperClass = new HelperClass();
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (screenWakeLock == null){
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            screenWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "app:tag");
+            screenWakeLock.acquire();
+        }
         String name = intent.getStringExtra("name");
         int kk = intent.getIntExtra("kk", 0);
         String time = intent.getStringExtra("time");
         NotificationHelper helper = new NotificationHelper(context);
         NotificationCompat.Builder builder = helper.getChannelNotification(name);
-        helper.getManager().notify(NOTIFICATION_ID++, builder.build());
+        helper.getManager().notify(kk, builder.build()); //here kk acts as notification ID as it is unique for each notification
+        if (screenWakeLock != null)
+            screenWakeLock.release();
+        //cancelling the alarm once it gets fired
+        cancel_alarm(context, kk, time, name);
+    }
+
+    public void cancel_alarm(Context context, int kk, String time, String name){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent my = new Intent(context, AlarmReceiver.class);
-        helperClass = new HelperClass();
-        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)+ 86400000), name);
+        Intent in = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, kk, in, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
+
+        //creating the canceled alarm the next day
+        setAlarm(time, context, alarmManager, in, kk, name);
+    }
+
+    public void setAlarm(String time, Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, String tablet_name){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.valueOf(time));
+        cal.add(Calendar.DATE, 1);
+        helperClass.schedule_alarm(context, alarmManager, intentAlarm, kk, cal.getTimeInMillis(), tablet_name);
     }
 }
