@@ -46,9 +46,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void setAlarm(String time, Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, String tablet_name){
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(Long.valueOf(time));
-        cal.add(Calendar.DATE, 1);
-        helperClass.schedule_alarm(context, alarmManager, intentAlarm, kk, cal.getTimeInMillis(), tablet_name);
+        Long nextTime = Long.valueOf(time) + (24 * 60 * 60 * 1000);
+        helperClass.schedule_alarm(context, alarmManager, intentAlarm, kk, nextTime, tablet_name);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sick;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -58,6 +61,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     HelperClass helperClass;
     String Text;
     EditText e;
+    TextView datePicker;
+    Calendar myCalendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +71,13 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         final FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fab_camera);
         final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
         final View rootView = findViewById(R.id.rel);
-
+        datePicker = (TextView) findViewById(R.id.datePicker);
+datePicker.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivityForResult(new Intent(Activity2.this, Datepicker.class), 999);
+    }
+});
         //Callback function to hide/show FAB when keyboard is opened/closed
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -104,8 +115,20 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         strDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
         strDay = new SimpleDateFormat("EEEE").format(now);
+        datePicker.setText(new SimpleDateFormat("MM/dd").format(calendar.getTime()));
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+        if (requestCode == 999 && resultCode == RESULT_OK) {
+            strDay = data.getStringExtra("dayofweek");
+            Integer day = data.getIntExtra("day", 0);
+            Integer month = data.getIntExtra("month", 0);
+            Integer year = data.getIntExtra("year", 0);
+            strDate = year+"/"+month+"/"+day;
+            datePicker.setText(month+"/"+day);
+        }
+    }
     //Function to dynamically adjust height of entered Bloodwork values in the listview as listview in enclosed between scrollview
     public static void updateListViewHeight(ListView myListView) {
         ListAdapter myListAdapter = myListView.getAdapter();

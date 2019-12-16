@@ -49,7 +49,7 @@ public class trackpage extends AppCompatActivity {
             View v1 = getLayoutInflater().inflate(R.layout.bloodtracking1, null);
             TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
             dateanddayString = all_tests[i];
-            datenday.setText(shorten_test_name_main(dateanddayString) +" " + "[" + UnitIncluder(dateanddayString) + "]");
+            datenday.setText(shorten_test_name_main(dateanddayString) +" " + "[" + UnitIncluder(dateanddayString).toLowerCase() + "]");
             parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
             for (int j = 0; j < o.size(); j++) {
                 if (o.get(j).get_map().get(all_tests[i]) != null) {

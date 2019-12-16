@@ -46,7 +46,7 @@ public class FullResult extends AppCompatActivity {
                 TextView t1 = (TextView) v.findViewById(R.id.textView);
                 TextView t2 = (TextView) v.findViewById(R.id.textView2);
                 t1.setText(all_tests[j]);
-                t2.setText(map.get(all_tests[j]) + " " +"[" + UnitIncluder(all_tests[j]) + "]");
+                t2.setText(map.get(all_tests[j]) + " " +"[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
                 layout.addView(v);
             }
         }

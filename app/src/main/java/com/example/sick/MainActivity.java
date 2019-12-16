@@ -248,7 +248,6 @@ public class MainActivity extends AppCompatActivity {
                     //My way of creating unique value for each remainder
                     for (int ii = 0; ii < obj_med.size(); ii++) {
                         kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
-
                     }
 
                     flag1 = 1;
@@ -657,7 +656,7 @@ public class MainActivity extends AppCompatActivity {
             time3.add("-");
         }
 
-        //RecyclerView, place to diaply Medication remainder in main view
+        //RecyclerView, place to display Medication remainder in main view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.listview_medications);
         recyclerView.setLayoutManager(layoutManager);

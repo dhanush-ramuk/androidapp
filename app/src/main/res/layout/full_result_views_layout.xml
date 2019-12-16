@@ -4,11 +4,11 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:padding="3dp">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="220dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="0"
@@ -16,7 +16,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="5dp"
         android:textColor="#131212"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="normal"
         android:theme="@style/MyEditText"
         app:fontFamily="sans-serif-condensed-medium" />
@@ -34,9 +34,9 @@
         android:layout_marginRight="2dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/labTextHeading"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textStyle="normal"
         android:theme="@style/MyEditText"
-        app:fontFamily="sans-serif-smallcaps" />
+        app:fontFamily="sans-serif" />
 
 </GridLayout>

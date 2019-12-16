@@ -81,7 +81,7 @@
             android:orientation="vertical"
             android:background="@color/labSecondary"
             android:elevation="15dp"
-            android:layout_margin="10dp"
+            android:layout_margin="6dp"
             >
 
         </LinearLayout>
