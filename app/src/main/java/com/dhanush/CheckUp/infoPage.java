@@ -1,4 +1,4 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +22,6 @@ public class infoPage extends AppCompatActivity {
 Switch simple_switch, simple_switch_standard;
 
 public static int i = 1;
-Map<String, String> Sswitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +96,7 @@ Map<String, String> Sswitch;
     }
     public static String getPrefs(String key, Context context){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getString(key, "notfound");
+        return sharedPrefs.getString(key, "1");
     }
     public static void setPrefs(String key, String value, Context a){
 

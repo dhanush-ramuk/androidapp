@@ -1,4 +1,4 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 

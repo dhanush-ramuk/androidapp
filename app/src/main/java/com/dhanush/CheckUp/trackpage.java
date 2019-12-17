@@ -1,6 +1,5 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,41 +12,59 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-public class FullResult extends AppCompatActivity {
+public class trackpage extends AppCompatActivity {
     ArrayList<All_Results> obj;
-    String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
+    LinearLayout parent, parent1;
+    String dateanddayString = null;
+    String[] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
-    int i;
+    int flag = 0;
     HelperClass helperClass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_full_result);
+        setContentView(R.layout.activity_trackpage);
+        helperClass = new HelperClass();
         Intent intent = getIntent();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
-        i = intent.getIntExtra("object index", 0);
-        set_value();
-
+        figure_out(obj);
     }
 
-    public void set_value(){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.parent_layout);
-        Map<String, String> map = obj.get(i).get_map();
-        TextView date = (TextView) findViewById(R.id.dateText);
-        TextView day = (TextView) findViewById(R.id.dayText);
-        date.setText(obj.get(i).get_map2().get("date"));
-        day.setText(obj.get(i).get_map2().get("day"));
-        for (int j = 0; j < all_tests.length; j++){
-            if(map.get(all_tests[j])!=null){
-                View v = getLayoutInflater().inflate(R.layout.full_result_views_layout, null);
-                TextView t1 = (TextView) v.findViewById(R.id.textView);
-                TextView t2 = (TextView) v.findViewById(R.id.textView2);
-                t1.setText(all_tests[j]);
-                t2.setText(map.get(all_tests[j]) + " " +"[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
-                layout.addView(v);
+    public String shorten_test_name_main(String a){
+        if(a.equals("blood urea nitrogen"))
+            a = "blood urea";
+        else if(a.equals("alanine amino transferase"))
+            a = "alanine aminotransferase";
+        else if(a.equals("aspartate amino transferase"))
+            a = "aspartate aminotransferase";
+        return a;
+    }
+
+    public void figure_out(ArrayList<All_Results> o) {
+        for (int i = 0; i < all_tests.length; i++) {
+            parent = (LinearLayout) findViewById(R.id.parentLinearLayout);
+            View v1 = getLayoutInflater().inflate(R.layout.bloodtracking1, null);
+            TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
+            dateanddayString = all_tests[i];
+            datenday.setText(shorten_test_name_main(dateanddayString) +" " + "[" + UnitIncluder(dateanddayString).toLowerCase() + "]");
+            parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
+            for (int j = 0; j < o.size(); j++) {
+                if (o.get(j).get_map().get(all_tests[i]) != null) {
+                    View v2 = getLayoutInflater().inflate(R.layout.bloodtracking2, null);
+                    TextView t1 = (TextView) v2.findViewById(R.id.textView);
+                    TextView t2 = (TextView) v2.findViewById(R.id.textView2);
+                    t1.setText(o.get(j).get_map2().get("date"));
+                    t2.setText(o.get(j).get_map().get(all_tests[i]));
+                    parent1.addView(v2);
+                    flag = 1;
+                }
+            }
+            if(flag == 1) {
+                flag = 0;
+                parent.addView(v1);
             }
         }
     }
@@ -101,34 +118,12 @@ public class FullResult extends AppCompatActivity {
     }
     public static String getPrefs(String key, Context context){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getString(key, "1");
+        return sharedPrefs.getString(key, "notfound");
     }
 
-    public void backToMain(View v){
+    public void back_to(View v){
         Intent intent = new Intent();
-        intent.putExtra("value", -1);
         setResult(RESULT_OK, intent);
         finish();
     }
-
-    public void deleteResult(View v){
-        Intent intent = new Intent();
-        intent.putExtra("value", i);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
-    public void gotoTrackPage(View v){
-        Intent i = new Intent(getApplicationContext(), trackpage.class);
-        i.putExtra("list", obj);
-        startActivityForResult(i, 995);
-
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == 995 && resultCode == RESULT_OK) {
-            //do nothing
-        }
-
-        }
 }

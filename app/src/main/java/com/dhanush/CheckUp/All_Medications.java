@@ -1,4 +1,4 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import java.io.Serializable;
 import java.util.Map;

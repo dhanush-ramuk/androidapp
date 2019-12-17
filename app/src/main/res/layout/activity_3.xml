@@ -94,7 +94,6 @@
                     app:fontFamily="sans-serif-condensed"/>
                 <Spinner
                     android:id="@+id/spinner_tab_times"
-                    style="@android:style/Widget.Material.Spinner"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"

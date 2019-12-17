@@ -1,4 +1,4 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import android.app.AlarmManager;
 import android.content.BroadcastReceiver;

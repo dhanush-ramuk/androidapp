@@ -1,6 +1,5 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -72,7 +70,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
         final View rootView = findViewById(R.id.rel);
         datePicker = (TextView) findViewById(R.id.datePicker);
-datePicker.setOnClickListener(new View.OnClickListener() {
+        datePicker.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         startActivityForResult(new Intent(Activity2.this, Datepicker.class), 999);

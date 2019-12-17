@@ -93,7 +93,6 @@ android:layout_height="match_parent"
 
             <Spinner
                 android:id="@+id/spinner_basic_lab"
-                style="@android:style/Widget.Material.Spinner"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_background"
@@ -179,7 +178,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_CBC"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
@@ -289,7 +287,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_generaltest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
@@ -375,7 +372,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_kidneytest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
@@ -462,7 +458,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_livertest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
@@ -548,7 +543,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_electrolytestest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -635,7 +629,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_proteintest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -721,7 +714,6 @@ android:layout_height="match_parent"
 
         <Spinner
             android:id="@+id/spinner_lipidstest"
-            style="@android:style/Widget.Material.Spinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"

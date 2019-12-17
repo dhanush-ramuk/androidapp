@@ -1,4 +1,4 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,11 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-
-import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

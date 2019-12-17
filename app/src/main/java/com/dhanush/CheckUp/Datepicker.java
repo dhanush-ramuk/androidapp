@@ -1,17 +1,13 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import java.sql.DataTruncation;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class Datepicker extends AppCompatActivity {
     android.widget.DatePicker datePicker;

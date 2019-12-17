@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sick">
+    package="com.dhanush.CheckUp"
+    android:versionCode="4"
+    android:versionName="1.0"
+    >
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -15,15 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".Datepicker"></activity>
-        <activity android:name=".infoPage" />
-        <activity android:name=".trackpage" />
-        <activity android:name=".Activity3" />
-        <activity android:name=".FullResult" />
-        <activity android:name=".Activity2" />
+        <activity android:name="com.dhanush.CheckUp.Datepicker"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.dhanush.CheckUp.infoPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.dhanush.CheckUp.trackpage"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.dhanush.CheckUp.Activity3"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.dhanush.CheckUp.FullResult"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.dhanush.CheckUp.Activity2"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
+            android:name="com.dhanush.CheckUp.MainActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,14 +55,14 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="com.dhanush.CheckUp.AlarmReceiver"
             android:enabled="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".BootReceiver"
+            android:name="com.dhanush.CheckUp.BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -63,7 +72,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".PackageReplaced"
+            android:name="com.dhanush.CheckUp.PackageReplaced"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />

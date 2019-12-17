@@ -1,15 +1,10 @@
-package com.example.sick;
+package com.dhanush.CheckUp;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import java.util.Calendar;
 
 public class HelperClass {
 
