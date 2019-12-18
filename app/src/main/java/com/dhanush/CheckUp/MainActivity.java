@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
     started from startActivityForResult() function from MainActivity*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         //TODO maybe remove cancel button in FullResult Activity as it is same as back button
         //finish() from FullResult Activity

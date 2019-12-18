@@ -117,7 +117,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 999 && resultCode == RESULT_OK) {
             strDay = data.getStringExtra("dayofweek");
             Integer day = data.getIntExtra("day", 0);
@@ -481,7 +481,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
     public static String getPrefs(String key, Context context){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getString(key, "notfound");
+        return sharedPrefs.getString(key, "1");
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

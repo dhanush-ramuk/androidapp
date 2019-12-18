@@ -130,18 +130,7 @@ public void twitter(View v){
         startActivity(browserIntent);
     }
 
-    public void show(View v){
-        LinearLayout l = (LinearLayout) findViewById(R.id.featuresList);
-        ImageButton b = (ImageButton) findViewById(R.id.updownButton);
-        if (l.getVisibility() == View.GONE) {
-            l.setVisibility(View.VISIBLE);
-            b.setBackgroundResource(R.drawable.down);
-            //videoView_linearlayout.setVisibility(View.GONE);
-        } else {
-            l.setVisibility(View.GONE);
-            b.setBackgroundResource(R.drawable.up);
-        }
-    }
+
 
 
 }

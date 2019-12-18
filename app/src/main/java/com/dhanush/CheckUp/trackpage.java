@@ -118,7 +118,7 @@ public class trackpage extends AppCompatActivity {
     }
     public static String getPrefs(String key, Context context){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getString(key, "notfound");
+        return sharedPrefs.getString(key, "1");
     }
 
     public void back_to(View v){
