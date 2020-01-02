@@ -175,24 +175,6 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
             return Integer.toString(hour);
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radio_pirates:
-                if (checked)
-                    alert = 0;
-                    break;
-            case R.id.radio_ninjas:
-                if (checked)
-                    alert = 1;
-                    break;
-        }
-    }
-
-
     //onclick function when user clicks okay button after entering time
     public void back_to_main(View v) {
         Integer h;
@@ -231,5 +213,10 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putExtra("boolean", 0);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    public void openExtraFeaturesMedication(View v){
+        startActivityForResult(new Intent(getApplicationContext(), ExtraFeaturesMedication.class), 999);
+
     }
 }

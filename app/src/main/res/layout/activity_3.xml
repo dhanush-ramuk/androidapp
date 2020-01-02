@@ -111,40 +111,7 @@
                     android:background="@drawable/spinner_background_medication"
                     android:popupBackground="@color/medicationThird"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="3dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/AlertType"
-                    android:textColor="@color/medicationText"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:fontFamily="sans-serif-condensed">
 
-                </TextView>
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <RadioButton android:id="@+id/radio_pirates"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/AlertOnce"
-                        android:onClick="onRadioButtonClicked"
-                        android:checked="true"/>
-                    <RadioButton android:id="@+id/radio_ninjas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/AlertRepeat"
-                        android:onClick="onRadioButtonClicked"/>
-                </RadioGroup>
-
-
-            </LinearLayout>
             <Button
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="60dp"
