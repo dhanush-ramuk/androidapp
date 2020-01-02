@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
@@ -12,8 +12,6 @@
         android:id="@+id/textView"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="0"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
@@ -28,8 +26,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="1"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginEnd="10dp"
@@ -39,4 +37,9 @@
         android:textSize="24sp"
         app:fontFamily="sans-serif-smallcaps"
         tools:text="yy" />
-</GridLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textView"
+        android:background="@android:color/darker_gray"/>
+</RelativeLayout>

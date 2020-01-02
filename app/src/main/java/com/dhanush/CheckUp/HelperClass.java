@@ -9,7 +9,7 @@ import android.os.Build;
 public class HelperClass {
 
 
-    public void schedule_alarm(Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, Long startTime, String tablet_name) {
+    public void schedule_alarm(Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, Long startTime, String tablet_name, int alert, int notsnooze) {
 
         if (System.currentTimeMillis() > startTime) {
             startTime = startTime + (24 * 60 * 60 * 1000);
@@ -17,6 +17,8 @@ public class HelperClass {
         intentAlarm.putExtra("name", tablet_name);
         intentAlarm.putExtra("kk", kk);
         intentAlarm.putExtra("time", String.valueOf(startTime));
+        intentAlarm.putExtra("alert", alert);
+        intentAlarm.putExtra("notsnooze", notsnooze);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, kk, intentAlarm, PendingIntent.FLAG_CANCEL_CURRENT);
             if (Build.VERSION.SDK_INT < 23) {
                 if (Build.VERSION.SDK_INT >= 19) {

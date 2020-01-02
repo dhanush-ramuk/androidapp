@@ -28,14 +28,15 @@ public class BootReceiver extends BroadcastReceiver {
                     int kk = Integer.parseInt(start_obj1.get(i).return_map().get(String.valueOf(j)));
                     String name = start_obj1.get(i).return_map().get("name");
                     String time = start_obj1.get(i).return_map().get(j+"time");
-                    schedule_alarm(context, kk, name, time);
+                    int alert = Integer.parseInt(start_obj1.get(i).return_map().get("alert"));
+                    schedule_alarm(context, kk, name, time, alert);
                 }
             }
         }
 
-    public void schedule_alarm(Context context, int kk, String name, String time){
+    public void schedule_alarm(Context context, int kk, String name, String time, int alert){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent my = new Intent(context, AlarmReceiver.class);
-        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name);
+        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name, alert, 1);
     }
 }

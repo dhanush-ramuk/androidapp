@@ -14,34 +14,81 @@
         android:textColor="#bdbdbd"
         android:id="@+id/noListEnteredText">
     </TextView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_medications"
-        android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
-        android:elevation="10dp"
-        android:dividerHeight="5.0sp"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_medications"
-        android:layout_marginBottom="55dp"
-        >
-        <ListView
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/BloodWorkMainActivity"
+        android:background="@color/labThird"
+        android:onClick="goToBloodWorkMainActivity"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listview_main"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
-            android:dividerHeight="5.0sp"
-            >
-        </ListView>
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/YourBloodWork"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:id="@+id/BloodWorkText">
+
+        </TextView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/BloodWorkText"
+            android:layout_toEndOf="@+id/BloodWorkText"
+            android:src="@drawable/rightred"
+            android:layout_centerVertical="true">
+
+        </ImageView>
     </RelativeLayout>
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/MedicationMainActivity"
+        android:layout_below="@+id/BloodWorkMainActivity"
+        android:background="@color/medicationThird"
+        android:onClick="goToMedicationMainActivity"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/YourMedication"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:id="@+id/MedicationText">
+
+        </TextView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/MedicationText"
+            android:layout_toEndOf="@+id/MedicationText"
+            android:src="@drawable/rightblue"
+            android:layout_centerVertical="true">
+
+        </ImageView>
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@id/buttons"

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,6 +39,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<TimePicker> timepicker_list;
     ArrayAdapter<String> spin_elements;
     String test[] = {"once", "twice", "thrice"};
+    int alert = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +175,24 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
             return Integer.toString(hour);
     }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_pirates:
+                if (checked)
+                    alert = 0;
+                    break;
+            case R.id.radio_ninjas:
+                if (checked)
+                    alert = 1;
+                    break;
+        }
+    }
+
+
     //onclick function when user clicks okay button after entering time
     public void back_to_main(View v) {
         Integer h;
@@ -199,6 +219,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("hour", hour);
         i.putStringArrayListExtra("minute", minute);
         i.putIntegerArrayListExtra("hourin24", hourin12);
+        i.putExtra("alert", alert);
         i.putExtra("boolean", 1);
         setResult(RESULT_OK, i);
         finish();

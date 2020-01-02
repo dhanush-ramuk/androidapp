@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Check Up</string>
+    <string name="YourBloodWork">My BloodWork Record</string>
+    <string name="YourMedication">My Medication Record</string>
+    <string name="AlertType">Notification type</string>
+    <string name="AlertOnce">Once</string>
+    <string name="AlertRepeat">persistent</string>
     <string name="ok_button_basic_lab">Ok</string>
     <string name="basic_test">Routine checkup</string>
     <string name="complete_blood_count_panel">Complete Blood Count</string>

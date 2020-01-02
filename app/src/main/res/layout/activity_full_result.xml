@@ -79,9 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:background="@color/labSecondary"
-            android:elevation="15dp"
-            android:layout_margin="6dp"
+            android:layout_margin="5dp"
             >
 
         </LinearLayout>

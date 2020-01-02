@@ -2,12 +2,16 @@ package com.dhanush.CheckUp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
@@ -39,13 +43,28 @@ public class NotificationHelper extends ContextWrapper {
     }
 
 
-    public NotificationCompat.Builder getChannelNotification(String name) {
+    public NotificationCompat.Builder getChannelNotification(String name, int kk, int alert) {
+        Intent snoozeIntent = new Intent(this, SnoozeAlarm.class);
+        //snoozeIntent.setAction(ACTION_SNOOZE);
+        snoozeIntent.putExtra("name", name);
+        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+        snoozeIntent.putExtra("kk", kk);
+        snoozeIntent.putExtra("alert", alert);
+        PendingIntent snoozePendingIntent =
+                PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
+        PendingIntent notifyPIntent =
+                PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
+
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Medication Reminder")
                 .setContentText("time to take "+name.toUpperCase())
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.appIconColor))
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification));
+                .setContentIntent(notifyPIntent)
+                .setAutoCancel(true)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification))
+                .addAction(R.drawable.notification_icon_24, "snooze for 5 minutes",
+                        snoozePendingIntent);
 
     }
 }

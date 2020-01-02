@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:id="@+id/root">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mainHeading"
@@ -24,8 +24,18 @@
         android:text="@string/medicationReminderHeading"
         android:id="@+id/medication_text"
         android:padding="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         />
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/extra_features_medication_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="openExtraFeaturesMedication"
+            />
+    </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -100,6 +110,40 @@
                     android:layout_marginStart="40dp"
                     android:background="@drawable/spinner_background_medication"
                     android:popupBackground="@color/medicationThird"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="3dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AlertType"
+                    android:textColor="@color/medicationText"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="sans-serif-condensed">
+
+                </TextView>
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton android:id="@+id/radio_pirates"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/AlertOnce"
+                        android:onClick="onRadioButtonClicked"
+                        android:checked="true"/>
+                    <RadioButton android:id="@+id/radio_ninjas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/AlertRepeat"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+
+
             </LinearLayout>
             <Button
                 style="@style/Widget.AppCompat.Button"
