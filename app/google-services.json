@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "504558554355",
+    "firebase_url": "https://check-up-d8bc5.firebaseio.com",
+    "project_id": "check-up-d8bc5",
+    "storage_bucket": "check-up-d8bc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504558554355:android:478600ce63d8bba5d0bb86",
+        "android_client_info": {
+          "package_name": "com.dhanush.CheckUp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504558554355-tlph2mfq4err8jogp5qpl9ev7ost4jt3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCnryk1Xb8SxxTVk6_dT3H7CVNIjbNQlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504558554355-tlph2mfq4err8jogp5qpl9ev7ost4jt3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
