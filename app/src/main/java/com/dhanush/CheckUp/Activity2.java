@@ -61,6 +61,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     EditText e;
     TextView datePicker;
     Calendar myCalendar;
+    Integer daya, montha, yeara;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +71,6 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         final FloatingActionButton b1 = (FloatingActionButton) findViewById(R.id.fab_back_lab);
         final View rootView = findViewById(R.id.rel);
         datePicker = (TextView) findViewById(R.id.datePicker);
-        datePicker.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivityForResult(new Intent(Activity2.this, Datepicker.class), 999);
-    }
-});
         //Callback function to hide/show FAB when keyboard is opened/closed
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -118,14 +113,30 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 999 && resultCode == RESULT_OK) {
-            strDay = data.getStringExtra("dayofweek");
-            Integer day = data.getIntExtra("day", 0);
-            Integer month = data.getIntExtra("month", 0);
-            Integer year = data.getIntExtra("year", 0);
-            strDate = year+"/"+month+"/"+day;
-            datePicker.setText(month+"/"+day);
+        //returns from extra features BloodWork
+
+        //TODO Need to change this too get date and day for different date picker
+        if (requestCode == 998 && resultCode == RESULT_OK) {
+            if(data.getIntExtra("boolean", 0) == 1) {
+                strDay = data.getStringExtra("dayofweek");
+                Integer day = data.getIntExtra("day", 0);
+                Integer month = data.getIntExtra("month", 0);
+                Integer year = data.getIntExtra("year", 0);
+                strDate = year + "/" + month + "/" + day;
+                datePicker.setText(month + "/" + day);
+                if(data.getIntExtra("alertForNextBloodWork", 0) == 1){
+                    daya = data.getIntExtra("dayalert", 0);
+                    montha = data.getIntExtra("monthalert", 0);
+                    yeara = data.getIntExtra("yearalert", 0);
+                }
+
+
+            } else if(data.getIntExtra("boolean", 0) == 0){
+                //do nothing if the cancel button is clicked on the extra feature bloodwork activity
+            }
+
         }
+
     }
     //Function to dynamically adjust height of entered Bloodwork values in the listview as listview in enclosed between scrollview
     public static void updateListViewHeight(ListView myListView) {
@@ -429,6 +440,11 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                  e.setCursorVisible(true);
                  break;
         }
+    }
+
+    public void openExtraFeaturesBloodWork(View v){
+        startActivityForResult(new Intent(getApplicationContext(), ExtraFeaturesBloodWork.class), 998);
+
     }
 
     public String UnitIncluder(String testName){

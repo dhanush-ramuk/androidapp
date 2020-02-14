@@ -35,6 +35,7 @@
     <string name="DeleteButton">X</string>
     <string name="UpcomingFeatures">Upcoming Features</string>
     <string name="bloodWork">Blood Work</string>
+    <string name="DoctorsCommentText">Doctors Comment</string>
     <string-array name="types">
         <item>once</item>
         <item>twice</item>

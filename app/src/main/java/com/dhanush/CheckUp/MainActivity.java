@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> hour, minute, ampm;
                 ArrayList<Integer> hourin12;
                 String tablet_name;
-                int alert;
+                int alertNotification, alertRefill, day = 0, month = 0, year = 0;
 
                 //get the returned tablet name and time value
                 tablet_name = data.getStringExtra("tablet_name");
@@ -200,11 +201,18 @@ public class MainActivity extends AppCompatActivity {
                 ampm = data.getStringArrayListExtra("ampm");
                 hourin12 = new ArrayList<Integer>();
                 hourin12 = data.getIntegerArrayListExtra("hourin24");
-                alert = data.getIntExtra("alert", 0);
+                alertNotification = data.getIntExtra("alertNotification", 0);
+                alertRefill = data.getIntExtra("alertRefill", 0);
+                if(alertRefill == 1){
+                    day = data.getIntExtra("day", 0);
+                    month = data.getIntExtra("month", 0);
+                    year = data.getIntExtra("year", 0);
+                }
 
                 //if not empty, save and create a remainder
                 if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
                     Calendar startTime = Calendar.getInstance();
+                    Calendar startDate = Calendar.getInstance();
 
                     //map_med to store hour, minute, ampm, name of tablet remainder
                     Map<String, String> map_med = new HashMap<>();
@@ -241,8 +249,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     map_med.put("size", String.valueOf(size));
                     map_med.put("name", tablet_name);
-                    map_med.put("alert", String.valueOf(alert));
-
+                    map_med.put("alertNotification", String.valueOf(alertNotification));
+                    map_med.put("alertRefill", String.valueOf(alertRefill));
                     //kk is unique value for each remainder used in creating Pending intent.
                     int kk = 0;
 
@@ -252,13 +260,26 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     flag1 = 1;
-
+                    if (alertRefill == 1){
+                        startDate.set(Calendar.YEAR, year);
+                        startDate.set(Calendar.MONTH, month);
+                        startDate.set(Calendar.DAY_OF_MONTH, day);
+                        startDate.set(Calendar.HOUR_OF_DAY, 9);
+                        startDate.set(Calendar.MINUTE, 0);
+                        startDate.set(Calendar.SECOND, 0);
+                        Log.e("check", "refill1");
+                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "refill", 0, 1, 1);
+                        map_med.put("kkvaluerefill", String.valueOf(kk));
+                        map_med.put("Refilltime", String.valueOf(startTime.getTimeInMillis()));
+                        kk = kk + 1;
+                    }
                     //changing time to calender instance for setting alarm, every time for each tablet name
                     for (int i = 0; i < hour.size(); i++) {
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
+                        Log.e("check", "hour value "+hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
                         startTime.set(Calendar.SECOND, 0);
-                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name, alert, 1);
+                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name, alertNotification, 1, 0);
                         map_med.put(String.valueOf(i), String.valueOf(kk));
                         map_med.put(i + "time", String.valueOf(startTime.getTimeInMillis()));
                         kk = kk + 1;

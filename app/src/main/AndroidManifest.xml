@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".ExtraFeaturesMedication"></activity>
+        <activity android:name=".ExtraFeaturesBloodWork"></activity>
+        <activity android:name=".ExtraFeaturesMedication" />
         <activity android:name=".MedicationMainActivity" />
         <activity android:name=".BloodWorkMainActivity" />
         <activity
@@ -89,7 +90,7 @@
         </receiver>
         <receiver
             android:name=".SnoozeAlarm"
-            android:enabled="true"></receiver>
+            android:enabled="true" />
     </application>
 
 </manifest>

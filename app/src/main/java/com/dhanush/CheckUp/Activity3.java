@@ -1,5 +1,6 @@
 package com.dhanush.CheckUp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -39,7 +40,9 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<TimePicker> timepicker_list;
     ArrayAdapter<String> spin_elements;
     String test[] = {"once", "twice", "thrice"};
-    int alert = 0;
+    int alertNotification = 0, alertRefill = 0;
+    int day = 0, month = 0, year = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                     b.setVisibility(View.INVISIBLE);
                     b1.setVisibility(View.INVISIBLE);
 
-                }else {
+                } else {
                     b.setVisibility(View.VISIBLE);
                     b1.setVisibility(View.VISIBLE);
                 }
@@ -69,7 +72,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         });
         spin = (Spinner) findViewById(R.id.spinner_tab_times);
         spin.setOnItemSelectedListener(this);
-        spin_elements = new ArrayAdapter<String>(this,R.layout.spinner_design_medication, test);
+        spin_elements = new ArrayAdapter<String>(this, R.layout.spinner_design_medication, test);
         spin_elements.setDropDownViewResource(R.layout.spinner_dropdown_medication_design);
         spin.setAdapter(spin_elements);
     }
@@ -90,19 +93,18 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
 
-    public void onclick_listview_for_time_enter(View v){
+    public void onclick_listview_for_time_enter(View v) {
         final TextView editTabletName = (TextView) findViewById(R.id.editTabletName);
-       final ImageButton editButton = (ImageButton) findViewById(R.id.editDeleteButton);
+        final ImageButton editButton = (ImageButton) findViewById(R.id.editDeleteButton);
 
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         final EditText edittext = (EditText) findViewById(R.id.tablet_name);
         tablet_name = edittext.getText().toString();
 
-        if(edittext.getText().toString().isEmpty()){
+        if (edittext.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), "enter tablet name", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             time = spin.getSelectedItem().toString();
             if (time.equals("once"))
                 time = "1";
@@ -110,7 +112,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                 time = "2";
             if (time.equals("thrice"))
                 time = "3";
-            editTabletName.setText(tablet_name +" - "+time+" times");
+            editTabletName.setText(tablet_name + " - " + time + " times");
             editTabletName.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
             final LinearLayout parent_linearlayout = (LinearLayout) findViewById(R.id.timer);
@@ -132,11 +134,9 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
                 timepicker_list.add(picker);
                 parent_linearlayout.addView(view);
             }
-            editButton.setOnClickListener(new View.OnClickListener()
-            {
+            editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     spin.setSelection(0);
                     parent_linearlayout.removeAllViews();
                     editTabletName.setVisibility(View.GONE);
@@ -156,7 +156,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     //function to convert 24hr time to 12hr time and find am or pm
-    public String find_ampm(Integer hour, Integer flag){
+    public String find_ampm(Integer hour, Integer flag) {
         String format;
         if (hour == 0) {
             hour += 12;
@@ -169,7 +169,7 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         } else {
             format = "AM";
         }
-        if(flag==0)
+        if (flag == 0)
             return format;
         else
             return Integer.toString(hour);
@@ -178,16 +178,15 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
     //onclick function when user clicks okay button after entering time
     public void back_to_main(View v) {
         Integer h;
-        for(int i=0; i<timepicker_list.size(); i++){
+        for (int i = 0; i < timepicker_list.size(); i++) {
             //Timepicker gethour function changed after SDK 23, so two function based on user sdk
-            if(Build.VERSION.SDK_INT < 23) {
+            if (Build.VERSION.SDK_INT < 23) {
                 h = timepicker_list.get(i).getCurrentHour();
                 hourin12.add(h);
                 ampm.add(find_ampm(h, 0));
                 hour.add(find_ampm(h, 1));
                 minute.add(Integer.toString(timepicker_list.get(i).getCurrentMinute()));
-            }
-            else {
+            } else {
                 h = timepicker_list.get(i).getHour();
                 hourin12.add(h);
                 ampm.add(find_ampm(h, 0));
@@ -201,22 +200,43 @@ public class Activity3 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("hour", hour);
         i.putStringArrayListExtra("minute", minute);
         i.putIntegerArrayListExtra("hourin24", hourin12);
-        i.putExtra("alert", alert);
+        i.putExtra("alertNotification", alertNotification);
+        i.putExtra("alertRefill", alertRefill);
+        i.putExtra("day", day);
+        i.putExtra("month", month);
+        i.putExtra("year", year);
         i.putExtra("boolean", 1);
         setResult(RESULT_OK, i);
         finish();
     }
 
     //onclick function when user closes the activity
-    public void closeActivity(View v){
+    public void closeActivity(View v) {
         Intent i = new Intent();
         i.putExtra("boolean", 0);
         setResult(RESULT_OK, i);
         finish();
     }
 
-    public void openExtraFeaturesMedication(View v){
+    public void openExtraFeaturesMedication(View v) {
         startActivityForResult(new Intent(getApplicationContext(), ExtraFeaturesMedication.class), 999);
+    }
 
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //finish() from ExtraFeaturesMedication Activity
+        if (requestCode == 999 && resultCode == RESULT_OK) {
+                if(data.getIntExtra("boolean", 1) == 1){
+                    alertNotification = data.getIntExtra("notificationType", 0);
+                    alertRefill = data.getIntExtra("refillValue", 0);
+                    if(alertRefill == 1){
+                        day = data.getIntExtra("day", 0);
+                        month = data.getIntExtra("month", 0);
+                        year = data.getIntExtra("year", 0);
+                    }
+                } else if (data.getIntExtra("boolean", 1) == 0){
+                    //do nothing
+                }
+        }
     }
 }

@@ -38,15 +38,16 @@ android:layout_height="match_parent">
             android:textSize="22sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps" />
+            app:fontFamily="sans-serif-smallcaps"
+            android:id="@+id/BloodWorkTextText"/>
 
         <TextView
             android:id="@+id/datePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="2dp"
+            android:layout_toRightOf="@id/BloodWorkTextText"
+            android:layout_toEndOf="@id/BloodWorkTextText"
+            android:paddingLeft="5dp"
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
             android:paddingRight="5dp"
@@ -55,6 +56,15 @@ android:layout_height="match_parent">
             android:textStyle="bold"
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/extra_features_bloodwork_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:onClick="openExtraFeaturesBloodWork"
+            />
     </RelativeLayout>
 
 

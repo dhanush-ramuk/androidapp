@@ -4,61 +4,66 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="3dp"
-        android:layout_alignParentTop="true"
-        android:id="@+id/linearLayoutNotificationAlert">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AlertType"
-            android:textColor="@color/medicationText"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:fontFamily="sans-serif-condensed">
-
-        </TextView>
-
-
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/radioButtonAlert">
-        <RadioButton android:id="@+id/radio_pirates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AlertOnce"
-            android:onClick="onRadioButtonClicked"
-            android:checked="true"/>
-        <RadioButton android:id="@+id/radio_ninjas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AlertRepeat"
-            android:onClick="onRadioButtonClicked"/>
-    </RadioGroup>
+        android:id="@+id/DoctorsCommentRelativeLayout">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/DoctorsCommentText"
+        android:id="@+id/DoctorsComment"
+        android:layout_alignParentTop="true">
+    </TextView>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/DoctorsComment"
+        android:hint="Your text goes here!"
+        android:id="@+id/DoctorsCommentEditText"
+        >
 
-</LinearLayout>
-
+    </EditText>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of the Current BllodWork"
+        android:textColor="@color/medicationText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/DoctorsCommentRelativeLayout"
+        app:fontFamily="sans-serif-condensed"
+        android:id="@+id/DatePickerText">
+    </TextView>
+    <DatePicker
+        android:id="@+id/BloodWorkDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:layout_below="@+id/DatePickerText"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_corner_datepicker"
+        android:elevation="10dp"
+        android:calendarViewShown="false"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="3dp"
-        android:layout_below="@+id/linearLayoutNotificationAlert"
+        android:layout_below="@+id/BloodWorkDatePicker"
         android:id="@+id/ReminderRefill">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remind me to refill this pill"
+            android:text="Remind me on my next BloodWork"
             android:textColor="@color/medicationText"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:fontFamily="sans-serif-condensed">
-
+            app:fontFamily="sans-serif-condensed"
+            >
         </TextView>
 
 
@@ -81,7 +86,6 @@
         </RadioGroup>
 
     </LinearLayout>
-
     <DatePicker
         android:id="@+id/simpleDatePicker"
         android:layout_width="wrap_content"
@@ -93,6 +97,8 @@
         android:visibility="invisible"
         android:calendarViewShown="false"
         android:layout_below="@id/ReminderRefill"/>
+
+
     <RelativeLayout
         android:id="@+id/buttons"
         android:layout_width="match_parent"
@@ -119,4 +125,5 @@
             android:src="@drawable/baseline_done_white_48dp"
             android:backgroundTint="#00c853"/>
     </RelativeLayout>
+
 </RelativeLayout>

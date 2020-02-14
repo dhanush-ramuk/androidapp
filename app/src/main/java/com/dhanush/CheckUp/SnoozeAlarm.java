@@ -33,7 +33,7 @@ public class SnoozeAlarm extends BroadcastReceiver {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent my = new Intent(context, AlarmReceiver.class);
-        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name, alert, notsnooze);
+        helperClass.schedule_alarm(context, alarmManager, my, kk, (Long.valueOf(time)), name, alert, notsnooze, 0);
     }
 
 }
