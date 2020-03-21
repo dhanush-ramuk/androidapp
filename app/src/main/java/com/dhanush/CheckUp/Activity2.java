@@ -57,11 +57,12 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     Spinner spin_basic_test, spin_CBC, spin_kidney_test, spin_liver_test, spin_electrolyte, spin_proteins, spin_general_test, spin_lipid;
     ArrayAdapter<String> basic_test_spin_elements, CBC_spin_elements, kidney_test_spin_elements, liver_test_spin_elements, electrolyte_spin_elements, proteins_spin_elements, general_test_spin_elements, lipid_spin_elements;
     HelperClass helperClass;
-    String Text;
+    String Text, DoctorsComment;
     EditText e;
     TextView datePicker;
     Calendar myCalendar;
-    Integer daya, montha, yeara;
+    int daya, montha, yeara;
+    int alertfornextbloodwork = 0, havedoctorscomment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,10 +125,15 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                 Integer year = data.getIntExtra("year", 0);
                 strDate = year + "/" + month + "/" + day;
                 datePicker.setText(month + "/" + day);
-                if(data.getIntExtra("alertForNextBloodWork", 0) == 1){
+                alertfornextbloodwork = data.getIntExtra("alertForNextBloodWork", 0);
+                havedoctorscomment = data.getIntExtra("havedoctorscomment", 0);
+                if(alertfornextbloodwork == 1){
                     daya = data.getIntExtra("dayalert", 0);
                     montha = data.getIntExtra("monthalert", 0);
                     yeara = data.getIntExtra("yearalert", 0);
+                }
+                if(havedoctorscomment == 1){
+                    DoctorsComment = data.getStringExtra("doctorsComment");
                 }
 
 
@@ -841,6 +847,16 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putStringArrayListExtra("general_test_values", general_test_rhs);
         i.putStringArrayListExtra("lipid_test_names", lipid_panel_lhs);
         i.putStringArrayListExtra("lipid_test_values", lipid_panel_rhs);
+        if(havedoctorscomment == 1){
+            i.putExtra("havedoctorscomment", havedoctorscomment);
+            i.putExtra("doctorsComment",DoctorsComment);
+        }
+        if(alertfornextbloodwork == 1){
+            i.putExtra("alertfornextbloodwork", alertfornextbloodwork);
+            i.putExtra("alertDay", daya);
+            i.putExtra("alertMonth", montha);
+            i.putExtra("alertYear", yeara);
+        }
         i.putExtra("date", strDate);
         i.putExtra("day", strDay);
         i.putExtra("boolean", 1);

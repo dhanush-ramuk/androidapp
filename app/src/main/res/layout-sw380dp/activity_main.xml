@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/main_relout"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/NoListEntered"
+        android:textSize="22sp"
+        android:textColor="#bdbdbd"
+        android:id="@+id/noListEnteredText">
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/BloodWorkMainActivity"
+        android:background="@color/labThird"
+        android:onClick="goToBloodWorkMainActivity"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/YourBloodWork"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:id="@+id/BloodWorkText">
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/BloodWorkText"
+            android:layout_toEndOf="@+id/BloodWorkText"
+            android:src="@drawable/rightred"
+            android:layout_centerVertical="true">
+
+        </ImageView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/MedicationMainActivity"
+        android:layout_below="@+id/BloodWorkMainActivity"
+        android:background="@color/medicationThird"
+        android:onClick="goToMedicationMainActivity"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/YourMedication"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:id="@+id/MedicationText">
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/MedicationText"
+            android:layout_toEndOf="@+id/MedicationText"
+            android:src="@drawable/rightblue"
+            android:layout_centerVertical="true">
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/buttons"
+            android:padding="5dp"
+            >
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/fab_lab"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="#e53935"
+                android:src="@drawable/syringeicon"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/info"
+                android:layout_alignParentBottom="true"
+                android:backgroundTint="#bdbdbd"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:onClick="gotoinfopage"
+                android:src="@drawable/info_icon"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/fab_tab"
+            android:backgroundTint="#1976d2"
+            android:visibility="gone"
+            android:src="@drawable/alarm96"/>
+        </RelativeLayout>
+</RelativeLayout>

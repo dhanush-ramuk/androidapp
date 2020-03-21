@@ -101,7 +101,7 @@ android:layout_height="match_parent">
 
             <Spinner
                 android:id="@+id/spinner_basic_lab"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_background"
                 android:popupBackground="@color/labSecondary"
@@ -110,7 +110,7 @@ android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/enter_basic_lab"
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="1"
@@ -128,7 +128,7 @@ android:layout_height="match_parent">
 
             <Button
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="3"
@@ -186,7 +186,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_CBC"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
             android:popupBackground="@color/labSecondary"
@@ -195,7 +195,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_CBC"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -212,7 +212,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -295,7 +295,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_generaltest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
             android:popupBackground="@color/labSecondary"
@@ -304,7 +304,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_generaltest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -322,7 +322,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -380,7 +380,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_kidneytest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
             android:popupBackground="@color/labSecondary"
@@ -389,7 +389,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_kidneytest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -407,7 +407,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -466,7 +466,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_livertest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_background"
             android:popupBackground="@color/labSecondary"
@@ -475,7 +475,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_livertest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -493,7 +493,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -551,7 +551,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_electrolytestest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0"
@@ -560,7 +560,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_electrolytestest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -578,7 +578,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -637,7 +637,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_proteintest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0"
@@ -646,7 +646,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_proteintest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -664,7 +664,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
@@ -722,7 +722,7 @@ android:layout_height="match_parent">
 
         <Spinner
             android:id="@+id/spinner_lipidstest"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0"
@@ -731,7 +731,7 @@ android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/enter_lipidstest"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
@@ -749,7 +749,7 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"

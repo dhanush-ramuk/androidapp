@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/labSecondary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="15dp"
+    android:background="@color/labThird"
+    android:padding="2dp"
+    >
+
+    <TextView
+        android:id="@+id/lab_lhs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:textColor="@color/labText"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:textSize="14sp"
+        app:fontFamily="sans-serif-condensed-medium" />
+
+    <TextView
+        android:id="@+id/lab_rhs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:textColor="@color/labText"
+        android:textSize="16sp"
+        app:fontFamily="sans-serif-condensed-medium" />
+
+    <Button
+        android:id="@+id/delete_button_listview"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_row="0"
+        android:layout_column="3"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/delete_button_my_list"
+        android:onClick="delete"
+        android:text="@string/DeleteButton"
+        />
+</GridLayout>
+</androidx.cardview.widget.CardView>

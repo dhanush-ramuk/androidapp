@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_list_relout"
+    android:background="@color/labThird"
+    android:elevation="20dp"
+    android:padding="2dp"
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        >
+
+        <TextView
+            android:id="@+id/main_value"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:textColor="@color/mainLabValueMainList"
+            android:autoSizeTextType="uniform"
+             android:textSize="66sp"
+            android:textStyle="bold"
+            app:fontFamily="cursive" />
+
+        <TextView
+            android:id="@+id/main_value_name"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_below="@+id/main_value"
+            android:autoSizeTextType="uniform"
+            android:layout_marginTop="3dp"
+            android:textColor="#37474F"
+            android:textSize="24sp"
+            app:fontFamily="sans-serif-smallcaps" />
+
+        <TextView
+            android:id="@+id/main_value_updown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/main_value_name"
+            android:layout_toRightOf="@+id/main_value_name"
+             />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/second_layout"
+        android:layout_toEndOf="@+id/second_layout"
+        android:padding="3dp"
+        >
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:fontFamily="sans-serif-smallcaps" />
+
+        <TextView
+            android:id="@+id/day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_text"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:fontFamily="sans-serif-smallcaps" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/main"
+        android:layout_toRightOf="@+id/main"
+       android:id="@+id/second_layout"
+        android:padding="2dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/second_value_main"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/second_value"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:fontFamily="serif" />
+
+            <TextView
+                android:id="@+id/second_value_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/second_value"
+                android:layout_toRightOf="@+id/second_value"
+                android:autoSizeTextType="uniform"
+                android:textColor="#37474F"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif-smallcaps" />
+
+            <TextView
+            android:id="@+id/second_value_updown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/second_value_text"
+            android:layout_toRightOf="@+id/second_value_text" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@+id/second_value_main"
+            android:paddingTop="1dp">
+
+            <TextView
+                android:id="@+id/third_value"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:fontFamily="serif" />
+
+            <TextView
+                android:id="@+id/third_value_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/third_value"
+                android:layout_toRightOf="@+id/third_value"
+                android:autoSizeTextType="uniform"
+                android:textColor="#37474F"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif-smallcaps" />
+
+            <TextView
+                android:id="@+id/third_value_updown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/third_value_text"
+                android:layout_toRightOf="@+id/third_value_text"
+                     />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+</androidx.cardview.widget.CardView>

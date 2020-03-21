@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     Intent intentAlarm;
     HelperClass helperClass;
     RelativeLayout BloodWork, Medication;
-    int flag1;
+    int flag1, alertfornextbloodwork, havedoctorscomment;
+    String doctorscomment = " ";
+    int daya = 0, montha = 0, yeara = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
+            BloodWork.setVisibility(View.VISIBLE);
                 if(!obj_med.isEmpty()){
-                    BloodWork.setVisibility(View.VISIBLE);
+                    Medication.setVisibility(View.VISIBLE);
             }
         }
 
@@ -319,6 +322,8 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> basic_test_lhs, CBC_lhs, kidney_test_lhs, liver_test_lhs, electrolytes_lhs, proteins_lhs, general_test_lhs, lipid_panel_lhs;
                 ArrayList<String> basic_test_rhs, CBC_rhs, kidney_test_rhs, liver_test_rhs, electrolytes_rhs, proteins_rhs, general_test_rhs, lipid_panel_rhs;
                 String day, date;
+                Calendar startDate = Calendar.getInstance();
+                Calendar startTime = Calendar.getInstance();
                 basic_test_lhs = new ArrayList<String>();
                 basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
                 basic_test_rhs = new ArrayList<String>();
@@ -353,6 +358,18 @@ public class MainActivity extends AppCompatActivity {
                 lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
                 date = data.getStringExtra("date");
                 day = data.getStringExtra("day");
+                havedoctorscomment = data.getIntExtra("havedoctorscomment", 0);
+                if( havedoctorscomment == 1){
+                    doctorscomment = data.getStringExtra("doctorsComment");
+                } else{
+                    doctorscomment = " ";
+                }
+                alertfornextbloodwork = data.getIntExtra("alertfornextbloodwork", 0);
+                if(alertfornextbloodwork == 1){
+                 daya = data.getIntExtra("alertDay", 0);
+                 montha = data.getIntExtra("alertMonth", 0);
+                 yeara = data.getIntExtra("alertYear", 0);
+                }
                 Map<String, String> map1 = new HashMap<>();
                 Map<String, String> map2 = new HashMap<>();
                 Map<String, String> map = new HashMap<String, String>();
@@ -360,7 +377,22 @@ public class MainActivity extends AppCompatActivity {
                 //Entering date and day value
                 map2.put("date", date);
                 map2.put("day", day);
+                map2.put("doctorscomment", doctorscomment);
+                map2.put("haveDoctorsComment", String.valueOf(havedoctorscomment));
 
+              /*  if (alertfornextbloodwork == 1){
+                    startDate.set(Calendar.YEAR, yeara);
+                    startDate.set(Calendar.MONTH, montha);
+                    startDate.set(Calendar.DAY_OF_MONTH, daya);
+                    startDate.set(Calendar.HOUR_OF_DAY, 9);
+                    startDate.set(Calendar.MINUTE, 0);
+                    startDate.set(Calendar.SECOND, 0);
+                    helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "refill", 0, 1, 1);
+                    map.put("kkvaluerefill", String.valueOf(kk));
+                    map.put("Refilltime", String.valueOf(startTime.getTimeInMillis()));
+                    kk = kk + 1;
+                }
+*/
                 //entering BloodWorks values into Map function
                 for (String a : all_tests) {
                     map.put(a, null);
@@ -446,8 +478,9 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
+            BloodWork.setVisibility(View.VISIBLE);
             if(!obj_med.isEmpty()){
-                BloodWork.setVisibility(View.VISIBLE);
+                Medication.setVisibility(View.VISIBLE);
             }
         }
     }

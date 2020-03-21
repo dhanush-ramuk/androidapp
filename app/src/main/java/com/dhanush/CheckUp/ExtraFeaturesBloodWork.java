@@ -71,11 +71,13 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             i.putExtra("dayofweekNextReminder", dayOfWeek);
         }
         if(!doctorsComment.getText().toString().equals("")){
+            i.putExtra("havedoctorscomment", 1);
+            Log.d("check", "doctors comment "+doctorsComment.getText().toString());
             i.putExtra("doctorsComment", doctorsComment.getText().toString());
-            Log.e("check", "written something");
-        } else {
-            Log.e("check", "empty");
 
+        } else {
+
+        i.putExtra("havedoctorscomment", 0);
         }
         i.putExtra("alertForNextBloodWork", alertForNextBloodWork);
         i.putExtra("boolean", 1);

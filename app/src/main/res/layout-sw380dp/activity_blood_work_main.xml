@@ -11,7 +11,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listview_medication"
+            android:id="@+id/listview_main"
             android:layout_margin="5dp"
             android:elevation="10dp"
             android:dividerHeight="5.0sp"

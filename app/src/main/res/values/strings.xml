@@ -36,6 +36,7 @@
     <string name="UpcomingFeatures">Upcoming Features</string>
     <string name="bloodWork">Blood Work</string>
     <string name="DoctorsCommentText">Doctors Comment</string>
+<string name="changedatecurrentbloodworktext">Change the date of the Current BloodWork</string>
     <string-array name="types">
         <item>once</item>
         <item>twice</item>
