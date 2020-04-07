@@ -31,15 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int isRefillReminder = intent.getIntExtra("isRefillReminder", 0);
         NotificationHelper helper = new NotificationHelper(context);
         NotificationCompat.Builder builder = helper.getChannelNotification(name, kk, alert, isRefillReminder);
-
-        if(notsnooze == 0)
-            helper.getManager().cancel(kk);
-
-        if(alert == 1) {
-            Notification note = builder.build();
-            note.flags = Notification.FLAG_INSISTENT;
-            helper.getManager().notify(kk, note); //here kk acts as notification ID as it is unique for each notification
-        } else if(alert == 0){
+        if(name.equals("Today") || name.equals("Tomorrow")){
             helper.getManager().notify(kk, builder.build());
         }
         //helper.getManager().cancel(kk);

@@ -116,15 +116,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         super.onActivityResult(requestCode, resultCode, data);
         //returns from extra features BloodWork
 
-        //TODO Need to change this too get date and day for different date picker
         if (requestCode == 998 && resultCode == RESULT_OK) {
             if(data.getIntExtra("boolean", 0) == 1) {
-                strDay = data.getStringExtra("dayofweek");
-                Integer day = data.getIntExtra("day", 0);
-                Integer month = data.getIntExtra("month", 0);
-                Integer year = data.getIntExtra("year", 0);
-                strDate = year + "/" + month + "/" + day;
-                datePicker.setText(month + "/" + day);
+
                 alertfornextbloodwork = data.getIntExtra("alertForNextBloodWork", 0);
                 havedoctorscomment = data.getIntExtra("havedoctorscomment", 0);
                 if(alertfornextbloodwork == 1){
@@ -141,6 +135,15 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                 //do nothing if the cancel button is clicked on the extra feature bloodwork activity
             }
 
+        }
+
+        if(requestCode == 997 && resultCode == RESULT_OK){
+            strDay = data.getStringExtra("dayofweek");
+            Integer day = data.getIntExtra("day", 0);
+            Integer month = data.getIntExtra("month", 0);
+            Integer year = data.getIntExtra("year", 0);
+            strDate = year + "/" + month + "/" + day;
+            datePicker.setText(month + "/" + day);
         }
 
     }
@@ -450,8 +453,12 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
 
     public void openExtraFeaturesBloodWork(View v){
         startActivityForResult(new Intent(getApplicationContext(), ExtraFeaturesBloodWork.class), 998);
-
     }
+
+    public void changeCurrentBloodWorkDate(View v){
+        startActivityForResult(new Intent(getApplicationContext(), changeCurrentBloodWorkDate.class), 997);
+    }
+
 
     public String UnitIncluder(String testName){
         String testUnit = null;

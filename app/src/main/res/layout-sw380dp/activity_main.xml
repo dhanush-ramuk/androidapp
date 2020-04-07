@@ -97,7 +97,7 @@
                 android:layout_alignParentRight="true"
                 android:id="@+id/fab_lab"
                 android:layout_alignParentEnd="true"
-                android:backgroundTint="#e53935"
+                android:backgroundTint="#ff8a65"
                 android:src="@drawable/syringeicon"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,6 +106,7 @@
                 android:id="@+id/info"
                 android:layout_alignParentBottom="true"
                 android:backgroundTint="#bdbdbd"
+                android:background="#bdbdbd"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:onClick="gotoinfopage"

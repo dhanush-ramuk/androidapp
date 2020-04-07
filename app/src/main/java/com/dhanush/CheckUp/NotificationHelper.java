@@ -44,7 +44,7 @@ public class NotificationHelper extends ContextWrapper {
 
 
     public NotificationCompat.Builder getChannelNotification(String name, int kk, int alert, int isRefillReminder) {
-        Intent snoozeIntent = new Intent(this, SnoozeAlarm.class);
+        /*Intent snoozeIntent = new Intent(this, SnoozeAlarm.class);
         //snoozeIntent.setAction(ACTION_SNOOZE);
         snoozeIntent.putExtra("name", name);
         snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
@@ -54,17 +54,15 @@ public class NotificationHelper extends ContextWrapper {
                 PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
         PendingIntent notifyPIntent =
                 PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
-        if(isRefillReminder == 0) {
+         */
+        if(isRefillReminder == 1) {
             return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                    .setContentTitle("Medication Reminder")
-                    .setContentText("time to take your " + name.toUpperCase())
+                    .setContentTitle("BloodWork Reminder")
+                    .setContentText("You have BloodWork scheduled" + name.toUpperCase())
                     .setSmallIcon(R.drawable.ic_notification)
                     .setColor(getResources().getColor(R.color.appIconColor))
-                    .setContentIntent(notifyPIntent)
                     .setAutoCancel(true)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification))
-                    .addAction(R.drawable.notification_icon_24, "snooze for 5 minutes",
-                    snoozePendingIntent);
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification));
         }
         else {
             return new NotificationCompat.Builder(getApplicationContext(), channelID)
@@ -72,7 +70,6 @@ public class NotificationHelper extends ContextWrapper {
                     .setContentText("Refill your" + name.toUpperCase())
                     .setSmallIcon(R.drawable.ic_notification)
                     .setColor(getResources().getColor(R.color.appIconColor))
-                    .setContentIntent(notifyPIntent)
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_round_notification));
         }

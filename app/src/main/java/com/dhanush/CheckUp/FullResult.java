@@ -60,32 +60,34 @@ public class FullResult extends AppCompatActivity {
 
     }
 
-    public void set_value(){
+    public void set_value() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.parent_layout);
         Map<String, String> map = obj.get(i).get_map();
         TextView date = (TextView) findViewById(R.id.dateText);
         TextView day = (TextView) findViewById(R.id.dayText);
         date.setText(obj.get(i).get_map2().get("date"));
         day.setText(obj.get(i).get_map2().get("day"));
-        for (int j = 0; j < all_tests.length; j++){
-            if(map.get(all_tests[j])!=null){
+        for (int j = 0; j < all_tests.length; j++) {
+            if (map.get(all_tests[j]) != null) {
                 View v = getLayoutInflater().inflate(R.layout.full_result_views_layout, null);
                 TextView t1 = (TextView) v.findViewById(R.id.textView);
                 TextView t2 = (TextView) v.findViewById(R.id.textView2);
                 t1.setText(all_tests[j]);
-                t2.setText(map.get(all_tests[j]) + " " +"[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
+                t2.setText(map.get(all_tests[j]) + " " + "[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
                 layout.addView(v);
             }
         }
-    TextView DoctorsComment = (TextView) findViewById(R.id.doctorsComment);
+        TextView DoctorsComment = (TextView) findViewById(R.id.doctorsComment);
         TextView DoctorsCommentText = (TextView) findViewById(R.id.doctorsCommentText);
         DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
-        if(!(obj.get(i).get_map2().get("doctorscomment") == null)){
-            DoctorsCommentText.setVisibility(View.VISIBLE);
+        Log.e("check", "doctorsComment " + obj.get(i).get_map2().get("doctorscomment"));
+        if (obj.get(i).get_map2().containsKey("doctorscomment")) {
+            if (!(obj.get(i).get_map2().get("doctorscomment").equals(" "))) {
+                DoctorsCommentText.setVisibility(View.VISIBLE);
+            }
+            Log.e("check", "doctors comment " + obj.get(i).get_map2().get("doctorscomment"));
         }
-        Log.e("check", "doctors comment "+obj.get(i).get_map2().get("doctorscomment"));
     }
-
     public String UnitIncluder(String testName){
         String testUnit = null;
         int i = Integer.parseInt(getPrefs("flag",getApplicationContext()));

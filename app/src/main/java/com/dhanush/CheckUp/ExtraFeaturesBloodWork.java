@@ -10,9 +10,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ExtraFeaturesBloodWork extends AppCompatActivity {
     int alertForNextBloodWork = 0;
@@ -69,27 +71,51 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             Date date = new Date(AlertNextBloodWork.getYear(), AlertNextBloodWork.getMonth(), (AlertNextBloodWork.getDayOfMonth() - 1));
             String dayOfWeek = simpledateformat.format(date);
             i.putExtra("dayofweekNextReminder", dayOfWeek);
-        }
-        if(!doctorsComment.getText().toString().equals("")){
-            i.putExtra("havedoctorscomment", 1);
-            Log.d("check", "doctors comment "+doctorsComment.getText().toString());
-            i.putExtra("doctorsComment", doctorsComment.getText().toString());
+            Calendar startDate = Calendar.getInstance();
+            startDate.set(Calendar.YEAR, AlertNextBloodWork.getYear());
+            startDate.set(Calendar.MONTH, AlertNextBloodWork.getMonth());
+            startDate.set(Calendar.DAY_OF_MONTH, AlertNextBloodWork.getDayOfMonth());
+            startDate.set(Calendar.HOUR_OF_DAY, Calendar.HOUR_OF_DAY);
+            startDate.set(Calendar.MINUTE, 0);
+            startDate.set(Calendar.SECOND, 0);
+            Log.e("check", "current time " +System.currentTimeMillis());
+            Log.e("check", "set time "+startDate.getTimeInMillis());
+            if((System.currentTimeMillis() >= startDate.getTimeInMillis()) && alertForNextBloodWork == 1){
+                Toast.makeText(getApplicationContext(), "The BloodWork remainder is in the past", Toast.LENGTH_LONG).show();
+            }
+            else {
+                String text = doctorsComment.getText().toString().trim();
+                Log.e("check", "doctor "+text);
+                if(!text.isEmpty()){
+                    i.putExtra("havedoctorscomment", 1);
+                    Log.d("check", "doctors comment "+doctorsComment.getText().toString());
+                    Log.d("check", "doctors commentttt "+doctorsComment.getText().toString());
+                    i.putExtra("doctorsComment", doctorsComment.getText().toString());
 
+                } else {
+                    i.putExtra("havedoctorscomment", 0);
+                }
+                i.putExtra("alertForNextBloodWork", alertForNextBloodWork);
+                i.putExtra("boolean", 1);
+                setResult(RESULT_OK, i);
+                finish();
+            }
         } else {
+            String text = doctorsComment.getText().toString().trim();
+            Log.e("check", "doctor "+text);
+            if(!text.isEmpty()){
+                i.putExtra("havedoctorscomment", 1);
+                Log.d("check", "doctors comment "+doctorsComment.getText().toString());
+                i.putExtra("doctorsComment", doctorsComment.getText().toString());
 
-        i.putExtra("havedoctorscomment", 0);
+            } else {
+                i.putExtra("havedoctorscomment", 0);
+            }
+            i.putExtra("alertForNextBloodWork", alertForNextBloodWork);
+            i.putExtra("boolean", 1);
+            setResult(RESULT_OK, i);
+            finish();
         }
-        i.putExtra("alertForNextBloodWork", alertForNextBloodWork);
-        i.putExtra("boolean", 1);
-        i.putExtra("day", BloodWorkdatePicker.getDayOfMonth());
-        i.putExtra("month", (BloodWorkdatePicker.getMonth()+1));
-        i.putExtra("year", BloodWorkdatePicker.getYear());
-        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-        Date date = new Date(BloodWorkdatePicker.getYear(), BloodWorkdatePicker.getMonth(), (BloodWorkdatePicker.getDayOfMonth()-1));
-        String dayOfWeek = simpledateformat.format(date);
-        i.putExtra("dayofweek", dayOfWeek);
-        setResult(RESULT_OK, i);
-        finish();
     }
 
     public void closeActivity(View v){

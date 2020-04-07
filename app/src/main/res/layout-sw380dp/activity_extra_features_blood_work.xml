@@ -41,35 +41,13 @@
         >
     </EditText>
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/changedatecurrentbloodworktext"
-        android:textColor="@color/medicationText"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_margin="2dp"
-        android:layout_below="@id/DoctorsCommentRelativeLayout"
-        app:fontFamily="sans-serif-condensed"
-        android:id="@+id/DatePickerText">
-    </TextView>
-    <DatePicker
-        android:id="@+id/BloodWorkDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:layout_margin="2dp"
-        android:layout_below="@+id/DatePickerText"
-        android:layout_centerInParent="true"
-        android:background="@drawable/rounded_corner_datepicker"
-        android:elevation="10dp"
-        android:calendarViewShown="false"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="3dp"
-        android:layout_below="@+id/BloodWorkDatePicker"
+        android:layout_below="@+id/DoctorsCommentRelativeLayout"
         android:id="@+id/ReminderRefill">
         <TextView
             android:layout_width="wrap_content"
@@ -109,7 +87,7 @@
         android:layout_height="wrap_content"
         android:datePickerMode="spinner"
         android:layout_centerInParent="true"
-        android:background="@drawable/rounded_corner_timepicker"
+        android:background="@drawable/rounded_corner_datepicker"
         android:elevation="10dp"
         android:visibility="invisible"
         android:calendarViewShown="false"

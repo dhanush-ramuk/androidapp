@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class trackpage extends AppCompatActivity {
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     int flag = 0;
     HelperClass helperClass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,19 @@ public class trackpage extends AppCompatActivity {
                     TextView t2 = (TextView) v2.findViewById(R.id.textView2);
                     t1.setText(o.get(j).get_map2().get("date"));
                     t2.setText(o.get(j).get_map().get(all_tests[i]));
+                    Log.e("check", "imageInsert "+j);
+                    if(j!=0 && (o.get(j-1).get_map().get(all_tests[i]) != null)) {
+                        ImageView upDownButton = (ImageView) v2.findViewById(R.id.upDownButton);
+                        try {
+                            if (Integer.valueOf(o.get(j).get_map().get(all_tests[i])) > Integer.valueOf(o.get(j - 1).get_map().get(all_tests[i]))) {
+                                upDownButton.setImageResource(R.drawable.up);
+                            } else {
+                                upDownButton.setImageResource(R.drawable.down);
+                            }
+                        } catch (NumberFormatException ne){
+                            // catches error if the object contains string value which cannot be converted too Integer.
+                        }
+                    }
                     parent1.addView(v2);
                     flag = 1;
                 }

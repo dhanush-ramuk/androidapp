@@ -37,6 +37,17 @@
         android:textSize="24sp"
         app:fontFamily="sans-serif-smallcaps"
         tools:text="yy" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/upDownButton"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:padding="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+
+    </ImageView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

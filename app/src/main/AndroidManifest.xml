@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.dhanush.CheckUp"
     android:versionCode="6"
-    android:versionName="1.0"
-    xmlns:dist="http://schemas.android.com/apk/distribution">
+    android:versionName="1.0">
 
     <dist:module dist:instant="true" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -22,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".ExtraFeaturesBloodWork"></activity>
+        <activity android:name=".changeCurrentBloodWorkDate"></activity>
+        <activity android:name=".ExtraFeaturesBloodWork" />
         <activity android:name=".ExtraFeaturesMedication" />
         <activity android:name=".MedicationMainActivity" />
         <activity android:name=".BloodWorkMainActivity" />

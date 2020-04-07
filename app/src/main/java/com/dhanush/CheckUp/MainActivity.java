@@ -304,11 +304,12 @@ public class MainActivity extends AppCompatActivity {
                 //clear_medication_list();
                 //create_medications_list(obj_med);
             }
+
         }
 
         //From Activity2
         if (requestCode == 999 && resultCode == RESULT_OK) {
-
+Log.e("check", "entered main activity");
             int flag = 0;
             //when user clicks close button
             if (data.getIntExtra("boolean", 0) == 0) {
@@ -323,7 +324,6 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> basic_test_rhs, CBC_rhs, kidney_test_rhs, liver_test_rhs, electrolytes_rhs, proteins_rhs, general_test_rhs, lipid_panel_rhs;
                 String day, date;
                 Calendar startDate = Calendar.getInstance();
-                Calendar startTime = Calendar.getInstance();
                 basic_test_lhs = new ArrayList<String>();
                 basic_test_lhs = data.getStringArrayListExtra("basic_test_names");
                 basic_test_rhs = new ArrayList<String>();
@@ -358,21 +358,47 @@ public class MainActivity extends AppCompatActivity {
                 lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
                 date = data.getStringExtra("date");
                 day = data.getStringExtra("day");
+                Log.e("check", "1");
                 havedoctorscomment = data.getIntExtra("havedoctorscomment", 0);
                 if( havedoctorscomment == 1){
                     doctorscomment = data.getStringExtra("doctorsComment");
                 } else{
                     doctorscomment = " ";
                 }
+                Log.e("check", "1");
                 alertfornextbloodwork = data.getIntExtra("alertfornextbloodwork", 0);
-                if(alertfornextbloodwork == 1){
-                 daya = data.getIntExtra("alertDay", 0);
-                 montha = data.getIntExtra("alertMonth", 0);
-                 yeara = data.getIntExtra("alertYear", 0);
-                }
+                Log.e("check", "2");
                 Map<String, String> map1 = new HashMap<>();
                 Map<String, String> map2 = new HashMap<>();
                 Map<String, String> map = new HashMap<String, String>();
+                int kk;
+                Random rand = new Random();
+                Log.e("check", "1");
+                kk = rand.nextInt(Integer.MAX_VALUE);
+                Log.e("check", "1");
+                Log.e("check", "kk value"+ kk);
+                if(alertfornextbloodwork == 1){
+                    daya = data.getIntExtra("alertDay", 0);
+                    montha = data.getIntExtra("alertMonth", 0);
+                    yeara = data.getIntExtra("alertYear", 0);
+                    startDate.set(Calendar.YEAR, yeara);
+                    startDate.set(Calendar.MONTH, montha);
+                    startDate.set(Calendar.DAY_OF_MONTH, daya);
+                    startDate.set(Calendar.HOUR_OF_DAY, 17);
+                    startDate.set(Calendar.MINUTE, 36);
+                    startDate.set(Calendar.SECOND, 0);
+                    Log.e("check", "refill1");
+                    helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "Today", 0, 1, 1);
+                    map2.put("kkvaluerefill", String.valueOf(kk));
+                   /* if(startDate.getTimeInMillis() > (System.currentTimeMillis() + (172800000))) {
+                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "Tomorrow", 0, 1, 1);
+
+                    } */
+
+                    map2.put("Refilltime", String.valueOf(startDate.getTimeInMillis()));
+
+                }
+
 
                 //Entering date and day value
                 map2.put("date", date);

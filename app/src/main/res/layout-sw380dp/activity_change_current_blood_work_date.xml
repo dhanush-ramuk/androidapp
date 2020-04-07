@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of the Current BloodWork"
+        android:textColor="@color/medicationText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        app:fontFamily="sans-serif-condensed"
+        android:id="@+id/DatePickerText">
+    </TextView>
+    <DatePicker
+        android:id="@+id/BloodWorkDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:layout_below="@+id/DatePickerText"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_corner_datepicker"
+        android:elevation="10dp"
+        android:padding="5dp"
+        android:calendarViewShown="false"/>
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_back_lab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="backToActivity2"
+            android:src="@drawable/baseline_done_white_48dp"
+            android:backgroundTint="#00c853"/>
+    </RelativeLayout>
+
+</RelativeLayout>
