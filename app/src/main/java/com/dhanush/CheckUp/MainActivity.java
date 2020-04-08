@@ -405,6 +405,10 @@ Log.e("check", "entered main activity");
                 map2.put("day", day);
                 map2.put("doctorscomment", doctorscomment);
                 map2.put("haveDoctorsComment", String.valueOf(havedoctorscomment));
+                map2.put("daya", String.valueOf(daya));
+                map2.put("montha", String.valueOf(montha));
+                map2.put("yeara", String.valueOf(yeara));
+                map2.put("havealertfornextbloodwork", String.valueOf(alertfornextbloodwork));
 
               /*  if (alertfornextbloodwork == 1){
                     startDate.set(Calendar.YEAR, yeara);
