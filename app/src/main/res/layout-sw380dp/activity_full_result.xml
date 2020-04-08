@@ -103,6 +103,12 @@
         android:layout_margin="5dp"
         android:textSize="22sp">
     </TextView>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/alertForNextBloodWorkText"
+    android:layout_margin="5dp"
+    android:textSize="22sp"/>
 </LinearLayout>
     </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

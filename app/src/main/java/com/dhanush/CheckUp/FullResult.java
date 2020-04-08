@@ -30,6 +30,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -79,8 +81,17 @@ public class FullResult extends AppCompatActivity {
         }
         TextView DoctorsComment = (TextView) findViewById(R.id.doctorsComment);
         TextView DoctorsCommentText = (TextView) findViewById(R.id.doctorsCommentText);
+        TextView alertForNextBloodWork = (TextView) findViewById(R.id.alertForNextBloodWorkText);
         DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
         Log.e("check", "doctorsComment " + obj.get(i).get_map2().get("doctorscomment"));
+        if(obj.get(i).get_map2().containsKey("daya")){
+            if(Integer.valueOf(obj.get(i).get_map2().get("havealertfornextbloodwork")) == 1){
+                int daya = Integer.valueOf(obj.get(i).get_map2().get("daya"));
+                int montha = Integer.valueOf(obj.get(i).get_map2().get("montha"));
+                int yeara = Integer.valueOf(obj.get(i).get_map2().get("yeara"));
+                alertForNextBloodWork.setText("Next BloodWork is on "+daya+"/"+montha+"/"+yeara);
+            }
+        }
         if (obj.get(i).get_map2().containsKey("doctorscomment")) {
             if (!(obj.get(i).get_map2().get("doctorscomment").equals(" "))) {
                 DoctorsCommentText.setVisibility(View.VISIBLE);
