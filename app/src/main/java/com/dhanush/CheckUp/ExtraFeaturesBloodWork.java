@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -20,21 +21,22 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
     int alertForNextBloodWork = 0;
     android.widget.DatePicker BloodWorkdatePicker, AlertNextBloodWork;
     EditText doctorsComment;
+    Button commentOkayButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_features_blood_work);
         AlertNextBloodWork = (android.widget.DatePicker) findViewById(R.id.simpleDatePicker);
         BloodWorkdatePicker = (android.widget.DatePicker) findViewById(R.id.BloodWorkDatePicker);
-
+        commentOkayButton = (Button) findViewById(R.id.okButtonComment);
         doctorsComment = (EditText) findViewById(R.id.DoctorsCommentEditText);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioButtonRefill);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
-                switch(checkedId) {
+                switch (checkedId) {
                     case R.id.radio_pirates1:
                         alertForNextBloodWork = 0;
                         AlertNextBloodWork.setVisibility(View.GONE);
@@ -49,6 +51,24 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setDoctorsComment(View v) {
+        doctorsComment.setCursorVisible(true);
+        if (commentOkayButton.getText().toString().equals("Ok")) {
+            commentOkayButton.setText("Edit");
+        } else {
+        commentOkayButton.setText("Ok");
+        }
+        if(commentOkayButton.getText().toString().equals("Edit")){
+            doctorsComment.setFocusable(false);
+            doctorsComment.setEnabled(false);
+            doctorsComment.setCursorVisible(false);
+        } else{
+            doctorsComment.setFocusable(true);
+            doctorsComment.setTextIsSelectable(true);
+            doctorsComment.setEnabled(true);
+        }
     }
     public void onRadioButtonClicked(View view) {
 
@@ -86,7 +106,7 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             else {
                 String text = doctorsComment.getText().toString().trim();
                 Log.e("check", "doctor "+text);
-                if(!text.isEmpty()){
+                if(commentOkayButton.getText().toString().equals("Edit") && !text.isEmpty()){
                     i.putExtra("havedoctorscomment", 1);
                     Log.d("check", "doctors comment "+doctorsComment.getText().toString());
                     Log.d("check", "doctors commentttt "+doctorsComment.getText().toString());
@@ -103,7 +123,7 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
         } else {
             String text = doctorsComment.getText().toString().trim();
             Log.e("check", "doctor "+text);
-            if(!text.isEmpty()){
+            if(commentOkayButton.getText().toString().equals("Edit") && !text.isEmpty()){
                 i.putExtra("havedoctorscomment", 1);
                 Log.d("check", "doctors comment "+doctorsComment.getText().toString());
                 i.putExtra("doctorsComment", doctorsComment.getText().toString());
