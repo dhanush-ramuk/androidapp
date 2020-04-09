@@ -3,6 +3,7 @@ package com.dhanush.CheckUp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,19 +56,24 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
 
     public void setDoctorsComment(View v) {
         doctorsComment.setCursorVisible(true);
-        if (commentOkayButton.getText().toString().equals("Ok")) {
-            commentOkayButton.setText("Edit");
-        } else {
-        commentOkayButton.setText("Ok");
-        }
-        if(commentOkayButton.getText().toString().equals("Edit")){
-            doctorsComment.setFocusable(false);
-            doctorsComment.setEnabled(false);
-            doctorsComment.setCursorVisible(false);
-        } else{
-            doctorsComment.setFocusable(true);
-            doctorsComment.setTextIsSelectable(true);
-            doctorsComment.setEnabled(true);
+        if(!doctorsComment.getText().toString().equals(" ")) {
+            if (commentOkayButton.getText().toString().equals("Ok")) {
+                commentOkayButton.setText("Edit");
+                commentOkayButton.setBackgroundColor(Color.parseColor("#d50000"));
+
+            } else {
+                commentOkayButton.setText("Ok");
+                commentOkayButton.setBackgroundColor(Color.parseColor("#00c853"));
+            }
+            if (commentOkayButton.getText().toString().equals("Edit")) {
+                doctorsComment.setFocusable(false);
+                doctorsComment.setEnabled(false);
+                doctorsComment.setCursorVisible(false);
+            } else {
+                doctorsComment.setFocusable(true);
+                doctorsComment.setTextIsSelectable(true);
+                doctorsComment.setEnabled(true);
+            }
         }
     }
     public void onRadioButtonClicked(View view) {
