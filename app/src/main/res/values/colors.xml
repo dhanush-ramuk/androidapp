@@ -16,4 +16,6 @@
     <color name="medicationThird">#2196f3</color>
     <color name="medicationText">#212121</color>
     <color name="appIconColor">#f50057</color>
+    <color name="okayColor">#00c853</color>
+    <color name="editColor">#d50000</color>
 </resources>
