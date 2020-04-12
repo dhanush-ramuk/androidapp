@@ -120,6 +120,32 @@
         android:visibility="invisible"
         android:calendarViewShown="false"
         android:layout_below="@id/ReminderRefill"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/simpleDatePicker"
+                android:id="@+id/timeNoteLinearLayout"
+                android:visibility="invisible"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/smallinfoicon"
+                    android:layout_marginTop="3dp"
+                    android:scaleType="center"
+                    android:adjustViewBounds="true">
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You will get remainder on the morning 08:30"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp">
+                </TextView>
+            </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
 
