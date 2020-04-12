@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
     android.widget.DatePicker BloodWorkdatePicker, AlertNextBloodWork;
     EditText doctorsComment;
     Button commentOkayButton;
+    LinearLayout noteLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
         BloodWorkdatePicker = (android.widget.DatePicker) findViewById(R.id.BloodWorkDatePicker);
         commentOkayButton = (Button) findViewById(R.id.okButtonComment);
         doctorsComment = (EditText) findViewById(R.id.DoctorsCommentEditText);
+        noteLayout = (LinearLayout) findViewById(R.id.timeNoteLinearLayout);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioButtonRefill);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -41,11 +44,13 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
                     case R.id.radio_pirates1:
                         alertForNextBloodWork = 0;
                         AlertNextBloodWork.setVisibility(View.GONE);
+                        noteLayout.setVisibility(View.INVISIBLE);
                         Log.e("check", "pirates");
                         break;
                     case R.id.radio_ninjas1:
                         alertForNextBloodWork = 1;
                         AlertNextBloodWork.setVisibility(View.VISIBLE);
+                        noteLayout.setVisibility(View.VISIBLE);
                         Log.e("check", "pirates");
                         break;
                 }
