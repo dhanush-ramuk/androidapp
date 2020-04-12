@@ -295,9 +295,6 @@ public class MainActivity extends AppCompatActivity {
                     //clear_medication_list();
                     //create_medications_list(obj_med);
                     if (obj_med.size() == 2) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Swipe ->", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 80);
-                        toast.show();
                     }
                 }
             } else {
@@ -384,8 +381,8 @@ Log.e("check", "entered main activity");
                     startDate.set(Calendar.YEAR, yeara);
                     startDate.set(Calendar.MONTH, montha);
                     startDate.set(Calendar.DAY_OF_MONTH, daya);
-                    startDate.set(Calendar.HOUR_OF_DAY, 17);
-                    startDate.set(Calendar.MINUTE, 36);
+                    startDate.set(Calendar.HOUR_OF_DAY, 8);
+                    startDate.set(Calendar.MINUTE, 30);
                     startDate.set(Calendar.SECOND, 0);
                     Log.e("check", "refill1");
                     helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "Today", 0, 1, 1);
