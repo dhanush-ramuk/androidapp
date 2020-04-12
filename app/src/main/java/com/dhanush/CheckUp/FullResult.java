@@ -92,9 +92,12 @@ public class FullResult extends AppCompatActivity {
                 alertForNextBloodWork.setText("Next BloodWork is on "+daya+"/"+montha+"/"+yeara);
             }
         }
+        View lineHorizontal = (View) findViewById(R.id.lineHorizontal);
         if (obj.get(i).get_map2().containsKey("doctorscomment")) {
             if (!(obj.get(i).get_map2().get("doctorscomment").equals(" "))) {
                 DoctorsCommentText.setVisibility(View.VISIBLE);
+                lineHorizontal.setVisibility(View.VISIBLE);
+                lineHorizontal.getLayoutParams().width = DoctorsComment.getWidth();
             }
             Log.e("check", "doctors comment " + obj.get(i).get_map2().get("doctorscomment"));
         }

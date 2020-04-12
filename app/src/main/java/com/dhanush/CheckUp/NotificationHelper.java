@@ -58,7 +58,7 @@ public class NotificationHelper extends ContextWrapper {
         if(isRefillReminder == 1) {
             return new NotificationCompat.Builder(getApplicationContext(), channelID)
                     .setContentTitle("BloodWork Reminder")
-                    .setContentText("You have BloodWork scheduled" + name.toUpperCase())
+                    .setContentText("You have BloodWork scheduled " + name.toUpperCase())
                     .setSmallIcon(R.drawable.ic_notification)
                     .setColor(getResources().getColor(R.color.appIconColor))
                     .setAutoCancel(true)

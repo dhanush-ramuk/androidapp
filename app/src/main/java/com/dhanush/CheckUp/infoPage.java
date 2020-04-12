@@ -32,8 +32,8 @@ public static int i = 1;
         final TextView info = (TextView) findViewById(R.id.SIunitissettext);
         RadioButton but1 = (RadioButton) findViewById(R.id.radio_pirates1);
         RadioButton but2 = (RadioButton) findViewById(R.id.radio_ninjas1);
-        simple_switch = findViewById(R.id.simpleSwitch);
-        simple_switch_standard = findViewById(R.id.simpleSwitchStandard);
+//        simple_switch = findViewById(R.id.simpleSwitch);
+  //      simple_switch_standard = findViewById(R.id.simpleSwitchStandard);
         String ii = getPrefs("flag", getApplicationContext());
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioButtonRefill);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()

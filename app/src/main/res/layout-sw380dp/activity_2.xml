@@ -57,15 +57,15 @@ android:layout_height="match_parent">
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps"
             android:onClick="changeCurrentBloodWorkDate"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/extra_features_bloodwork_icon"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:padding="5dp"
             android:onClick="openExtraFeaturesBloodWork"
-            />
+            android:padding="5dp"
+            android:src="@drawable/extra_features_bloodwork_icon" />
     </RelativeLayout>
 
 

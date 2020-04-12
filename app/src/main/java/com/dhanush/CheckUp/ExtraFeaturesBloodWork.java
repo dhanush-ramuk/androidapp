@@ -55,21 +55,20 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
     }
 
     public void setDoctorsComment(View v) {
-        doctorsComment.setCursorVisible(true);
-        if(!doctorsComment.getText().toString().equals(" ")) {
+        if(!doctorsComment.getText().toString().equals("") && !doctorsComment.getText().toString().equals(null)) {
             if (commentOkayButton.getText().toString().equals("Ok")) {
                 commentOkayButton.setText("Edit");
                 commentOkayButton.setBackgroundColor(Color.parseColor("#d50000"));
-
             } else {
                 commentOkayButton.setText("Ok");
                 commentOkayButton.setBackgroundColor(Color.parseColor("#00c853"));
             }
             if (commentOkayButton.getText().toString().equals("Edit")) {
-                doctorsComment.setFocusable(false);
+               // doctorsComment.setFocusable(false);
                 doctorsComment.setEnabled(false);
-                doctorsComment.setCursorVisible(false);
-            } else {
+                //doctorsComment.setCursorVisible(false);
+            } else if(commentOkayButton.getText().toString().equals("Ok")) {
+                doctorsComment.setCursorVisible(true);
                 doctorsComment.setFocusable(true);
                 doctorsComment.setTextIsSelectable(true);
                 doctorsComment.setEnabled(true);

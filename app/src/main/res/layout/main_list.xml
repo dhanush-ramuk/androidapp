@@ -16,7 +16,7 @@
 
     <RelativeLayout
         android:id="@+id/main"
-        android:layout_width="130dp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:padding="3dp"
         >
@@ -27,7 +27,7 @@
             android:layout_height="75dp"
             android:textColor="@color/mainLabValueMainList"
             android:autoSizeTextType="uniform"
-             android:textSize="66sp"
+             android:textSize="60sp"
             android:textStyle="bold"
             app:fontFamily="cursive" />
 
@@ -52,7 +52,7 @@
              />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="130dp"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/second_layout"
         android:layout_toEndOf="@+id/second_layout"
@@ -83,7 +83,7 @@
             app:fontFamily="sans-serif-smallcaps" />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="145dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/main"
         android:layout_toRightOf="@+id/main"
