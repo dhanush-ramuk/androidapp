@@ -30,9 +30,6 @@
         <activity android:name=".MedicationMainActivity" />
         <activity android:name=".BloodWorkMainActivity" />
         <activity
-            android:name=".Datepicker"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".infoPage"
             android:screenOrientation="portrait" />
         <activity
@@ -80,7 +77,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".BootReceiver"
+            android:name=".BootReceiverBloodWork"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
