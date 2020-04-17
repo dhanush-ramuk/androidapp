@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -83,7 +82,6 @@ public class FullResult extends AppCompatActivity {
         TextView DoctorsCommentText = (TextView) findViewById(R.id.doctorsCommentText);
         TextView alertForNextBloodWork = (TextView) findViewById(R.id.alertForNextBloodWorkText);
         DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
-        Log.e("check", "doctorsComment " + obj.get(i).get_map2().get("doctorscomment"));
         if(obj.get(i).get_map2().containsKey("daya")){
             if(Integer.valueOf(obj.get(i).get_map2().get("havealertfornextbloodwork")) == 1){
                 int daya = Integer.valueOf(obj.get(i).get_map2().get("daya"));
@@ -99,7 +97,6 @@ public class FullResult extends AppCompatActivity {
                 lineHorizontal.setVisibility(View.VISIBLE);
                 lineHorizontal.getLayoutParams().width = DoctorsComment.getWidth();
             }
-            Log.e("check", "doctors comment " + obj.get(i).get_map2().get("doctorscomment"));
         }
     }
     public String UnitIncluder(String testName){

@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -270,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
                         startDate.set(Calendar.HOUR_OF_DAY, 9);
                         startDate.set(Calendar.MINUTE, 0);
                         startDate.set(Calendar.SECOND, 0);
-                        Log.e("check", "refill1");
                         helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "refill", 0, 1, 1);
                         map_med.put("kkvaluerefill", String.valueOf(kk));
                         map_med.put("Refilltime", String.valueOf(startTime.getTimeInMillis()));
@@ -279,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
                     //changing time to calender instance for setting alarm, every time for each tablet name
                     for (int i = 0; i < hour.size(); i++) {
                         startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
-                        Log.e("check", "hour value "+hourin12.get(i));
                         startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
                         startTime.set(Calendar.SECOND, 0);
                         helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name, alertNotification, 1, 0);
@@ -306,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
 
         //From Activity2
         if (requestCode == 999 && resultCode == RESULT_OK) {
-Log.e("check", "entered main activity");
             int flag = 0;
             //when user clicks close button
             if (data.getIntExtra("boolean", 0) == 0) {
@@ -355,25 +351,19 @@ Log.e("check", "entered main activity");
                 lipid_panel_rhs = data.getStringArrayListExtra("lipid_test_values");
                 date = data.getStringExtra("date");
                 day = data.getStringExtra("day");
-                Log.e("check", "1");
                 havedoctorscomment = data.getIntExtra("havedoctorscomment", 0);
                 if( havedoctorscomment == 1){
                     doctorscomment = data.getStringExtra("doctorsComment");
                 } else{
                     doctorscomment = " ";
                 }
-                Log.e("check", "1");
                 alertfornextbloodwork = data.getIntExtra("alertfornextbloodwork", 0);
-                Log.e("check", "2");
                 Map<String, String> map1 = new HashMap<>();
                 Map<String, String> map2 = new HashMap<>();
                 Map<String, String> map = new HashMap<String, String>();
                 int kk;
                 Random rand = new Random();
-                Log.e("check", "1");
                 kk = rand.nextInt(Integer.MAX_VALUE);
-                Log.e("check", "1");
-                Log.e("check", "kk value"+ kk);
                 if(alertfornextbloodwork == 1){
                     daya = data.getIntExtra("alertDay", 0);
                     montha = data.getIntExtra("alertMonth", 0);
@@ -384,7 +374,6 @@ Log.e("check", "entered main activity");
                     startDate.set(Calendar.HOUR_OF_DAY, 8);
                     startDate.set(Calendar.MINUTE, 30);
                     startDate.set(Calendar.SECOND, 0);
-                    Log.e("check", "refill1");
                     helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "Today", 0, 1, 1);
                     map2.put("kkvaluerefill", String.valueOf(kk));
                    /* if(startDate.getTimeInMillis() > (System.currentTimeMillis() + (172800000))) {

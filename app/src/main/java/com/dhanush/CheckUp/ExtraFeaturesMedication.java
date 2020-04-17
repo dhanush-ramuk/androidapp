@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -32,11 +31,9 @@ public class ExtraFeaturesMedication extends AppCompatActivity {
                 switch(checkedId) {
                     case R.id.radio_pirates:
                             alertForNotificationType = 0;
-                            Log.e("check", "pirates");
                         break;
                     case R.id.radio_ninjas:
                             alertForNotificationType = 1;
-                            Log.e("check", "ninjas");
                         break;
                 }
             }
@@ -55,13 +52,11 @@ public class ExtraFeaturesMedication extends AppCompatActivity {
                 if (checked)
                     alertForRefill = 0;
                     simpleDatePicker.setVisibility(View.GONE);
-                    Log.e("check", "pirates");
                 break;
             case R.id.radio_ninjas1:
                 if (checked)
                     alertForRefill = 1;
                     simpleDatePicker.setVisibility(View.VISIBLE);
-                    Log.e("check", "pirates");
                 break;
         }
     }

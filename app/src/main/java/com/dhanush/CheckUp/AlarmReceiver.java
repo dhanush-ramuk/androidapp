@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -22,7 +21,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             screenWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "app:tag");
             screenWakeLock.acquire();
         }
-        Log.e("check", "refill1");
         String name = intent.getStringExtra("name");
         int kk = intent.getIntExtra("kk", 0);
         String time = intent.getStringExtra("time");

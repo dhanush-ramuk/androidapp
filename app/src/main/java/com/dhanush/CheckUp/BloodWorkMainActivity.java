@@ -53,7 +53,8 @@ public class BloodWorkMainActivity extends AppCompatActivity {
     //Function to loop all objects in ArrayList<Results>. Map function is retrieved from object and main view is created
     public void create_list(ArrayList<All_Results> obj){
         if(obj!=null && !obj.isEmpty()){
-            for(int i=0;i<obj.size(); i++){the_brain(obj.get(i).get_map(), obj.get(i).get_map1(), obj.get(i).get_map2());
+            for(int i=0;i<obj.size(); i++){
+                the_brain(obj.get(i).get_map(), obj.get(i).get_map1(), obj.get(i).get_map2());
             }
         }
     }

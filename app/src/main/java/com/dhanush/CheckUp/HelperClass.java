@@ -5,17 +5,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 public class HelperClass {
 
 
     public void schedule_alarm(Context context, AlarmManager alarmManager, Intent intentAlarm, int kk, Long startTime, String tablet_name, int alert, int notsnooze, int isrefillReminder) {
-        Log.e("check", "refill1");
         if (System.currentTimeMillis() > startTime) {
             startTime = startTime + (24 * 60 * 60 * 1000);
         }
-        Log.e("check", "refill1 "+startTime);
         intentAlarm.putExtra("name", tablet_name);
         intentAlarm.putExtra("kk", kk);
         intentAlarm.putExtra("time", String.valueOf(startTime));

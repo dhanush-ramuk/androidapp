@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +60,6 @@ public class trackpage extends AppCompatActivity {
                     TextView t2 = (TextView) v2.findViewById(R.id.textView2);
                     t1.setText(o.get(j).get_map2().get("date"));
                     t2.setText(o.get(j).get_map().get(all_tests[i]));
-                    Log.e("check", "imageInsert "+j);
                     if(j!=0 && (o.get(j-1).get_map().get(all_tests[i]) != null)) {
                         ImageView upDownButton = (ImageView) v2.findViewById(R.id.upDownButton);
                         try {

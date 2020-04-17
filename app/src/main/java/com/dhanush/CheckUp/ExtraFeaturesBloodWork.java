@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -45,13 +44,11 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
                         alertForNextBloodWork = 0;
                         AlertNextBloodWork.setVisibility(View.GONE);
                         noteLayout.setVisibility(View.INVISIBLE);
-                        Log.e("check", "pirates");
                         break;
                     case R.id.radio_ninjas1:
                         alertForNextBloodWork = 1;
                         AlertNextBloodWork.setVisibility(View.VISIBLE);
                         noteLayout.setVisibility(View.VISIBLE);
-                        Log.e("check", "pirates");
                         break;
                 }
             }
@@ -108,18 +105,13 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             startDate.set(Calendar.HOUR_OF_DAY, Calendar.HOUR_OF_DAY);
             startDate.set(Calendar.MINUTE, 0);
             startDate.set(Calendar.SECOND, 0);
-            Log.e("check", "current time " +System.currentTimeMillis());
-            Log.e("check", "set time "+startDate.getTimeInMillis());
             if((System.currentTimeMillis() >= startDate.getTimeInMillis()) && alertForNextBloodWork == 1){
                 Toast.makeText(getApplicationContext(), "The BloodWork remainder is in the past", Toast.LENGTH_LONG).show();
             }
             else {
                 String text = doctorsComment.getText().toString().trim();
-                Log.e("check", "doctor "+text);
                 if(commentOkayButton.getText().toString().equals("Edit") && !text.isEmpty()){
                     i.putExtra("havedoctorscomment", 1);
-                    Log.d("check", "doctors comment "+doctorsComment.getText().toString());
-                    Log.d("check", "doctors commentttt "+doctorsComment.getText().toString());
                     i.putExtra("doctorsComment", doctorsComment.getText().toString());
 
                 } else {
@@ -132,10 +124,8 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
             }
         } else {
             String text = doctorsComment.getText().toString().trim();
-            Log.e("check", "doctor "+text);
             if(commentOkayButton.getText().toString().equals("Edit") && !text.isEmpty()){
                 i.putExtra("havedoctorscomment", 1);
-                Log.d("check", "doctors comment "+doctorsComment.getText().toString());
                 i.putExtra("doctorsComment", doctorsComment.getText().toString());
 
             } else {

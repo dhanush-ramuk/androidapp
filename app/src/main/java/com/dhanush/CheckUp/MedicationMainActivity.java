@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ public class MedicationMainActivity extends AppCompatActivity {
     //Function to loop objects in ArrayList<Medication> to create main view
     public void create_medications_list(ArrayList<All_Medications> o){
         //check_function();
-        Log.e("check", "size "+o.size());
         for(int i=0; i<o.size(); i++){
             the_medication_brain(o.get(i).return_map());
         }
