@@ -31,10 +31,28 @@
             android:typeface="normal"
             app:fontFamily="sans-serif-smallcaps" />
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbarLabResult"
+        android:text="graph_view"
+        android:id="@+id/graph_view_button">
+
+    </Button>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/graph_view_button"
+        android:orientation="vertical"
+        android:id="@+id/parentLinearLayout1">
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarLabResult"
+        android:layout_below="@id/parentLinearLayout1"
        >
 
     <LinearLayout

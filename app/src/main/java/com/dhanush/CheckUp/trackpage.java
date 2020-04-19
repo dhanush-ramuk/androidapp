@@ -7,15 +7,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class trackpage extends AppCompatActivity {
     ArrayList<All_Results> obj;
+    ArrayList<Date> dateArrayList;
+    ArrayList<Integer> dataPointArrayList;
     LinearLayout parent, parent1;
     String dateanddayString = null;
     String[] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
@@ -23,6 +34,7 @@ public class trackpage extends AppCompatActivity {
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     int flag = 0;
     HelperClass helperClass;
+    Button graphViewButton;
 
 
     @Override
@@ -30,9 +42,107 @@ public class trackpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackpage);
         helperClass = new HelperClass();
+        graphViewButton = findViewById(R.id.graph_view_button);
         Intent intent = getIntent();
+        dateArrayList = new ArrayList<>();
+        dataPointArrayList = new ArrayList<>();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
-        figure_out(obj);
+        //figure_out(obj);
+        parent = (LinearLayout) findViewById(R.id.parentLinearLayout);
+        graphViewButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                    //parent.setVisibility(View.GONE);
+                   createGraphView();
+                  //dummyMethod();
+
+            }
+        }
+        );
+    }
+
+    private void dummyMethod() {
+
+            View view = getLayoutInflater().inflate(R.layout.graph_view_layout, null);
+            parent = (LinearLayout) findViewById(R.id.parentLinearLayout1);
+            // View v1 = getLayoutInflater().inflate(R.layout.bloodtracking1, null);
+            //TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
+            //dateanddayString = all_tests[i];
+            //datenday.setText(shorten_test_name_main(dateanddayString) + " " + "[" + UnitIncluder(dateanddayString).toLowerCase() + "]");
+            //parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
+            GraphView graphView = view.findViewById(R.id.graph_view);
+
+                //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                        new DataPoint(0, 1),
+                        new DataPoint(1, 5),
+                        new DataPoint(2, 3)
+                });
+                graphView.addSeries(series);
+                parent.addView(view);
+
+
+    }
+
+    private void createGraphView() {
+
+        for (int i = 0; i < all_tests.length; i++) {
+            View view = getLayoutInflater().inflate(R.layout.graph_view_layout, null);
+            parent = (LinearLayout) findViewById(R.id.parentLinearLayout1);
+            GraphView graphView = view.findViewById(R.id.graph_view);
+            for (int j = 0; j < obj.size(); j++) {
+                if (obj.get(j).get_map().get(all_tests[i]) != null) {
+                    flag = 1;
+                    try{
+                    dateArrayList.add(getIndividualDate(j));
+                    dataPointArrayList.add(Integer.valueOf(obj.get(j).get_map().get(all_tests[i])));
+                } catch (NumberFormatException e){}
+                }
+            }
+            if (flag == 1) {
+               LineGraphSeries<DataPoint> series = new LineGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
+
+                graphView.addSeries(series);
+                graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
+                graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
+              //  graphView.getViewport().setMinX(dateArrayList.get(0).getTime());
+               // graphView.getViewport().setMaxX(dateArrayList.get(dateArrayList.size()-1).getTime());
+                graphView.getViewport().setXAxisBoundsManual(true);
+                graphView.getGridLabelRenderer().setHumanRounding(false);
+                flag = 0;
+                parent.addView(view);
+            }
+
+        }
+}
+
+    private DataPoint[] generateDataPoints(ArrayList<Date> dateArrayList, ArrayList<Integer> dataPointArrayList) {
+        DataPoint[] values = new DataPoint[dateArrayList.size()];
+        for(int i=0; i<dateArrayList.size(); i++){
+            DataPoint value = new DataPoint(dateArrayList.get(i), dataPointArrayList.get(i));
+            Log.i("check", "values "+value );
+            Log.i("check", "size "+dateArrayList.size());
+            values[i] = value;
+        }
+        return values;
+    }
+
+
+    private Date getIndividualDate(int j) {
+        String date = obj.get(j).get_map2().get("date");
+        String[] seperateDate = date.split("/", 0);
+        int year = Integer.valueOf(seperateDate[0]);
+        int month = Integer.valueOf(seperateDate[1]);
+        int day = Integer.valueOf(seperateDate[2]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, (month-1));
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        Date individualDate = calendar.getTime();
+        Log.i("check", "date" +calendar.getTime());
+        return individualDate;
+
     }
 
     public String shorten_test_name_main(String a){

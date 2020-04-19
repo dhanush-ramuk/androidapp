@@ -29,12 +29,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -55,13 +59,19 @@ public class FullResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_result);
         Intent intent = getIntent();
-        obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
+       // obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("mylist", "");
+
+        ArrayList<All_Results> obj = gson.fromJson(json,
+                new TypeToken<List<All_Results>>(){}.getType());
         i = intent.getIntExtra("object index", 0);
-        set_value();
+        set_value(obj);
 
     }
 
-    public void set_value() {
+    public void set_value(ArrayList<All_Results> obj) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.parent_layout);
         Map<String, String> map = obj.get(i).get_map();
         TextView date = (TextView) findViewById(R.id.dateText);

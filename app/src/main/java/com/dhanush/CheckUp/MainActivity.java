@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     AlarmManager alarmManager;
     TextView textview_NO_LIST_ENTERED;
     ArrayList<All_Results> obj;
-    ArrayList<All_Medications> obj_med;
     Intent intentAlarm;
     HelperClass helperClass;
     RelativeLayout BloodWork, Medication;
@@ -58,13 +57,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         BloodWork = (RelativeLayout) findViewById(R.id.BloodWorkMainActivity);
-        Medication = (RelativeLayout) findViewById(R.id.MedicationMainActivity);
         if(intent.getIntExtra("empty", -1) == 1){
             BloodWork.setVisibility(View.GONE);
         }
-        if(intent.getIntExtra("empty", -1) == 2){
-            Medication.setVisibility(View.GONE);
-        }
+
         intentAlarm =  new Intent(MainActivity.this, AlarmReceiver.class);
         helperClass = new HelperClass();
         textview_NO_LIST_ENTERED = (TextView) findViewById(R.id.noListEnteredText);
@@ -76,20 +72,17 @@ public class MainActivity extends AppCompatActivity {
         prioritized_left1 = new ArrayList<>();
         prioritized_left2 = new ArrayList<>();
 
-
+        obj = new ArrayList<>();
         /*Using shared preference to get the Medication Remainder and All BloodWork Results object that contains
         all the previous results*/
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
-        String json1 = sharedPrefs.getString("mylist1", "");
 
         ArrayList<All_Results> start_obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
-        ArrayList<All_Medications> start_obj1 = gson.fromJson(json1,
-                new TypeToken<List<All_Medications>>(){}.getType());
-        obj = new ArrayList<>();
-        obj_med = new ArrayList<>();
+
+
 
         if(start_obj!=null && !start_obj.isEmpty()) {
             obj.addAll(start_obj);
@@ -97,31 +90,17 @@ public class MainActivity extends AppCompatActivity {
             BloodWork.setVisibility(View.VISIBLE);
         }
 
-        if(start_obj1!=null && !start_obj1.isEmpty()){
-            obj_med.addAll(start_obj1);
-            //create_medications_list(obj_med);
-            Medication.setVisibility(View.VISIBLE);
-        }
+
 
         //Display NOTHING ENTERED when both the objects are NULL.
         if(obj.isEmpty()) {
-            if (obj_med.isEmpty()) {
+
                 textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
                 BloodWork.setVisibility(View.GONE);
-                Medication.setVisibility(View.GONE);
 
-            } else{
-                textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
-                BloodWork.setVisibility(View.GONE);
-                Medication.setVisibility(View.VISIBLE);
-
-            }
         } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
             BloodWork.setVisibility(View.VISIBLE);
-                if(!obj_med.isEmpty()){
-                    Medication.setVisibility(View.VISIBLE);
-            }
         }
 
 
@@ -134,14 +113,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //FAB click to goto Activity3(Medication Remainder)
-        FloatingActionButton fab_tab = findViewById(R.id.fab_tab);
-        fab_tab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(getApplicationContext(), Activity3.class), 998);
-            }
-        });
     }
     //FAB click to goto App's information page
     public void gotoinfopage(View v){
@@ -149,8 +120,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /*Using shared preference to get the Medication Remainder and All BloodWork Results object that contains
+        all the previous results*/
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("mylist", "");
+        if(obj!=null && !obj.isEmpty()) {
+                obj = gson.fromJson(json, new TypeToken<List<All_Results>>() {}.getType());
+        }
+
+
+
+    }
+
     /*The main function which activates when finish() function gets excecuted in other Activity. finish() finction
-    started from startActivityForResult() function from MainActivity*/
+                started from startActivityForResult() function from MainActivity*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,138 +156,10 @@ public class MainActivity extends AppCompatActivity {
                 clear_list();
                 //create_list(obj);
                 clear_ArrayList();
-                saveBloodResults();
+                saveBloodResults(obj);
             }
         }
 
-        //finish() from Activity3(Medication Remainder)
-        if (requestCode == 998 && resultCode == RESULT_OK) {
-
-            int l = data.getIntExtra("boolean", 0);
-
-            /*clears and creates medication main list i.e. user clicked cancel button.
-            User not created any new remainder(l==0)*/
-            if (l == 0) {
-                //clear_medication_list();
-                //create_medications_list(obj_med);
-
-            }
-
-            //User created a new medication remainder(l==1)
-            else if (l == 1) {
-                Medication.setVisibility(View.VISIBLE);
-                ArrayList<String> hour, minute, ampm;
-                ArrayList<Integer> hourin12;
-                String tablet_name;
-                int alertNotification, alertRefill, day = 0, month = 0, year = 0;
-
-                //get the returned tablet name and time value
-                tablet_name = data.getStringExtra("tablet_name");
-                hour = new ArrayList<String>();
-                hour = data.getStringArrayListExtra("hour");
-                minute = new ArrayList<String>();
-                minute = data.getStringArrayListExtra("minute");
-                ampm = new ArrayList<String>();
-                ampm = data.getStringArrayListExtra("ampm");
-                hourin12 = new ArrayList<Integer>();
-                hourin12 = data.getIntegerArrayListExtra("hourin24");
-                alertNotification = data.getIntExtra("alertNotification", 0);
-                alertRefill = data.getIntExtra("alertRefill", 0);
-                if(alertRefill == 1){
-                    day = data.getIntExtra("day", 0);
-                    month = data.getIntExtra("month", 0);
-                    year = data.getIntExtra("year", 0);
-                }
-
-                //if not empty, save and create a remainder
-                if (!hour.isEmpty() && !minute.isEmpty() && !ampm.isEmpty() && !hourin12.isEmpty()) {
-                    Calendar startTime = Calendar.getInstance();
-                    Calendar startDate = Calendar.getInstance();
-
-                    //map_med to store hour, minute, ampm, name of tablet remainder
-                    Map<String, String> map_med = new HashMap<>();
-                    for (String a : med_info)
-                        map_med.put(a, null);
-                    int size;
-                    size = hour.size();
-
-                    /*Saving tablet time and name info based on size. Maximum only 3 remainders can be set
-                    for a tablet(morning, afternoon, night). User could give one, two, or three remainders/
-                    Could've used for loop mmm*/
-                    if (size == 2) {
-                        map_med.put("hour1", hour.get(0));
-                        map_med.put("hour2", hour.get(1));
-                        map_med.put("minute1", check_minute(minute.get(0)));
-                        map_med.put("minute2", check_minute(minute.get(1)));
-                        map_med.put("ampm1", ampm.get(0));
-                        map_med.put("ampm2", ampm.get(1));
-                    } else if (size == 1) {
-                        map_med.put("hour1", hour.get(0));
-                        map_med.put("minute1", check_minute(minute.get(0)));
-                        map_med.put("ampm1", ampm.get(0));
-                    } else {
-                        map_med.put("hour1", hour.get(0));
-                        map_med.put("hour2", hour.get(1));
-                        map_med.put("hour3", hour.get(2));
-                        map_med.put("minute1", check_minute(minute.get(0)));
-                        map_med.put("minute2", check_minute(minute.get(1)));
-                        map_med.put("minute3", check_minute(minute.get(2)));
-                        map_med.put("ampm1", ampm.get(0));
-                        map_med.put("ampm2", ampm.get(1));
-                        map_med.put("ampm3", ampm.get(2));
-
-                    }
-                    map_med.put("size", String.valueOf(size));
-                    map_med.put("name", tablet_name);
-                    map_med.put("alertNotification", String.valueOf(alertNotification));
-                    map_med.put("alertRefill", String.valueOf(alertRefill));
-                    //kk is unique value for each remainder used in creating Pending intent.
-                    int kk = 0;
-
-                    //My way of creating unique value for each remainder
-                    for (int ii = 0; ii < obj_med.size(); ii++) {
-                        kk = kk + Integer.parseInt(obj_med.get(ii).return_map().get("size"));
-                    }
-
-                    flag1 = 1;
-                    if (alertRefill == 1){
-                        startDate.set(Calendar.YEAR, year);
-                        startDate.set(Calendar.MONTH, month);
-                        startDate.set(Calendar.DAY_OF_MONTH, day);
-                        startDate.set(Calendar.HOUR_OF_DAY, 9);
-                        startDate.set(Calendar.MINUTE, 0);
-                        startDate.set(Calendar.SECOND, 0);
-                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startDate.getTimeInMillis(), "refill", 0, 1, 1);
-                        map_med.put("kkvaluerefill", String.valueOf(kk));
-                        map_med.put("Refilltime", String.valueOf(startTime.getTimeInMillis()));
-                        kk = kk + 1;
-                    }
-                    //changing time to calender instance for setting alarm, every time for each tablet name
-                    for (int i = 0; i < hour.size(); i++) {
-                        startTime.set(Calendar.HOUR_OF_DAY, hourin12.get(i));
-                        startTime.set(Calendar.MINUTE, Integer.parseInt(minute.get(i)));
-                        startTime.set(Calendar.SECOND, 0);
-                        helperClass.schedule_alarm(getApplicationContext(), alarmManager, intentAlarm, kk, startTime.getTimeInMillis(), tablet_name, alertNotification, 1, 0);
-                        map_med.put(String.valueOf(i), String.valueOf(kk));
-                        map_med.put(i + "time", String.valueOf(startTime.getTimeInMillis()));
-                        kk = kk + 1;
-                    }
-
-
-                    //obj_med, Arraylist of All_Medication object to save every created map for mediaction remainder
-                    obj_med.add(new All_Medications(map_med));
-                    saveMedications();
-                    //clear_medication_list();
-                    //create_medications_list(obj_med);
-                    if (obj_med.size() == 2) {
-                    }
-                }
-            } else {
-                //clear_medication_list();
-                //create_medications_list(obj_med);
-            }
-
-        }
 
         //From Activity2
         if (requestCode == 999 && resultCode == RESULT_OK) {
@@ -471,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                     obj.add(new All_Results(map, map1, map2));
 
                     //function to save Arraylist of object into Shared Preferences
-                    saveBloodResults();
+                    saveBloodResults(obj);
                     // clear_list();
                     //create_list(obj);
                     clear_ArrayList();
@@ -481,23 +341,14 @@ public class MainActivity extends AppCompatActivity {
         }
         //Display NOTHING ENTERED when both the objects are NULL.
         if(obj.isEmpty()) {
-            if (obj_med.isEmpty()) {
-                textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
-                BloodWork.setVisibility(View.GONE);
-                Medication.setVisibility(View.GONE);
 
-            } else{
                 textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
                 BloodWork.setVisibility(View.GONE);
                 Medication.setVisibility(View.VISIBLE);
 
-            }
-        } else {
+            } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
             BloodWork.setVisibility(View.VISIBLE);
-            if(!obj_med.isEmpty()){
-                Medication.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -505,23 +356,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
-        ArrayList<All_Medications> obj = gson.fromJson(json,
+        ArrayList<All_Results> obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
         Intent intent = new Intent(getApplicationContext(), BloodWorkMainActivity.class);
         intent.putExtra("list", obj);
         startActivity(intent);
     }
 
-    public void goToMedicationMainActivity(View v){
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        String json = sharedPrefs.getString("mylist1", "");
-        ArrayList<All_Medications> obj = gson.fromJson(json,
-                new TypeToken<List<All_Medications>>(){}.getType());
-        Intent intent = new Intent(getApplicationContext(), MedicationMainActivity.class);
-        intent.putExtra("list", obj);
-        startActivity(intent);
-    }
 
     public void go_figure_the_fuck_out(Map map){
         Random rand = new Random();
@@ -667,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //function to save BloodWork value in sharedpreferences
-    public void saveBloodResults(){
+    public void saveBloodResults(ArrayList<All_Results> obj){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
         Gson gson = new Gson();
@@ -676,15 +517,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    //function to save Medication Remainder in sharedpreferences
-    public void saveMedications(){
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(obj_med);
-        editor.putString("mylist1", json);
-        editor.apply();
-    }
 
 
     public void clear_ArrayList(){

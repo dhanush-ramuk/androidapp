@@ -26,17 +26,12 @@
         android:windowSoftInputMode="adjustResize">
         <activity android:name=".changeCurrentBloodWorkDate"></activity>
         <activity android:name=".ExtraFeaturesBloodWork" />
-        <activity android:name=".ExtraFeaturesMedication" />
-        <activity android:name=".MedicationMainActivity" />
         <activity android:name=".BloodWorkMainActivity" />
         <activity
             android:name=".infoPage"
             android:screenOrientation="portrait" />
         <activity
             android:name=".trackpage"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity3"
             android:screenOrientation="portrait" />
         <activity
             android:name=".FullResult"
