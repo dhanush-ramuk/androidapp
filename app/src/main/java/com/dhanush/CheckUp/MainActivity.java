@@ -143,23 +143,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //TODO maybe remove cancel button in FullResult Activity as it is same as back button
-        //finish() from FullResult Activity
-        if (requestCode == 997 && resultCode == RESULT_OK) {
-
-            //user deletes the BloodWork result from FullResult Activity
-
-            //index value of deleted object
-            int objectIndex = data.getIntExtra("value", -1);
-            if (objectIndex != -1) {
-                obj.remove(objectIndex);
-                clear_list();
-                //create_list(obj);
-                clear_ArrayList();
-                saveBloodResults(obj);
-            }
-        }
-
 
         //From Activity2
         if (requestCode == 999 && resultCode == RESULT_OK) {
