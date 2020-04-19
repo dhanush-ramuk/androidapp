@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.dhanush.CheckUp"
-    android:versionCode="7"
-    android:versionName="1.2">
+    android:versionCode="9"
+    android:versionName="1.2.1">
 
     <dist:module dist:instant="true" />
 

@@ -69,7 +69,7 @@ public class trackpage extends AppCompatActivity {
                             if(Integer.valueOf(o.get(j).get_map().get(all_tests[i])) == Integer.valueOf(o.get(j - 1).get_map().get(all_tests[i]))){
                                 upDownButton.setImageResource(R.drawable.nochange);
                             }
-                            else {
+                            else if(Integer.valueOf(o.get(j).get_map().get(all_tests[i])) < Integer.valueOf(o.get(j - 1).get_map().get(all_tests[i]))) {
                                 upDownButton.setImageResource(R.drawable.down);
                             }
                         } catch (NumberFormatException ne){
