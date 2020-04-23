@@ -34,4 +34,10 @@ public class HelperClass {
             }
         }
 
+        public String splitDate(String date){
+            String[] splitDate = date.split("/", 0);
+            String smallDate = splitDate[1]+"/"+splitDate[2];
+            return smallDate;
+        }
+
 }

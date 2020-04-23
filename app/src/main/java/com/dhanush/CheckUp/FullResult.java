@@ -44,11 +44,11 @@ import java.util.Objects;
 
 public class FullResult extends AppCompatActivity {
     ArrayList<All_Results> obj;
-    Bitmap bitmap;
     String [] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     int i;
+    HelperClass mHelperClass;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -64,7 +64,7 @@ public class FullResult extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPrefs.getString("mylist", "");
 
-        ArrayList<All_Results> obj = gson.fromJson(json,
+        obj = gson.fromJson(json,
                 new TypeToken<List<All_Results>>(){}.getType());
         i = intent.getIntExtra("object index", 0);
         set_value(obj);
@@ -72,42 +72,87 @@ public class FullResult extends AppCompatActivity {
     }
 
     public void set_value(ArrayList<All_Results> obj) {
+        mHelperClass = new HelperClass();
         LinearLayout layout = (LinearLayout) findViewById(R.id.parent_layout);
+        TextView blooddworkTextView = findViewById(R.id.blood_work_textview);
         Map<String, String> map = obj.get(i).get_map();
         TextView date = (TextView) findViewById(R.id.dateText);
         TextView day = (TextView) findViewById(R.id.dayText);
-        date.setText(obj.get(i).get_map2().get("date"));
-        day.setText(obj.get(i).get_map2().get("day"));
+        blooddworkTextView.setText("Blood Work - "+mHelperClass.splitDate(obj.get(i).get_map2().get("date")));
+
         for (int j = 0; j < all_tests.length; j++) {
             if (map.get(all_tests[j]) != null) {
                 View v = getLayoutInflater().inflate(R.layout.full_result_views_layout, null);
                 TextView t1 = (TextView) v.findViewById(R.id.textView);
                 TextView t2 = (TextView) v.findViewById(R.id.textView2);
-                t1.setText(all_tests[j]);
-                t2.setText(map.get(all_tests[j]) + " " + "[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
+                t1.setText(shortenTestName(all_tests[j])+ " " + "[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
+                t2.setText(map.get(all_tests[j]));
                 layout.addView(v);
             }
         }
         TextView DoctorsComment = (TextView) findViewById(R.id.doctorsComment);
         TextView DoctorsCommentText = (TextView) findViewById(R.id.doctorsCommentText);
         TextView alertForNextBloodWork = (TextView) findViewById(R.id.alertForNextBloodWorkText);
+        TextView alertForNextBloodWorkDate = (TextView) findViewById(R.id.alert_for_next_bloodwork_date);
         DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
         if(obj.get(i).get_map2().containsKey("daya")){
             if(Integer.valueOf(obj.get(i).get_map2().get("havealertfornextbloodwork")) == 1){
                 int daya = Integer.valueOf(obj.get(i).get_map2().get("daya"));
                 int montha = Integer.valueOf(obj.get(i).get_map2().get("montha"));
                 int yeara = Integer.valueOf(obj.get(i).get_map2().get("yeara"));
-                alertForNextBloodWork.setText("Next BloodWork is on "+daya+"/"+montha+"/"+yeara);
+                alertForNextBloodWork.setText("Next BloodWork is on ");
+                alertForNextBloodWorkDate.setText(daya+"/"+montha+"/"+yeara);
             }
         }
-        View lineHorizontal = (View) findViewById(R.id.lineHorizontal);
         if (obj.get(i).get_map2().containsKey("doctorscomment")) {
             if (!(obj.get(i).get_map2().get("doctorscomment").equals(" "))) {
                 DoctorsCommentText.setVisibility(View.VISIBLE);
-                lineHorizontal.setVisibility(View.VISIBLE);
-                lineHorizontal.getLayoutParams().width = DoctorsComment.getWidth();
             }
         }
+    }
+    private String shortenTestName(String a){
+        String str = null;
+        if(a.equals("blood urea nitrogen"))
+            str = "Blood Urea";
+        else if(a.equals("alanine amino transferase"))
+            str = "ALT";
+        else if(a.equals("aspartate amino transferase"))
+            str = "AST";
+        else if(a.equals("total protein"))
+            str = "Total Protein";
+        else if(a.equals("glucose[fasting]"))
+            str = "Glucose[F]";
+        else if(a.equals("glucose[random]"))
+            str = "Glucose[R]";
+        else if(a.equals("alkaline phosphatase"))
+            str = "ALP";
+        else if(a.equals("weight"))
+            str = "Weight";
+        else if(a.equals("cholesterol"))
+            str = "Cholesterol";
+        else if(a.equals("creatinine"))
+            str = "Creatinine";
+        else if(a.equals("calcium"))
+            str = "Calcium";
+        else if(a.equals("albumin"))
+            str = "Albumin";
+        else if(a.equals("sodium"))
+            str = "Sodium";
+        else if(a.equals("potassium"))
+            str = "Potassium";
+        else if(a.equals("chloride"))
+            str = "Chloride";
+        else if(a.equals("bilirubin"))
+            str = "Bilirubin";
+        else if(a.equals("hemoglobin"))
+            str = "Hemoglobin";
+        else if(a.equals("hematocrit"))
+            str = "Hematocrit";
+        else if(a.equals("platelets"))
+            str = "Platelets";
+        else
+            str = a;
+        return str;
     }
     public String UnitIncluder(String testName){
         String testUnit = null;

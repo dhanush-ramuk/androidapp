@@ -3,135 +3,121 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:background="@color/colorBackground"
+    android:padding="8dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/rounded_corner_card"
         android:id="@+id/toolbarLabResult"
-        android:elevation="20dp"
+        android:layout_centerVertical="true"
+        android:elevation="5dp"
         android:layout_marginBottom="2.5dp">
 
         <TextView
+            android:id="@+id/blood_work_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
+            android:padding="10dp"
             android:text="@string/bloodWork"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="28sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps" />
+            app:fontFamily="@font/nunito_extrabold" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLabResult"
-        android:id="@+id/dateday"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-       >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dateText"
-            android:textSize="24sp"
-            android:layout_margin="10dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps">
 
-        </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dayText"
-            android:textSize="24sp"
-            android:textStyle="normal"
-            android:layout_marginTop="10dp"
-            android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp">
-
-        </TextView>
-    </LinearLayout>
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollViewForPdf"
-        android:layout_below="@+id/dateday"
+        android:layout_below="@+id/toolbarLabResult"
         android:fillViewport="true"
         android:layout_marginBottom="75dp"
+        android:padding="5dp"
         >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+       >
         <LinearLayout
             android:id="@+id/parent_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
+            android:background="@drawable/rounded_corner_card"
+            android:padding="3dp"
             >
         </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/parent_layout">
+        android:layout_below="@id/parent_layout"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="6dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rounded_corner_card">
+
+            <TextView
+                android:id="@+id/doctorsCommentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/DoctorsCommentText"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:visibility="invisible">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/doctorsComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textColor="#000000"
+                android:textSize="22sp">
+
+            </TextView>
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="6dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/rounded_corner_card">
+        <TextView
+            android:id="@+id/alertForNextBloodWorkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+           />
 
     <TextView
-        android:id="@+id/doctorsCommentText"
+        android:id="@+id/alert_for_next_bloodwork_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/DoctorsCommentText"
-        android:textSize="20sp"
-        android:visibility="invisible">
-
-    </TextView>
-        <View
-            android:layout_width="200dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:visibility="invisible"
-            android:id="@+id/lineHorizontal"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/doctorsComment"
-        android:layout_margin="7dp"
-        android:textColor="@color/labTextHeading"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="18sp">
-    </TextView>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/alertForNextBloodWorkText"
-    android:layout_marginLeft="5dp"
-    android:fontFamily="sans-serif-smallcaps"
-    android:layout_marginTop="10dp"
-    android:textColor="#000000"
-    android:textSize="20sp"/>
+        android:fontFamily="@font/open_sans_bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+    />
+</LinearLayout>
     </LinearLayout>
 </RelativeLayout>
     </ScrollView>
@@ -147,8 +133,8 @@
     android:id="@+id/okayButton"
     android:layout_alignParentEnd="true"
     android:onClick="backToMain"
-    android:src="@drawable/baseline_done_white_48dp"
-    android:backgroundTint="#00c853"/>
+    android:src="@drawable/tickmark_icon_light_48"
+   />
 
 
 
@@ -161,28 +147,18 @@
         android:id="@+id/deleteButton"
         android:layout_alignParentStart="true"
         android:onClick="deleteResult"
-        android:backgroundTint="#ff0000"
-        android:src="@drawable/baseline_delete_outline_white_36dp"/>
+        android:src="@drawable/trash_icon_light_48"/>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button"
-        android:layout_width="153dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:src="@drawable/track_icon_light_48"
+      android:layout_centerHorizontal="true"
 
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginRight="68dp"
-        android:layout_toStartOf="@+id/okayButton"
-        android:layout_toLeftOf="@+id/okayButton"
-        android:layout_toEndOf="@+id/deleteButton"
-        android:layout_toRightOf="@+id/deleteButton"
-        android:background="@drawable/button_rounded_corner"
         android:onClick="gotoTrackPage"
-        android:text="@string/TRACK"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
+        />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -12,13 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +32,7 @@ public class trackpage extends AppCompatActivity {
     ArrayList<All_Results> obj;
     ArrayList<Date> dateArrayList;
     ArrayList<Integer> dataPointArrayList;
-    LinearLayout parent, parent1;
+    LinearLayout parent, parent1, parentGraphview;
     String dateanddayString = null;
     String[] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
@@ -35,6 +40,7 @@ public class trackpage extends AppCompatActivity {
     int flag = 0;
     HelperClass helperClass;
     Button graphViewButton;
+    ScrollView defaultViewScrollbar, graphViewScrollbar;
 
 
     @Override
@@ -44,17 +50,26 @@ public class trackpage extends AppCompatActivity {
         helperClass = new HelperClass();
         graphViewButton = findViewById(R.id.graph_view_button);
         Intent intent = getIntent();
-        dateArrayList = new ArrayList<>();
-        dataPointArrayList = new ArrayList<>();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
-        //figure_out(obj);
+        figure_out(obj);
+        createGraphView();
+        defaultViewScrollbar = findViewById(R.id.scrollview_deafultview);
+        graphViewScrollbar = findViewById(R.id.scrollview_graphview);
         parent = (LinearLayout) findViewById(R.id.parentLinearLayout);
+        parentGraphview = findViewById(R.id.parentLinearLayout1);
+
         graphViewButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                    //parent.setVisibility(View.GONE);
-                   createGraphView();
+                    if(graphViewButton.getText().toString().equals("GRAPH_VIEW")) {
+                        defaultViewScrollbar.setVisibility(View.GONE);
+                        graphViewScrollbar.setVisibility(View.VISIBLE);
+                        graphViewButton.setText("DEFAULT_VIEW");
+                    } else if(graphViewButton.getText().toString().equals("DEFAULT_VIEW")){
+                        graphViewScrollbar.setVisibility(View.GONE);
+                        defaultViewScrollbar.setVisibility(View.VISIBLE);
+                        graphViewButton.setText("GRAPH_VIEW");
+                    }
                   //dummyMethod();
 
             }
@@ -62,38 +77,19 @@ public class trackpage extends AppCompatActivity {
         );
     }
 
-    private void dummyMethod() {
-
-            View view = getLayoutInflater().inflate(R.layout.graph_view_layout, null);
-            parent = (LinearLayout) findViewById(R.id.parentLinearLayout1);
-            // View v1 = getLayoutInflater().inflate(R.layout.bloodtracking1, null);
-            //TextView datenday = (TextView) v1.findViewById(R.id.dateandday);
-            //dateanddayString = all_tests[i];
-            //datenday.setText(shorten_test_name_main(dateanddayString) + " " + "[" + UnitIncluder(dateanddayString).toLowerCase() + "]");
-            //parent1 = (LinearLayout) v1.findViewById(R.id.parentLinearLayout2);
-            GraphView graphView = view.findViewById(R.id.graph_view);
-
-                //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                        new DataPoint(0, 1),
-                        new DataPoint(1, 5),
-                        new DataPoint(2, 3)
-                });
-                graphView.addSeries(series);
-                parent.addView(view);
-
-
-    }
 
     private void createGraphView() {
-
         for (int i = 0; i < all_tests.length; i++) {
+            dateArrayList = new ArrayList<>();
+            dataPointArrayList = new ArrayList<>();
             View view = getLayoutInflater().inflate(R.layout.graph_view_layout, null);
             parent = (LinearLayout) findViewById(R.id.parentLinearLayout1);
+            TextView graphviewTextview = view.findViewById(R.id.graphview_textview);
             GraphView graphView = view.findViewById(R.id.graph_view);
             for (int j = 0; j < obj.size(); j++) {
                 if (obj.get(j).get_map().get(all_tests[i]) != null) {
                     flag = 1;
+                    graphviewTextview.setText(all_tests[i]);
                     try{
                     dateArrayList.add(getIndividualDate(j));
                     dataPointArrayList.add(Integer.valueOf(obj.get(j).get_map().get(all_tests[i])));
@@ -101,13 +97,16 @@ public class trackpage extends AppCompatActivity {
                 }
             }
             if (flag == 1) {
-               LineGraphSeries<DataPoint> series = new LineGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
-
+               PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
+                series.setTitle(all_tests[i]);
                 graphView.addSeries(series);
+                series.setShape(PointsGraphSeries.Shape.POINT);
+                GridLabelRenderer glr = graphView.getGridLabelRenderer();
+                glr.setPadding(36);
                 graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
-                graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
-              //  graphView.getViewport().setMinX(dateArrayList.get(0).getTime());
-               // graphView.getViewport().setMaxX(dateArrayList.get(dateArrayList.size()-1).getTime());
+                graphView.getGridLabelRenderer().setNumHorizontalLabels(dateArrayList.size());
+                graphView.getViewport().setMinX(dateArrayList.get(0).getTime());
+                graphView.getViewport().setMaxX(dateArrayList.get(dateArrayList.size()-1).getTime());
                 graphView.getViewport().setXAxisBoundsManual(true);
                 graphView.getGridLabelRenderer().setHumanRounding(false);
                 flag = 0;
@@ -179,7 +178,7 @@ public class trackpage extends AppCompatActivity {
                             if(Integer.valueOf(o.get(j).get_map().get(all_tests[i])) == Integer.valueOf(o.get(j - 1).get_map().get(all_tests[i]))){
                                 upDownButton.setImageResource(R.drawable.nochange);
                             }
-                            else {
+                            else if(Integer.valueOf(o.get(j).get_map().get(all_tests[i])) < Integer.valueOf(o.get(j - 1).get_map().get(all_tests[i]))) {
                                 upDownButton.setImageResource(R.drawable.down);
                             }
                         } catch (NumberFormatException ne){

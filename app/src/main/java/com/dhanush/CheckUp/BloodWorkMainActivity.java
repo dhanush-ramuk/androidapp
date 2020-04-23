@@ -73,7 +73,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
         main_value.add(mini_map.get(left));
         if(!left1.isEmpty()) {
             if (left1.equals("-")) {
-                second_value_text.add(" - ");
+                second_value_text.add("  ");
                 second_value.add("");
             } else {
                 second_value_text.add(mini_map.get(left1));
@@ -82,13 +82,13 @@ public class BloodWorkMainActivity extends AppCompatActivity {
 
         } else{
 
-            second_value_text.add(" - ");
-            second_value.add(" - ");
+            second_value_text.add("  ");
+            second_value.add(" ");
         }
 
         if(!left2.isEmpty()) {
             if (left2.equals(" ")) {
-                third_value_text.add(" - ");
+                third_value_text.add("  ");
                 third_value.add(" ");
             } else {
                 third_value_text.add(mini_map.get(left2));
@@ -238,6 +238,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
+            HelperClass helperClass = new HelperClass();
             view = getLayoutInflater().inflate(R.layout.main_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.main_value);
             TextView text2 = (TextView)view.findViewById(R.id.main_value_name);
@@ -249,7 +250,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
             TextView text6 = (TextView)view.findViewById(R.id.third_value_text);
             TextView t3 = (TextView)view.findViewById(R.id.third_value_updown);
             TextView text7 = (TextView)view.findViewById(R.id.date_text);
-            TextView text8 = (TextView)view.findViewById(R.id.day_text);
+//            TextView text8 = (TextView)view.findViewById(R.id.day_text);
 
             text1.setText(main_value.get(i));
             text2.setText(main_value_text.get(i));
@@ -266,8 +267,8 @@ public class BloodWorkMainActivity extends AppCompatActivity {
                 text5.setText(third_value_text.get(i));
             }
             if(!date_text.isEmpty()) {
-                text7.setText(date_text.get(i));
-                text8.setText(day_text.get(i));
+                text7.setText(helperClass.splitDate(date_text.get(i)));
+              //  text8.setText(day_text.get(i));
             }
 
             //Mainview BloodWork relative layout

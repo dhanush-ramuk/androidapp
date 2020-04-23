@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_width="wrap_content"
+<RelativeLayout android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="20dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+   android:background="@drawable/rounded_corner_card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="5dp">
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_list_relout"
-    android:background="@color/labThird"
-    android:elevation="20dp"
-    android:padding="2dp"
+    android:padding="10dp"
+    android:elevation="5dp"
     >
 
 
@@ -18,29 +19,30 @@
         android:id="@+id/main"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:padding="3dp"
+        android:padding="0dp"
         >
 
         <TextView
             android:id="@+id/main_value"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:textColor="@color/mainLabValueMainList"
+            android:layout_height="74dp"
             android:autoSizeTextType="uniform"
-             android:textSize="66sp"
-            android:textStyle="bold"
-            app:fontFamily="cursive" />
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="66sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/main_value_name"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/main_value"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="0dp"
             android:autoSizeTextType="uniform"
-            android:layout_marginTop="3dp"
-            android:textColor="#37474F"
-            android:textSize="24sp"
-            app:fontFamily="sans-serif-smallcaps" />
+            android:fontFamily="@font/nunito_extrabold"
+            android:textColor="#000000"
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/main_value_updown"
@@ -52,11 +54,11 @@
              />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_width="145dp"
+        android:layout_height="110dp"
         android:layout_toRightOf="@+id/second_layout"
         android:layout_toEndOf="@+id/second_layout"
-        android:padding="3dp"
+        android:padding="1dp"
         >
 
         <TextView
@@ -65,34 +67,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif-smallcaps" />
+            android:layout_centerInParent="true"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:fontFamily="@font/nunito_bold" />
 
-        <TextView
-            android:id="@+id/day_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/date_text"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif-smallcaps" />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="110dp"
         android:layout_toEndOf="@+id/main"
         android:layout_toRightOf="@+id/main"
        android:id="@+id/second_layout"
-        android:padding="2dp"
+        android:padding="1dp"
         >
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:id="@+id/second_value_main"
             android:paddingBottom="1dp">
 
@@ -103,26 +94,28 @@
                 android:layout_alignParentTop="true"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:textSize="34sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
                 android:textStyle="bold"
-                app:fontFamily="serif" />
+                app:fontFamily="@font/nunito_extrabold" />
 
             <TextView
                 android:id="@+id/second_value_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@+id/second_value"
                 android:layout_toRightOf="@+id/second_value"
                 android:autoSizeTextType="uniform"
-                android:textColor="#37474F"
-                android:textSize="14sp"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#000000"
                 android:textStyle="bold"
-                app:fontFamily="sans-serif-smallcaps" />
+                android:textSize="14sp"
+
+                />
 
             <TextView
             android:id="@+id/second_value_updown"
@@ -135,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_below="@+id/second_value_main"
             android:paddingTop="1dp">
 
@@ -145,26 +138,26 @@
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:textSize="34sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
                 android:textStyle="bold"
-                app:fontFamily="serif" />
+                app:fontFamily="@font/nunito_extrabold" />
 
             <TextView
                 android:id="@+id/third_value_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@+id/third_value"
                 android:layout_toRightOf="@+id/third_value"
                 android:autoSizeTextType="uniform"
-                android:textColor="#37474F"
+                android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:fontFamily="sans-serif-smallcaps" />
+                app:fontFamily="@font/nunito_bold" />
 
             <TextView
                 android:id="@+id/third_value_updown"
@@ -176,4 +169,4 @@
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</RelativeLayout>
