@@ -8,8 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="MyEditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/labThird</item>
-        <item name="colorControlActivated">@color/labThird</item>
+        <item name="colorControlNormal">@color/colorBackground</item>
+        <item name="colorControlActivated">@color/colorBackground</item>
     </style>
     <style name="MyEditTextMedication" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/medicationText</item>

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<All_Results> obj;
     Intent intentAlarm;
     HelperClass helperClass;
-    RelativeLayout BloodWork, Medication;
+    RelativeLayout BloodWork;
     int flag1, alertfornextbloodwork, havedoctorscomment;
     String doctorscomment = " ";
     int daya = 0, montha = 0, yeara = 0;
@@ -327,8 +327,6 @@ public class MainActivity extends AppCompatActivity {
 
                 textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
                 BloodWork.setVisibility(View.GONE);
-                Medication.setVisibility(View.VISIBLE);
-
             } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
             BloodWork.setVisibility(View.VISIBLE);
