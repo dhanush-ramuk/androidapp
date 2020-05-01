@@ -3,34 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
-    <TextView
+    android:padding="10dp"
+    android:background="@color/colorBackground">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date of the Current BloodWork"
+        android:id="@+id/current_datepicker_relativelayout"
+        android:background="@drawable/rounded_corner_card"
         android:elevation="10dp"
-        android:layout_margin="5dp"
-        android:textColor="#ffffff"
-        android:padding="2dp"
-        android:background="@drawable/rounded_corner"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        app:fontFamily="sans-serif-condensed"
-        android:id="@+id/DatePickerText">
-    </TextView>
+        android:layout_marginBottom="2.5dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/DoctorsCommentText"
+            android:id="@+id/DoctorsComment"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            app:fontFamily="@font/nunito_extrabold">
+        </TextView>
+    </RelativeLayout>
     <DatePicker
         android:id="@+id/BloodWorkDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:datePickerMode="spinner"
-        android:layout_below="@+id/DatePickerText"
+        android:layout_below="@+id/current_datepicker_relativelayout"
         android:layout_centerInParent="true"
-        android:background="@drawable/rounded_corner_datepicker"
         android:elevation="10dp"
         android:padding="5dp"
         android:layout_margin="10dp"
+        android:background="@drawable/rounded_corner_card"
         android:calendarViewShown="false"/>
     <RelativeLayout
         android:id="@+id/buttons"
@@ -46,8 +55,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="backToActivity2"
-            android:src="@drawable/baseline_done_white_48dp"
-            android:backgroundTint="#00c853"/>
+            android:src="@drawable/tickmark_icon_light_48" />
     </RelativeLayout>
 
 </RelativeLayout>

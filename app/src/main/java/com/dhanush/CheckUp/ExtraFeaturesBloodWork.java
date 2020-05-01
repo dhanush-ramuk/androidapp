@@ -24,7 +24,7 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
     EditText doctorsComment;
     Button commentOkayButton;
     LinearLayout noteLayout;
-
+    RadioGroup radioGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,20 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
         commentOkayButton = (Button) findViewById(R.id.okButtonComment);
         doctorsComment = (EditText) findViewById(R.id.DoctorsCommentEditText);
         noteLayout = (LinearLayout) findViewById(R.id.timeNoteLinearLayout);
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioButtonRefill);
+        Intent i = getIntent();
+        String comment = i.getStringExtra("comment");
+        int daya = i.getIntExtra("daya", 0);
+        int montha = i.getIntExtra("montha", 0);
+        int yeara = i.getIntExtra("yeara", 0);
+        setDoctorsCommentFromStart(comment);
+        radioGroup = (RadioGroup) findViewById(R.id.radioButtonRefill);
+        setAlertDate(daya, montha, yeara);
+        doctorsComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doctorsComment.setCursorVisible(true);
+            }
+        });
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -56,35 +69,42 @@ public class ExtraFeaturesBloodWork extends AppCompatActivity {
 
     }
 
+    private void setAlertDate(int daya, int montha, int yeara) {
+        if(daya!=0){
+            AlertNextBloodWork.updateDate(yeara, montha, daya);
+            alertForNextBloodWork = 1;
+            AlertNextBloodWork.setVisibility(View.VISIBLE);
+            noteLayout.setVisibility(View.VISIBLE);
+            radioGroup.check(R.id.radio_ninjas1);
+        }
+    }
+
+    private void setDoctorsCommentFromStart(String comment) {
+        if(comment != null){
+            doctorsComment.setText(comment);
+            doctorsComment.setEnabled(false);
+            commentOkayButton.setText("Edit");
+            commentOkayButton.setTextColor(Color.parseColor("#FF1E58"));
+        }
+    }
+
     public void setDoctorsComment(View v) {
         if(!doctorsComment.getText().toString().equals("") && !doctorsComment.getText().toString().equals(null)) {
             if (commentOkayButton.getText().toString().equals("Ok")) {
                 commentOkayButton.setText("Edit");
-                commentOkayButton.setBackgroundColor(Color.parseColor("#d50000"));
+                commentOkayButton.setTextColor(Color.parseColor("#FF1E58"));
             } else {
                 commentOkayButton.setText("Ok");
-                commentOkayButton.setBackgroundColor(Color.parseColor("#00c853"));
+                commentOkayButton.setTextColor(Color.parseColor("#000000"));
             }
             if (commentOkayButton.getText().toString().equals("Edit")) {
-               // doctorsComment.setFocusable(false);
                 doctorsComment.setEnabled(false);
-                //doctorsComment.setCursorVisible(false);
             } else if(commentOkayButton.getText().toString().equals("Ok")) {
                 doctorsComment.setCursorVisible(true);
                 doctorsComment.setFocusable(true);
                 doctorsComment.setTextIsSelectable(true);
                 doctorsComment.setEnabled(true);
             }
-        }
-    }
-    public void onRadioButtonClicked(View view) {
-
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-
         }
     }
 

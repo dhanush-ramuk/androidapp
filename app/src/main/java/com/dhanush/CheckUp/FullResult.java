@@ -85,7 +85,7 @@ public class FullResult extends AppCompatActivity {
                 View v = getLayoutInflater().inflate(R.layout.full_result_views_layout, null);
                 TextView t1 = (TextView) v.findViewById(R.id.textView);
                 TextView t2 = (TextView) v.findViewById(R.id.textView2);
-                t1.setText(shortenTestName(all_tests[j])+ " " + "[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
+                t1.setText(mHelperClass.shortenTestName(all_tests[j])+ " " + "[" + UnitIncluder(all_tests[j]).toLowerCase() + "]");
                 t2.setText(map.get(all_tests[j]));
                 layout.addView(v);
             }
@@ -94,12 +94,14 @@ public class FullResult extends AppCompatActivity {
         TextView DoctorsCommentText = (TextView) findViewById(R.id.doctorsCommentText);
         TextView alertForNextBloodWork = (TextView) findViewById(R.id.alertForNextBloodWorkText);
         TextView alertForNextBloodWorkDate = (TextView) findViewById(R.id.alert_for_next_bloodwork_date);
-        DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
+        LinearLayout alertLayout = findViewById(R.id.alert_layout);
+        LinearLayout doctorsCommentLayout = findViewById(R.id.doctors_comment_layout);
         if(obj.get(i).get_map2().containsKey("daya")){
             if(Integer.valueOf(obj.get(i).get_map2().get("havealertfornextbloodwork")) == 1){
                 int daya = Integer.valueOf(obj.get(i).get_map2().get("daya"));
                 int montha = Integer.valueOf(obj.get(i).get_map2().get("montha"));
                 int yeara = Integer.valueOf(obj.get(i).get_map2().get("yeara"));
+                alertLayout.setVisibility(View.VISIBLE);
                 alertForNextBloodWork.setText("Next BloodWork is on ");
                 alertForNextBloodWorkDate.setText(daya+"/"+montha+"/"+yeara);
             }
@@ -107,53 +109,12 @@ public class FullResult extends AppCompatActivity {
         if (obj.get(i).get_map2().containsKey("doctorscomment")) {
             if (!(obj.get(i).get_map2().get("doctorscomment").equals(" "))) {
                 DoctorsCommentText.setVisibility(View.VISIBLE);
+                DoctorsComment.setText(obj.get(i).get_map2().get("doctorscomment"));
+                doctorsCommentLayout.setVisibility(View.VISIBLE);
             }
         }
     }
-    private String shortenTestName(String a){
-        String str = null;
-        if(a.equals("blood urea nitrogen"))
-            str = "Blood Urea";
-        else if(a.equals("alanine amino transferase"))
-            str = "ALT";
-        else if(a.equals("aspartate amino transferase"))
-            str = "AST";
-        else if(a.equals("total protein"))
-            str = "Total Protein";
-        else if(a.equals("glucose[fasting]"))
-            str = "Glucose[F]";
-        else if(a.equals("glucose[random]"))
-            str = "Glucose[R]";
-        else if(a.equals("alkaline phosphatase"))
-            str = "ALP";
-        else if(a.equals("weight"))
-            str = "Weight";
-        else if(a.equals("cholesterol"))
-            str = "Cholesterol";
-        else if(a.equals("creatinine"))
-            str = "Creatinine";
-        else if(a.equals("calcium"))
-            str = "Calcium";
-        else if(a.equals("albumin"))
-            str = "Albumin";
-        else if(a.equals("sodium"))
-            str = "Sodium";
-        else if(a.equals("potassium"))
-            str = "Potassium";
-        else if(a.equals("chloride"))
-            str = "Chloride";
-        else if(a.equals("bilirubin"))
-            str = "Bilirubin";
-        else if(a.equals("hemoglobin"))
-            str = "Hemoglobin";
-        else if(a.equals("hematocrit"))
-            str = "Hematocrit";
-        else if(a.equals("platelets"))
-            str = "Platelets";
-        else
-            str = a;
-        return str;
-    }
+
     public String UnitIncluder(String testName){
         String testUnit = null;
         int i = Integer.parseInt(getPrefs("flag",getApplicationContext()));

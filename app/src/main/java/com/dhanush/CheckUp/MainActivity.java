@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
         //Display NOTHING ENTERED when both the objects are NULL.
         if(obj.isEmpty()) {
 
-                textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);
+                textview_NO_LIST_ENTERED.setVisibility(View.VISIBLE);
                 BloodWork.setVisibility(View.GONE);
             } else {
             textview_NO_LIST_ENTERED.setVisibility(View.INVISIBLE);

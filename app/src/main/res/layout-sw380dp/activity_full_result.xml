@@ -60,7 +60,6 @@
         android:gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_below="@id/parent_layout"
-
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,6 +67,8 @@
             android:orientation="vertical"
             android:padding="6dp"
             android:layout_gravity="bottom"
+            android:id="@+id/doctors_comment_layout"
+            android:visibility="invisible"
             android:background="@drawable/rounded_corner_card">
 
             <TextView
@@ -99,6 +100,8 @@
     android:orientation="horizontal"
     android:padding="6dp"
     android:layout_marginTop="10dp"
+    android:id="@+id/alert_layout"
+    android:visibility="invisible"
     android:background="@drawable/rounded_corner_card">
         <TextView
             android:id="@+id/alertForNextBloodWorkText"

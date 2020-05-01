@@ -27,6 +27,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class trackpage extends AppCompatActivity {
     ArrayList<All_Results> obj;
@@ -88,16 +90,19 @@ public class trackpage extends AppCompatActivity {
             GraphView graphView = view.findViewById(R.id.graph_view);
             for (int j = 0; j < obj.size(); j++) {
                 if (obj.get(j).get_map().get(all_tests[i]) != null) {
-                    flag = 1;
+
                     graphviewTextview.setText(all_tests[i]);
                     try{
-                    dateArrayList.add(getIndividualDate(j));
-                    dataPointArrayList.add(Integer.valueOf(obj.get(j).get_map().get(all_tests[i])));
+                        if(checkForChar(obj.get(j).get_map().get(all_tests[i]))) {
+                            dateArrayList.add(getIndividualDate(j));
+                            dataPointArrayList.add(Integer.valueOf(obj.get(j).get_map().get(all_tests[i])));
+                            flag = 1;
+                        }
                 } catch (NumberFormatException e){}
                 }
             }
             if (flag == 1) {
-               PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
+                PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
                 series.setTitle(all_tests[i]);
                 graphView.addSeries(series);
                 series.setShape(PointsGraphSeries.Shape.POINT);
@@ -116,12 +121,19 @@ public class trackpage extends AppCompatActivity {
         }
 }
 
+    private boolean checkForChar(String s) {
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)<48 || s.charAt(i)>57){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private DataPoint[] generateDataPoints(ArrayList<Date> dateArrayList, ArrayList<Integer> dataPointArrayList) {
         DataPoint[] values = new DataPoint[dateArrayList.size()];
         for(int i=0; i<dateArrayList.size(); i++){
             DataPoint value = new DataPoint(dateArrayList.get(i), dataPointArrayList.get(i));
-            Log.i("check", "values "+value );
-            Log.i("check", "size "+dateArrayList.size());
             values[i] = value;
         }
         return values;
@@ -139,7 +151,6 @@ public class trackpage extends AppCompatActivity {
         calendar.set(Calendar.MONTH, (month-1));
         calendar.set(Calendar.DAY_OF_MONTH, day);
         Date individualDate = calendar.getTime();
-        Log.i("check", "date" +calendar.getTime());
         return individualDate;
 
     }

@@ -24,20 +24,20 @@ android:layout_height="match_parent">
         android:layout_marginBottom="2.5dp">
 
         <TextView
+            android:id="@+id/BloodWorkTextText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/labResultMainHeading"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/labResultMainHeading"
             android:textColor="@color/textColorPrimary"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps"
-            android:id="@+id/BloodWorkTextText"/>
+            app:fontFamily="@font/nunito_extrabold" />
 
         <TextView
             android:id="@+id/datePicker"
@@ -45,15 +45,15 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/BloodWorkTextText"
             android:layout_toEndOf="@id/BloodWorkTextText"
-            android:paddingLeft="2dp"
-            android:paddingStart="2dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="28sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:fontFamily="sans-serif-smallcaps"
+            app:fontFamily="@font/nunito_extrabold"
             android:onClick="changeCurrentBloodWorkDate"/>
 
         <ImageView
@@ -62,8 +62,10 @@ android:layout_height="match_parent">
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="openExtraFeaturesBloodWork"
-            android:padding="5dp"
-            android:src="@drawable/extra_features_bloodwork_icon" />
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/grid_view_icon_30_light" />
     </RelativeLayout>
 
 
@@ -76,20 +78,19 @@ android:layout_height="match_parent">
         android:elevation="10dp"
         android:background="@drawable/rounded_corner_card"
         android:layout_marginTop="10dp"
-        android:padding="3dp"
-        >
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/basic_test_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
             android:text="@string/basic_test"
             android:textColor="@color/textColorPrimary"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:fontFamily="sans-serif-condensed" />
+            app:fontFamily="@font/nunito_bold" />
 
 
         <LinearLayout
@@ -137,7 +138,7 @@ android:layout_height="match_parent">
                 android:onClick="onclick"
                 android:text="@string/ok_button_basic_lab"
                 android:textSize="18sp"
-                android:background="@color/colorBackground"
+                android:background="@drawable/rounded_corner"
                 android:textColor="@color/textColorPrimary"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif-smallcaps"/>
@@ -171,12 +172,12 @@ android:layout_height="match_parent">
         android:layout_height="wrap_content"
         android:id="@+id/CBC_text"
         android:text="@string/complete_blood_count_panel"
-        android:layout_marginTop="10dp"
-        android:padding="8dp"
-        android:textSize="26sp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/labTextHeading"
-        app:fontFamily="sans-serif-condensed"
+        android:textColor="@color/textColorPrimary"
+        app:fontFamily="@font/nunito_bold"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -221,7 +222,7 @@ android:layout_height="match_parent">
             android:onClick="onclick_CBC"
             android:text="@string/ok_button_basic_lab"
             android:textSize="18sp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/rounded_corner"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
@@ -255,12 +256,15 @@ android:layout_height="match_parent">
         android:layout_height="wrap_content"
         android:id="@+id/CMP_text"
         android:text="@string/comprehensive_metabolic_panel"
-        android:padding="6dp"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="@color/textColorPrimary"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:fontFamily="sans-serif-smallcaps"
+        app:fontFamily="@font/nunito_bold"
         />
     </LinearLayout>
 
@@ -278,12 +282,13 @@ android:layout_height="match_parent">
         android:id="@+id/generaltest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="5dp"
         android:text="@string/GeneralTest"
+        android:layout_marginTop="8dp"
         android:textColor="@color/textColorPrimary"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -325,11 +330,11 @@ android:layout_height="match_parent">
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:onClick="onclick_general_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/rounded_corner"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
@@ -361,13 +366,13 @@ android:layout_height="match_parent">
         android:id="@+id/kidneytest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="5dp"
         android:text="@string/KidneyPanel"
         android:textColor="@color/textColorPrimary"
-        android:textSize="26sp"
-        android:layout_marginTop="5dp"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -408,11 +413,11 @@ android:layout_height="match_parent">
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2dp"
+            android:layout_weight="2"
             android:onClick="onclick_kidney_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/rounded_corner"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
@@ -436,52 +441,52 @@ android:layout_height="match_parent">
         android:id="@+id/layoutCardViewLiverTest"
         android:layout_below="@+id/layoutCardViewKidneyTest"
         android:elevation="10dp"
-        android:background="@color/labSecondary"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="2.5dp"
-        android:layout_marginLeft="2.5dp">
+        android:background="@drawable/rounded_corner_card"
+        android:layout_marginTop="10dp"
+        android:padding="3dp">
 
     <TextView
         android:id="@+id/livertest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:text="@string/LiverPanel"
-        android:textColor="@color/labTextHeading"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grid_livertest"
+        android:orientation="horizontal"
         android:layout_below="@+id/livertest_text"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <Spinner
             android:id="@+id/spinner_livertest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:background="@drawable/spinner_background"
-            android:popupBackground="@color/labSecondary"
-            android:layout_row="0"
-            android:layout_column="0" />
+            android:popupBackground="@color/cardBackground" />
 
         <EditText
             android:id="@+id/enter_livertest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:maxLength="8"
             android:inputType="number|numberDecimal"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18sp"
-            android:textColor="@color/labText"
+            android:textColor="@color/textColorPrimary"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
             android:onClick="show_cursor"
@@ -489,31 +494,28 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="3"
+            android:layout_weight="2"
             android:onClick="onclick_liver_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@drawable/button_rounded_corner"
-            android:textColor="@color/labText"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
-    </GridLayout>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview_livertest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_livertest"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="12dp"
+        android:divider="@android:color/transparent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -522,83 +524,80 @@ android:layout_height="match_parent">
         android:id="@+id/layoutCardViewElectrolytesTest"
         android:layout_below="@+id/layoutCardViewLiverTest"
         android:elevation="10dp"
-        android:background="@color/labSecondary"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="2.5dp"
-        android:layout_marginLeft="2.5dp">
+        android:background="@drawable/rounded_corner_card"
+        android:layout_marginTop="10dp"
+        android:padding="3dp">
     <TextView
         android:id="@+id/electrolytestest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:text="@string/Electrolytes"
-        android:textColor="@color/labTextHeading"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grid_electrolytestest"
+        android:orientation="horizontal"
         android:layout_below="@+id/electrolytestest_text"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <Spinner
             android:id="@+id/spinner_electrolytestest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
+            android:layout_weight="5"
             android:background="@drawable/spinner_background"
-            android:popupBackground="@color/labSecondary"/>
+            android:popupBackground="@color/cardBackground"/>
 
         <EditText
             android:id="@+id/enter_electrolytestest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:inputType="number|numberDecimal"
             android:maxLength="8"
             android:onClick="show_cursor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18sp"
-            android:textColor="@color/labText"
+            android:textColor="@color/textColorPrimary"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="3"
+            android:layout_weight="2"
             android:onClick="onclick_electrolytes_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@drawable/button_rounded_corner"
-            android:textColor="@color/labText"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
-    </GridLayout>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview_electrolytestest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_electrolytestest"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="12dp"
+        android:divider="@android:color/transparent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -607,52 +606,51 @@ android:layout_height="match_parent">
         android:id="@+id/layoutCardViewProteinTest"
         android:layout_below="@+id/layoutCardViewElectrolytesTest"
         android:elevation="10dp"
-        android:background="@color/labSecondary"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="2.5dp"
-        android:layout_marginLeft="2.5dp"
-        android:layout_marginBottom="60dp">
+        android:background="@drawable/rounded_corner_card"
+        android:layout_marginTop="10dp"
+        android:padding="3dp">
     <TextView
         android:id="@+id/proteintest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
+        android:layout_marginTop="8dp"
         android:text="@string/Proteins"
-        android:textColor="@color/labTextHeading"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grid_proteintest"
+        android:orientation="horizontal"
         android:layout_below="@+id/proteintest_text"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <Spinner
             android:id="@+id/spinner_proteintest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
+            android:layout_weight="5"
             android:background="@drawable/spinner_background"
-            android:popupBackground="@color/labSecondary"/>
+            android:popupBackground="@color/cardBackground"/>
 
         <EditText
             android:id="@+id/enter_proteintest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:inputType="number|numberDecimal"
             android:maxLength="8"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18sp"
-            android:textColor="@color/labText"
+            android:textColor="@color/textColorPrimary"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
             android:onClick="show_cursor"
@@ -660,31 +658,28 @@ android:layout_height="match_parent">
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="3"
+            android:layout_weight="2"
             android:onClick="onclick_protein_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@drawable/button_rounded_corner"
-            android:textColor="@color/labText"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
-    </GridLayout>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview_proteintest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_proteintest"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="12dp"
+        android:divider="@android:color/transparent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -693,83 +688,80 @@ android:layout_height="match_parent">
         android:id="@+id/layoutCardViewLipidTest"
         android:layout_below="@+id/layoutCardViewCBC"
         android:elevation="10dp"
-        android:background="@color/labSecondary"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="2.5dp"
-        android:layout_marginLeft="2.5dp">
+        android:background="@drawable/rounded_corner_card"
+        android:layout_marginTop="10dp"
+        android:padding="3dp">
     <TextView
         android:id="@+id/lipidstest_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:text="@string/LipidPanel"
-        android:textColor="@color/labTextHeading"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp"
         android:textStyle="bold"
-        app:fontFamily="sans-serif-condensed" />
+        app:fontFamily="@font/nunito_bold" />
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grid_lipidstest"
         android:layout_below="@+id/lipidstest_text"
-        android:padding="5dp">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <Spinner
             android:id="@+id/spinner_lipidstest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
+            android:layout_weight="5"
             android:background="@drawable/spinner_background"
-            android:popupBackground="@color/labSecondary"/>
+            android:popupBackground="@color/cardBackground"/>
 
         <EditText
             android:id="@+id/enter_lipidstest"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
+            android:layout_weight="5"
             android:maxLength="8"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:inputType="number|numberDecimal"
             android:onClick="show_cursor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="18sp"
-            android:textColor="@color/labText"
+            android:textColor="@color/textColorPrimary"
             android:theme="@style/MyEditText"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
 
         <Button
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="3"
+            android:layout_weight="2"
             android:onClick="onclick_lipids_test"
             android:text="@string/ok"
             android:textSize="18sp"
-            android:background="@drawable/button_rounded_corner"
-            android:textColor="@color/labText"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/textColorPrimary"
             android:textStyle="bold"
             app:fontFamily="sans-serif-smallcaps"/>
-    </GridLayout>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview_lipidstest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grid_lipidstest"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="12dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
     />
     </LinearLayout>
 </RelativeLayout>
@@ -787,8 +779,7 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
             android:onClick="closeActivity"
-            android:backgroundTint="#d50000"
-            android:src="@drawable/baseline_clear_white_48dp"
+            android:src="@drawable/xmark_icon_48_light"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -799,7 +790,6 @@ android:layout_height="match_parent">
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="back_to_main"
-            android:src="@drawable/baseline_done_white_48dp"
-            android:backgroundTint="#00c853"/>
+            android:src="@drawable/tickmark_icon_light_48"/>
     </RelativeLayout>
 </RelativeLayout>

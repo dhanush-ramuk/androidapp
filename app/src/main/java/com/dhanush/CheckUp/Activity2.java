@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -57,11 +59,10 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     Spinner spin_basic_test, spin_CBC, spin_kidney_test, spin_liver_test, spin_electrolyte, spin_proteins, spin_general_test, spin_lipid;
     ArrayAdapter<String> basic_test_spin_elements, CBC_spin_elements, kidney_test_spin_elements, liver_test_spin_elements, electrolyte_spin_elements, proteins_spin_elements, general_test_spin_elements, lipid_spin_elements;
     HelperClass helperClass;
-    String Text, DoctorsComment;
+    String Text, DoctorsComment = null;
     EditText e;
     TextView datePicker;
-    Calendar myCalendar;
-    int daya, montha, yeara;
+    int daya, montha, yeara, day, month, year;
     int alertfornextbloodwork = 0, havedoctorscomment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         strDay = new SimpleDateFormat("EEEE").format(now);
         datePicker.setText(new SimpleDateFormat("MM/dd").format(calendar.getTime()));
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,25 +127,32 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                     daya = data.getIntExtra("dayalert", 0);
                     montha = data.getIntExtra("monthalert", 0);
                     yeara = data.getIntExtra("yearalert", 0);
+                } else{
+                    daya = montha = yeara = 0;
                 }
                 if(havedoctorscomment == 1){
                     DoctorsComment = data.getStringExtra("doctorsComment");
+                } else{
+                    DoctorsComment = null;
                 }
 
 
             } else if(data.getIntExtra("boolean", 0) == 0){
                 //do nothing if the cancel button is clicked on the extra feature bloodwork activity
+                DoctorsComment = null;
+                daya = montha = yeara = 0;
             }
 
         }
 
         if(requestCode == 997 && resultCode == RESULT_OK){
             strDay = data.getStringExtra("dayofweek");
-            Integer day = data.getIntExtra("day", 0);
-            Integer month = data.getIntExtra("month", 0);
-            Integer year = data.getIntExtra("year", 0);
-            strDate = year + "/" + month + "/" + day;
-            datePicker.setText(month + "/" + day);
+            day = data.getIntExtra("day", 0);
+            month = data.getIntExtra("month", 0);
+            year = data.getIntExtra("year", 0);
+            strDate = year + "/" + (month+1) + "/" + day;
+            datePicker.setText((month+1) + "/" + day);
+            Log.i("check", "date in Activity 2 after receiving values"+day+month+year);
         }
 
     }
@@ -452,11 +461,20 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void openExtraFeaturesBloodWork(View v){
-        startActivityForResult(new Intent(getApplicationContext(), ExtraFeaturesBloodWork.class), 998);
+        Intent i = new Intent(getApplicationContext(), ExtraFeaturesBloodWork.class);
+        i.putExtra("comment", DoctorsComment);
+        i.putExtra("daya", daya);
+        i.putExtra("montha", montha);
+        i.putExtra("yeara", yeara);
+        startActivityForResult(i, 998);
     }
 
     public void changeCurrentBloodWorkDate(View v){
-        startActivityForResult(new Intent(getApplicationContext(), changeCurrentBloodWorkDate.class), 997);
+        Intent i = new Intent(getApplicationContext(), changeCurrentBloodWorkDate.class);
+        i.putExtra("day", day);
+        i.putExtra("month", month);
+        i.putExtra("year", year);
+        startActivityForResult(i, 997);
     }
 
 
@@ -545,9 +563,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(basic_test_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(basic_test_lhs.get(i)));
             text2.setText(basic_test_rhs.get(i) + " " + "(" + UnitIncluder(basic_test_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView) view.findViewById(R.id.delete_button_listview);
 
             //delete button click listener for BloodWork listview, removes the entered value
             b.setOnClickListener(new View.OnClickListener() {
@@ -586,9 +604,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(CBC_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(CBC_lhs.get(i)));
             text2.setText(CBC_rhs.get(i) + " " + "(" + UnitIncluder(CBC_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView) view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -625,9 +643,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(general_test_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(general_test_lhs.get(i)));
             text2.setText(general_test_rhs.get(i) + " " + "(" + UnitIncluder(general_test_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -663,9 +681,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(kidney_test_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(kidney_test_lhs.get(i)));
             text2.setText(kidney_test_rhs.get(i) + " " + "(" + UnitIncluder(kidney_test_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -701,9 +719,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(liver_test_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(liver_test_lhs.get(i)));
             text2.setText(liver_test_rhs.get(i) + " " + "(" + UnitIncluder(liver_test_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -740,9 +758,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(electrolytes_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(electrolytes_lhs.get(i)));
             text2.setText(electrolytes_rhs.get(i) + " " + "(" + UnitIncluder(electrolytes_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -778,9 +796,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(proteins_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(proteins_lhs.get(i)));
             text2.setText(proteins_rhs.get(i) + " " + "(" + UnitIncluder(proteins_lhs.get(i)) +")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -817,9 +835,9 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
             view = getLayoutInflater().inflate(R.layout.my_list, null);
             TextView text1 = (TextView)view.findViewById(R.id.lab_lhs);
             TextView text2 = (TextView)view.findViewById(R.id.lab_rhs);
-            text1.setText(lipid_panel_lhs.get(i));
+            text1.setText(helperClass.shortenTestName(lipid_panel_lhs.get(i)));
             text2.setText(lipid_panel_rhs.get(i) + " " + "(" + UnitIncluder(lipid_panel_lhs.get(i)) + ")");
-            Button b = (Button)view.findViewById(R.id.delete_button_listview);
+            ImageView b = (ImageView)view.findViewById(R.id.delete_button_listview);
             b.setOnClickListener(new View.OnClickListener() {
 
                 @Override
