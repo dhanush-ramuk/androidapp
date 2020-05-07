@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -14,26 +17,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class trackpage extends AppCompatActivity {
     ArrayList<All_Results> obj;
-    ArrayList<Date> dateArrayList;
-    ArrayList<Integer> dataPointArrayList;
+    ArrayList<Date> dateArrayList, orderedDateArrayList;
+    ArrayList<Float> dataPointArrayList, orderedDataPointArrayList;
     LinearLayout parent, parent1, parentGraphview;
     String dateanddayString = null;
     String[] all_tests = {"weight", "cholesterol", "triglyceride", "HDL", "LDL", "glucose[fasting]", "glucose[random]", "calcium", "albumin", "total protein", "C02",
@@ -50,11 +58,11 @@ public class trackpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackpage);
         helperClass = new HelperClass();
-        graphViewButton = findViewById(R.id.graph_view_button);
         Intent intent = getIntent();
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
-        figure_out(obj);
-        createGraphView();
+        graphViewButton = findViewById(R.id.graph_view_button);
+        figure_out(helperClass.arrangeObjectsAscendingOrder(obj));
+        createGraphView(helperClass.arrangeObjectsAscendingOrder(obj));
         defaultViewScrollbar = findViewById(R.id.scrollview_deafultview);
         graphViewScrollbar = findViewById(R.id.scrollview_graphview);
         parent = (LinearLayout) findViewById(R.id.parentLinearLayout);
@@ -80,7 +88,7 @@ public class trackpage extends AppCompatActivity {
     }
 
 
-    private void createGraphView() {
+    private void createGraphView(ArrayList<All_Results> obj) {
         for (int i = 0; i < all_tests.length; i++) {
             dateArrayList = new ArrayList<>();
             dataPointArrayList = new ArrayList<>();
@@ -94,26 +102,47 @@ public class trackpage extends AppCompatActivity {
                     graphviewTextview.setText(all_tests[i]);
                     try{
                         if(checkForChar(obj.get(j).get_map().get(all_tests[i]))) {
-                            dateArrayList.add(getIndividualDate(j));
-                            dataPointArrayList.add(Integer.valueOf(obj.get(j).get_map().get(all_tests[i])));
+                            dateArrayList.add(helperClass.getIndividualDate(j, obj));
+                            dataPointArrayList.add(Float.parseFloat(obj.get(j).get_map().get(all_tests[i])));
                             flag = 1;
                         }
                 } catch (NumberFormatException e){}
                 }
             }
             if (flag == 1) {
-                PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
+                //TODO order the datearray list in ascending order with it corresponding values
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(generateDataPoints(dateArrayList, dataPointArrayList));
                 series.setTitle(all_tests[i]);
+                // styling series
+                series.setColor(Color.rgb(255, 30, 88));
+                series.setDrawDataPoints(true);
+                series.setDataPointsRadius(18);
+                series.setThickness(12);
+                series.setOnDataPointTapListener(new OnDataPointTapListener() {
+                    @Override
+                    public void onTap(Series series, DataPointInterface dataPoint) {
+                       // Toast.makeText(getApplicationContext(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 graphView.addSeries(series);
-                series.setShape(PointsGraphSeries.Shape.POINT);
+
+
                 GridLabelRenderer glr = graphView.getGridLabelRenderer();
-                glr.setPadding(36);
+                glr.setPadding(80);
                 graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
-                graphView.getGridLabelRenderer().setNumHorizontalLabels(dateArrayList.size());
+                //TODO change the Labels to manual if less than 4 or to Human rounding
+                //TODO make the UI of graph more good
+                graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
                 graphView.getViewport().setMinX(dateArrayList.get(0).getTime());
                 graphView.getViewport().setMaxX(dateArrayList.get(dateArrayList.size()-1).getTime());
                 graphView.getViewport().setXAxisBoundsManual(true);
+                graphView.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+                graphView.getGridLabelRenderer().setTextSize(44);
+                graphView.getGridLabelRenderer().setHorizontalLabelsAngle(0);
                 graphView.getGridLabelRenderer().setHumanRounding(false);
+               // NumberFormat nf = NumberFormat.getInstance();
+                //nf.setMaximumFractionDigits(2);
+                //graphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(nf,nf));
                 flag = 0;
                 parent.addView(view);
             }
@@ -121,16 +150,23 @@ public class trackpage extends AppCompatActivity {
         }
 }
 
+
+
     private boolean checkForChar(String s) {
-        for(int i=0; i<s.length(); i++){
-            if(s.charAt(i)<48 || s.charAt(i)>57){
-                return false;
+        int flag = 0;
+        for(int i=0; i<s.length(); i++) {
+            if ((((int)s.charAt(i)) >= 48 && ((int)s.charAt(i))<=57) || ((int)s.charAt(i)) == 46) {
+                        flag = 1;
             }
         }
-        return true;
+        if(flag==1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    private DataPoint[] generateDataPoints(ArrayList<Date> dateArrayList, ArrayList<Integer> dataPointArrayList) {
+    private DataPoint[] generateDataPoints(ArrayList<Date> dateArrayList, ArrayList<Float> dataPointArrayList) {
         DataPoint[] values = new DataPoint[dateArrayList.size()];
         for(int i=0; i<dateArrayList.size(); i++){
             DataPoint value = new DataPoint(dateArrayList.get(i), dataPointArrayList.get(i));
@@ -140,20 +176,7 @@ public class trackpage extends AppCompatActivity {
     }
 
 
-    private Date getIndividualDate(int j) {
-        String date = obj.get(j).get_map2().get("date");
-        String[] seperateDate = date.split("/", 0);
-        int year = Integer.valueOf(seperateDate[0]);
-        int month = Integer.valueOf(seperateDate[1]);
-        int day = Integer.valueOf(seperateDate[2]);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, (month-1));
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        Date individualDate = calendar.getTime();
-        return individualDate;
 
-    }
 
     public String shorten_test_name_main(String a){
         if(a.equals("blood urea nitrogen"))

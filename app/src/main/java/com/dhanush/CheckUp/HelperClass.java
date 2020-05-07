@@ -5,6 +5,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 public class HelperClass {
 
@@ -36,9 +42,49 @@ public class HelperClass {
 
         public String splitDate(String date){
             String[] splitDate = date.split("/", 0);
-            String smallDate = splitDate[1]+"/"+splitDate[2];
+            String smallDate = splitDate[2]+"/"+splitDate[1]+"/"+splitDate[0];
             return smallDate;
         }
+    public ArrayList<All_Results> arrangeObjectsAscendingOrder(ArrayList<All_Results> obj) {
+        ArrayList<All_Results> orderedObj = new ArrayList<>();
+        ArrayList<Date> orderedDates = new ArrayList<>();
+        ArrayList<Date> dates = new ArrayList<>();
+         for(int i=0; i<obj.size(); i++){
+            dates.add(getIndividualDate(i, obj));
+        }
+        orderedDates.addAll(dates);
+        orderedObj.addAll(obj);
+        Collections.sort(orderedDates);
+        for(Date date:orderedDates){
+            Log.i("check", "ordered dates "+date);
+        }
+        for(Date date:dates){
+            Log.i("check", "unordered dates "+date);
+        }
+        for(int i=0; i<orderedDates.size(); i++){
+            Log.i("check", "objects "+obj.get(i));
+            Log.i("check", "dates "+orderedDates.indexOf(dates.get(i)));
+            orderedObj.remove(orderedDates.indexOf(dates.get(i)));
+            orderedObj.add(orderedDates.indexOf(dates.get(i)), obj.get(i));
+        }
+        Log.i("check", "size "+orderedObj.size());
+        return orderedObj;
+    }
+
+        public Date getIndividualDate(int j, ArrayList<All_Results> obj) {
+            String date = obj.get(j).get_map2().get("date");
+            String[] seperateDate = date.split("/", 0);
+            int year = Integer.valueOf(seperateDate[0]);
+            int month = Integer.valueOf(seperateDate[1]);
+            int day = Integer.valueOf(seperateDate[2]);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, (month-1));
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            Date individualDate = calendar.getTime();
+            return individualDate;
+        }
+
     public String shortenTestName(String a){
         String str = null;
         if(a.equals("blood urea nitrogen"))

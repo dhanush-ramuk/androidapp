@@ -62,7 +62,8 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
     String Text, DoctorsComment = null;
     EditText e;
     TextView datePicker;
-    int daya, montha, yeara, day, month, year;
+    int daya, montha, yeara;
+    String day = null, month = null, year = null;
     int alertfornextbloodwork = 0, havedoctorscomment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +111,7 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         strDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
         strDay = new SimpleDateFormat("EEEE").format(now);
-        datePicker.setText(new SimpleDateFormat("MM/dd").format(calendar.getTime()));
+        datePicker.setText(new SimpleDateFormat("dd/MM").format(calendar.getTime()));
     }
 
     @Override
@@ -147,11 +148,11 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
 
         if(requestCode == 997 && resultCode == RESULT_OK){
             strDay = data.getStringExtra("dayofweek");
-            day = data.getIntExtra("day", 0);
-            month = data.getIntExtra("month", 0);
-            year = data.getIntExtra("year", 0);
-            strDate = year + "/" + (month+1) + "/" + day;
-            datePicker.setText((month+1) + "/" + day);
+            day = data.getStringExtra("day");
+            month = data.getStringExtra("month");
+            year = data.getStringExtra("year");
+            strDate = year + "/" + month + "/" + day;
+            datePicker.setText(day + "/" + month);
             Log.i("check", "date in Activity 2 after receiving values"+day+month+year);
         }
 

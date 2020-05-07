@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 public class BloodWorkMainActivity extends AppCompatActivity {
-    ArrayList<All_Results> obj;
+    ArrayList<All_Results> obj, arranged_obj;
     ArrayList<String> main_value_text;
     ArrayList<String> main_value;
     ArrayList<String> second_value_text;
@@ -30,6 +33,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
     ArrayList<String> date_text;
     ArrayList<String> day_text;
     Customadapter1 adapter;
+    HelperClass helperClass;
 
 
     @Override
@@ -44,12 +48,28 @@ public class BloodWorkMainActivity extends AppCompatActivity {
         day_text = new ArrayList<>();
         date_text = new ArrayList<>();
         adapter = new Customadapter1();
+        helperClass = new HelperClass();
 
         setContentView(R.layout.activity_blood_work_main);
         Intent intent = getIntent();
+        //TODO order the listed bloodwork results according to the ascending order of their date
         obj = (ArrayList<All_Results>) intent.getSerializableExtra("list");
-        create_list(obj);
+        arranged_obj = new ArrayList<>();
+        arranged_obj = helperClass.arrangeObjectsAscendingOrder(obj);
+        create_list(arranged_obj);
+        saveBloodResults(arranged_obj);
+
     }
+
+    private void saveBloodResults(ArrayList<All_Results> obj){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+        editor.putString("mylist", json);
+        editor.apply();
+    }
+
     //Function to loop all objects in ArrayList<Results>. Map function is retrieved from object and main view is created
     public void create_list(ArrayList<All_Results> obj){
         if(obj!=null && !obj.isEmpty()){
@@ -67,7 +87,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
         String left = mini_map2.get("p").toString();
         String left1 = mini_map2.get("p1").toString();
         String left2 = mini_map2.get("p2").toString();
-        date_text.add(mini_map3.get("date").toString());
+        date_text.add(mini_map3.get("date"));
         day_text.add(mini_map3.get("day").toString());
         main_value_text.add(shorten_test_name_main(left));
         main_value.add(mini_map.get(left));
@@ -102,6 +122,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
         //Listview Adapter to set all BloodWork values
         v.setAdapter(adapter);
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -217,6 +238,13 @@ public class BloodWorkMainActivity extends AppCompatActivity {
         else str = a;
 
         return str;
+    }
+
+    //TODO replace this button to the activity_blood_work_main layout
+    public void gotoTrackPage(View v){
+        Intent i = new Intent(getApplicationContext(), trackpage.class);
+        i.putExtra("list", obj);
+        startActivityForResult(i, 995);
     }
 
     public class Customadapter1 extends BaseAdapter {

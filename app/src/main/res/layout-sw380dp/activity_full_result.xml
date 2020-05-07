@@ -152,16 +152,7 @@
         android:onClick="deleteResult"
         android:src="@drawable/trash_icon_light_48"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/track_icon_light_48"
-      android:layout_centerHorizontal="true"
 
-        android:onClick="gotoTrackPage"
-        />
     </RelativeLayout>
 
 </RelativeLayout>

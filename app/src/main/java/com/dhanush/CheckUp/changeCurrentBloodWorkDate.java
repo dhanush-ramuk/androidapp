@@ -20,27 +20,39 @@ public class changeCurrentBloodWorkDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_current_blood_work_date);
         Intent i = getIntent();
-        int day = i.getIntExtra("day", 0);
-        int month = i.getIntExtra("month", 0);
-        int year = i.getIntExtra("year", 0);
+        String day = i.getStringExtra("day");
+        String month = i.getStringExtra("month");
+        String year = i.getStringExtra("year");
         Log.i("check", "date "+day+month+year );
         BloodWorkdatePicker = (android.widget.DatePicker) findViewById(R.id.BloodWorkDatePicker);
         setDate(day, month, year);
     }
 
-    private void setDate(int day, int month, int year) {
-        if(day != 0){
-            BloodWorkdatePicker.updateDate(year, month, day);
+    private void setDate(String day, String month, String year) {
+        if(day != null){
+            BloodWorkdatePicker.updateDate(Integer.parseInt(year), (Integer.parseInt(month)-1), Integer.parseInt(day));
         }
     }
 
     public void backToActivity2(View V) {
         Intent i = new Intent();
         i.putExtra("boolean", "0");
-        i.putExtra("day", BloodWorkdatePicker.getDayOfMonth());
-        i.putExtra("month", (BloodWorkdatePicker.getMonth()));
-        Log.i("check", "month value "+BloodWorkdatePicker.getMonth());
-        i.putExtra("year", BloodWorkdatePicker.getYear());
+        Log.i("check", "day "+BloodWorkdatePicker.getDayOfMonth());
+        if(BloodWorkdatePicker.getDayOfMonth() < 10) {
+            String day = '0'+String.valueOf(BloodWorkdatePicker.getDayOfMonth());
+            Log.i("check", "day "+day);
+            i.putExtra("day", day);
+            Log.i("check", "day value "+Integer.parseInt(day));
+        } else {
+            i.putExtra("day", String.valueOf(BloodWorkdatePicker.getDayOfMonth()));
+        }
+        if(BloodWorkdatePicker.getMonth() < 10) {
+            String day = '0'+String.valueOf(BloodWorkdatePicker.getMonth()+1);
+            i.putExtra("month", day);
+        } else {
+            i.putExtra("month", String.valueOf(BloodWorkdatePicker.getMonth()+1));
+        }
+        i.putExtra("year", String.valueOf(BloodWorkdatePicker.getYear()));
         SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
         Date date = new Date(BloodWorkdatePicker.getYear(), BloodWorkdatePicker.getMonth(), (BloodWorkdatePicker.getDayOfMonth() - 1));
         String dayOfWeek = simpledateformat.format(date);

@@ -8,12 +8,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/graphview_textview">
+        android:id="@+id/graphview_textview"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:fontFamily="sans-serif-smallcaps"
+        android:layout_margin="5dp">
     </TextView>
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/graph_view">
+        android:layout_height="250dp"
+        android:id="@+id/graph_view"
+        android:background="@drawable/rounded_corner_card">
 
     </com.jjoe64.graphview.GraphView>
 </LinearLayout>

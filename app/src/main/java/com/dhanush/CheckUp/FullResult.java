@@ -48,6 +48,7 @@ public class FullResult extends AppCompatActivity {
             "sodium", "potassium", "chloride", "alkaline phosphatase", "alanine amino transferase", "aspartate amino transferase", "bilirubin",
             "blood urea nitrogen", "creatinine", "WBC", "RBC", "hemoglobin", "platelets", "hematocrit", "BP"};
     int i;
+    String modifiedMonth, modifiedDay;
     HelperClass mHelperClass;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -103,7 +104,18 @@ public class FullResult extends AppCompatActivity {
                 int yeara = Integer.valueOf(obj.get(i).get_map2().get("yeara"));
                 alertLayout.setVisibility(View.VISIBLE);
                 alertForNextBloodWork.setText("Next BloodWork is on ");
-                alertForNextBloodWorkDate.setText(daya+"/"+montha+"/"+yeara);
+                if(montha < 10) {
+                    modifiedMonth = '0' + String.valueOf(++montha);
+                } else{
+                    modifiedMonth = String.valueOf(++montha);
+                }
+                if(daya < 10){
+                    modifiedDay = '0' + String.valueOf(daya);
+                } else {
+                    modifiedDay = String.valueOf(daya);
+                }
+                    alertForNextBloodWorkDate.setText(yeara + "/" + modifiedMonth + "/" + modifiedDay);
+
             }
         }
         if (obj.get(i).get_map2().containsKey("doctorscomment")) {
@@ -184,12 +196,8 @@ public class FullResult extends AppCompatActivity {
         finish();
     }
 
-    public void gotoTrackPage(View v){
-        Intent i = new Intent(getApplicationContext(), trackpage.class);
-        i.putExtra("list", obj);
-        startActivityForResult(i, 995);
 
-    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
