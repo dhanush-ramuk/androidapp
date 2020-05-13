@@ -24,7 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".changeCurrentBloodWorkDate"></activity>
+        <activity android:name=".CreateCustomBloodworkActivity"></activity>
+        <activity android:name=".CustomBloodworkActivity" />
+        <activity android:name=".changeCurrentBloodWorkDate" />
         <activity android:name=".ExtraFeaturesBloodWork" />
         <activity android:name=".BloodWorkMainActivity" />
         <activity

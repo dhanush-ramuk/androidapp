@@ -37,6 +37,8 @@
     <string name="bloodWork">Blood Work</string>
     <string name="DoctorsCommentText">Doctors Comment</string>
     <string name="changedatecurrentbloodworktext">Change the date of the Current BloodWork</string>
+    <string name="createCustomBloodwork">Create Your Bloodwork Profile</string>
+    <string name="hintGroupNameCustomBloodwork">Bloodwork Group Name...</string>
     <string-array name="types">
         <item>once</item>
         <item>twice</item>

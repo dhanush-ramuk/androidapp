@@ -139,7 +139,7 @@ public class BloodWorkMainActivity extends AppCompatActivity {
                 obj.remove(objectIndex);
                 clear_list();
                 create_list(obj);
-                saveBloodResults();
+                saveBloodResults(obj);
                 if(obj.isEmpty()){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("empty", 1);

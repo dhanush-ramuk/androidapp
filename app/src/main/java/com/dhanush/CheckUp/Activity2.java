@@ -136,8 +136,6 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
                 } else{
                     DoctorsComment = null;
                 }
-
-
             } else if(data.getIntExtra("boolean", 0) == 0){
                 //do nothing if the cancel button is clicked on the extra feature bloodwork activity
                 DoctorsComment = null;
@@ -888,6 +886,10 @@ public class Activity2 extends AppCompatActivity implements AdapterView.OnItemSe
         i.putExtra("boolean", 1);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    public void fab_goto_custombloodwork(View v){
+        startActivityForResult(new Intent(getApplicationContext(), CustomBloodworkActivity.class), 999);
     }
 
     //onclick function. user closes the activity

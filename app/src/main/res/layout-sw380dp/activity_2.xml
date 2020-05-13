@@ -781,6 +781,13 @@ android:layout_height="match_parent">
             android:onClick="closeActivity"
             android:src="@drawable/xmark_icon_48_light"
             />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_goto_custombloodwork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="fab_goto_custombloodwork"
+            android:src="@drawable/tickmark_icon_light_48"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_back_lab"
