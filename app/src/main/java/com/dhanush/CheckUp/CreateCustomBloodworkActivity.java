@@ -2,6 +2,7 @@ package com.dhanush.CheckUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 public class CreateCustomBloodworkActivity extends AppCompatActivity {
     ArrayList<View> addTestViewArrayList;
     ArrayList<String> testNameArrayList, testUnitArrayList;
-    EditText firstTestNameEditText, firstTestUnitEditText, restTestNameEditText, restTextUnitEditText;
-    String firstTestName, restTestName;
+    EditText firstTestNameEditText, firstTestUnitEditText, restTestNameEditText, restTextUnitEditText, groupNameEditText;
+    String firstTestName, restTestName, groupName = "Group";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,14 @@ public class CreateCustomBloodworkActivity extends AppCompatActivity {
         final LinearLayout addTestLinearLayout = findViewById(R.id.add_test_main_linear_layout);
         firstTestNameEditText = findViewById(R.id.first_testname_edittext);
         firstTestUnitEditText = findViewById(R.id.first_testunit_edittext);
+        groupNameEditText = findViewById(R.id.group_name_edittext);
+        if(!groupNameEditText.getText().toString().trim().isEmpty()){
+            groupName = groupNameEditText.getText().toString();
+        }
         testNameArrayList = new ArrayList<>();
         testUnitArrayList = new ArrayList<>();
         addTestViewArrayList = new ArrayList<>();
+        //TODO need to get and add testUnit values in its ArrayList
         addTestFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +48,7 @@ public class CreateCustomBloodworkActivity extends AppCompatActivity {
                     if(!restTestName.trim().isEmpty()) {
                         addTestLinearLayout.addView(addTestView);
                         addTestViewArrayList.add(addTestView);
+                        testNameArrayList.add(restTestName);
                     } else{
                         Log.e("check", "Please fill up the test name");
                     }
@@ -51,6 +58,7 @@ public class CreateCustomBloodworkActivity extends AppCompatActivity {
                     if(!firstTestName.trim().isEmpty()) {
                         addTestLinearLayout.addView(addTestView);
                         addTestViewArrayList.add(addTestView);
+                        testNameArrayList.add(firstTestName);
                     } else{
                         Log.e("check", "Please fill up the test name");
                     }
@@ -62,6 +70,21 @@ public class CreateCustomBloodworkActivity extends AppCompatActivity {
     }
 
     public void fab_goto_custombloodwork(View v){
-        
+        if(addTestViewArrayList.isEmpty()){
+            firstTestName = firstTestNameEditText.getText().toString();
+            testNameArrayList.add(firstTestName);
+        } else{
+            View lastView = addTestViewArrayList.get((addTestViewArrayList.size()-1));
+            restTestNameEditText = lastView.findViewById(R.id.rest_testname_edittext);
+            restTestName = restTestNameEditText.getText().toString();
+            if(!restTestName.trim().isEmpty()) {
+                testNameArrayList.add(restTestName);
+            }
+        }
+
+        Intent i = new Intent();
+        i.putExtra("Group_Name", groupName);
+        setResult(RESULT_OK, i);
+        i.putStringArrayListExtra("Test_Name_Arraylist", testNameArrayList);
     }
 }
