@@ -48,7 +48,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:id="@+id/add_test_main_linear_layout"
         android:layout_below="@id/group_name_edittext">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/first_testname_edittext"/>
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/first_testunit_edittext"/>
+        </LinearLayout>
+
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_test_fab"
+        android:layout_below="@+id/add_test_main_linear_layout"/>
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_goto_create_custombloodwork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="fab_goto_custombloodwork"
+            android:src="@drawable/tickmark_icon_light_48"/>
+    </RelativeLayout>
 
 </RelativeLayout>

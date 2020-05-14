@@ -18,7 +18,5 @@
             android:layout_centerInParent="true"
             android:onClick="fab_goto_create_custombloodwork"
             android:src="@drawable/tickmark_icon_light_48"/>
-
-
     </RelativeLayout>
 </RelativeLayout>
